@@ -15,9 +15,12 @@
 /**
  * Adds a random greeting to the page.
  */
-function addRandomGreeting() {
+function addRandomFunFact() {
   const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+      ['I love hiking, biking, and spending time outdoors.', 
+      'At Columbia, I am part of the Pops Orchestra, an ensemble dedicated to arranging and playing pop pieces for orchestra',
+       'I have two pet cats.',
+        'My favorite movie is The Matrix.'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
