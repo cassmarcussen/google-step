@@ -18,7 +18,7 @@
 function addRandomFunFact() {
   const greetings =
       ['I love hiking, biking, and spending time outdoors.', 
-      'At Columbia, I am part of the Pops Orchestra, an ensemble dedicated to arranging and playing pop pieces for orchestra',
+      'At Columbia, I am part of the Pops Orchestra, an ensemble dedicated to arranging and playing pop pieces for orchestra.',
        'I have two pet cats.',
         'My favorite movie is The Matrix.'];
 
