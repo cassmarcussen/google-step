@@ -10,8 +10,9 @@
 }
 
 img {
-    border: 10px solid black;
+    border: 5px solid black;
     border-radius: 5%;
+    margin: 5px;
 }
 
 .boxed-div{
@@ -27,4 +28,9 @@ img {
     border: 10px solid black;
     padding: 25px 50px 25px;
     margin: 10px 5px;
+}
+
+a {
+    color: darkgreen;
+    font-style: italic;
 }
