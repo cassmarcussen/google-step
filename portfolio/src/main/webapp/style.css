@@ -1,9 +1,10 @@
 #content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 750px;
+  margin: auto;
+  margin-bottom: 20px;
+  width: 90%;
   text-align: center;
   font-family: 'B612', sans-serif;
+  border-bottom: 2px solid black;
 }
 
 #greeting-container {
@@ -11,31 +12,35 @@
 }
 
 img {
-    border: 2px solid black;
     border-radius: 5%;
     margin: 5px;
 }
 
 .boxed-div{
-    /*background-color: lightgray;*/
     border-top: 2px solid black;
-    /*border-bottom: 2px solid black;*/
-    /*padding: top, right/left, bottom*/
     padding: 25px 50px 25px;
     margin: 10px 5px;
 }
 
 .boxed-div-colorful{
-    /*background-color: lightskyblue;*/
     color: darkblue;
-    border-radius: 5%;
-    /*border-top: 2px solid black;
-    border-bottom: 2px solid black;*/
     padding: 25px 50px 25px;
     margin: 10px 5px;
 }
 
-a {
+a{
     color: darkblue;
-    /*font-style: italic;*/
+}
+
+button {
+    font-size: 100%;
+    background-color: white;
+    border-radius: 15%;
+    padding: 10px;
+    color: black;
+    border: 2px solid gainsboro;
+}
+
+button:hover {
+    border: 2px solid darkblue;
 }
