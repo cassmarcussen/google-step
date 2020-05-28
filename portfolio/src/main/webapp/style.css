@@ -11,6 +11,10 @@
   margin-top: 20px;
 }
 
+#xkcd-pointers {
+    border-radius: 0%;
+}
+
 img {
     border-radius: 5%;
     margin: 5px;
