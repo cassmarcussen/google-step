@@ -39,6 +39,8 @@ button {
     padding: 10px;
     color: black;
     border: 2px solid gainsboro;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 button:hover {
