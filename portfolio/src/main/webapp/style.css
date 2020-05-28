@@ -1,10 +1,36 @@
-#content {
+body {
   margin: auto;
   margin-bottom: 20px;
-  width: 90%;
   text-align: center;
   font-family: 'B612', sans-serif;
+}
+
+#content {
+  text-align: center;
+  margin: auto;
+  margin-top: 60px;
+  width: 90%;
   border-bottom: 2px solid black;
+}
+
+/* https://www.w3schools.com/howto/howto_js_navbar_sticky.asp */
+.navbar {
+  overflow: hidden;
+  background-color: black;
+  /*Make the navbar sticky*/
+  position: fixed;
+  top: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  text-decoration: none;
 }
 
 #funfact-table, #funfact-message {
@@ -20,13 +46,13 @@ img {
     margin: 5px;
 }
 
-.boxed-div{
+.boxed-div {
     border-top: 2px solid black;
     padding: 25px 50px 25px;
     margin: 10px 5px;
 }
 
-.boxed-div-colorful{
+.boxed-div-colorful {
     color: darkblue;
     padding: 25px 50px 25px;
     margin: 10px 5px;
