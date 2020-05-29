@@ -25,12 +25,15 @@ body {
 }
 
 .navbar a {
-  float: left;
-  display: block;
+  display: inline-block;
   color: white;
   text-align: center;
   padding: 20px;
   text-decoration: none;
+}
+
+.navbar a:hover {
+    color: greenyellow;
 }
 
 #funfact-table, #funfact-message {
