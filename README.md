@@ -1,6 +1,6 @@
 # Google Student Training in Engineering Program
 
-This repo contains Cassandra Marcussen's portfolio and STEP projects. This work is based on the [Google Software Product Sprint](https://g.co/softwareproductsprint) program.
+This repo contains Cassandra Marcussen's portfolio and STEP projects for the Google STEP Internship 2020. This work is based on the [Google Software Product Sprint](https://g.co/softwareproductsprint) program.
 
 To get started:
 

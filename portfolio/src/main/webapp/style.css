@@ -1,9 +1,81 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+body {
+  margin: auto;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 'B612', sans-serif;
 }
 
-#greeting-container {
+#content {
+  text-align: center;
+  margin: auto;
+  margin-top: 65px;
+  width: 90%;
+  border-bottom: 2px solid black;
+}
+
+/* https://www.w3schools.com/howto/howto_js_navbar_sticky.asp */
+.navbar {
+  overflow: hidden;
+  background-color: black;
+  /*Make the navbar sticky*/
+  position: fixed;
+  top: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.navbar a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+    color: greenyellow;
+}
+
+#funfact-table, #funfact-message {
   margin-top: 20px;
+}
+
+#xkcd-pointers {
+    border-radius: 0%;
+}
+
+img {
+    border-radius: 5%;
+    margin: 5px;
+}
+
+.boxed-div {
+    border-top: 2px solid black;
+    padding: 25px 50px 25px;
+    margin: 10px 5px;
+}
+
+.boxed-div-colorful {
+    color: darkblue;
+    padding: 25px 50px 25px;
+    margin: 10px 5px;
+}
+
+a {
+    color: darkblue;
+}
+
+button {
+    font-size: 100%;
+    background-color: white;
+    border-radius: 15%;
+    padding: 10px;
+    color: black;
+    border: 2px solid gainsboro;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+button:hover {
+    border: 2px solid darkblue;
 }
