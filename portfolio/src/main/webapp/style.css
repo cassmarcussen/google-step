@@ -13,6 +13,10 @@ body {
   border-bottom: 2px solid black;
 }
 
+div {
+    text-align: center;
+}
+
 /* https://www.w3schools.com/howto/howto_js_navbar_sticky.asp */
 .navbar {
   overflow: hidden;
@@ -53,6 +57,17 @@ img {
     border-top: 2px solid black;
     padding: 25px 50px 25px;
     margin: 10px 5px;
+}
+
+#comment-table {
+    width:50%;
+    margin: auto;
+}
+
+.comment-table-entry {
+    padding: 30px;
+    border: 2px solid black;
+    border-radius: 5%;
 }
 
 .boxed-div-colorful {
