@@ -44,10 +44,10 @@ function addRandomFunFact() {
 }
 
 /**
- * Fetches a "Hello Cassandra" statement from the server and adds it to the DOM.
+ * Fetches the comments from the server and adds it to the DOM.
  Based on week-3-server/random-quotes/src/webapp/script.js from the Week-3-Server tutorial
  */
-function getHello() {
+function getComments() {
   console.log('Fetching comments.');
 
   // The fetch() function returns a Promise because the request is asynchronous.
