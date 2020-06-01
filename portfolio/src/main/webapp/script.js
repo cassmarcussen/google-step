@@ -33,13 +33,13 @@ function addRandomFunFact() {
   var funFactTable = document.getElementById('funfact-table');
   const funFactRowText = '<tr><td>' + funfact + '</td></tr>';
 
-  if(!tableText.includes(funFactRowText)){
+  if (!tableText.includes(funFactRowText)){
         tableText += '<tr><td>' + funfact + '</td></tr>';
         countTableEntries++;
         document.getElementById('funfact-message').innerHTML = "";
-  }else if(countTableEntries < funfacts.length){
+  } else if (countTableEntries < funfacts.length){
       document.getElementById('funfact-message').innerHTML = "Repeat fact - try again!";
-  }else{
+  } else {
       //need to deal with edge case that the table has all the entries more elegantly
       document.getElementById('funfact-message').innerHTML = "Congrats - you've gone through all of the fun facts!";
   }
