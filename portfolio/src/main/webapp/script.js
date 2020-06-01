@@ -31,12 +31,11 @@ function addRandomFunFact() {
         unusedFunFacts[randomIndex] = firstFunFact;
         unusedFunFacts.shift();
 
-        const funFactRowText = '<tr><td>' + funfact + '</td></tr>';
-        tableText += '<tr><td>' + funfact + '</td></tr>';
-        countTableEntries++;
+        //const funFactRowText = '<tr><td>' + funfact + '</td></tr>';
+        factTableText += '<tr><td>' + funfact + '</td></tr>';
         document.getElementById('funfact-message').innerHTML = "";
         
-        funFactTable.innerHTML = tableText + '</table>';
+        funFactTable.innerHTML = factTableText + '</table>';
 
   } else {
       document.getElementById('funfact-message').innerHTML = "Congrats - you've gone through all of the fun facts!";
@@ -49,10 +48,10 @@ function addRandomFunFact() {
  Based on week-3-server/random-quotes/src/webapp/script.js from the Week-3-Server tutorial
  */
 function getHello() {
-  console.log('Fetching a Hello statement.');
+  console.log('Fetching comments.');
 
   // The fetch() function returns a Promise because the request is asynchronous.
-  const responsePromise = fetch('/hello-response');
+  const responsePromise = fetch('/comments');
 
   // When the request is complete, pass the response into handleResponse().
   responsePromise.then(handleResponse);
@@ -60,7 +59,7 @@ function getHello() {
 
 /**
  * Handles response by converting it to text and passing the result to
- * addHelloToDom().
+ * addCommentsToDom().
  */
 function handleResponse(response) {
   console.log('Handling the response.');
@@ -70,22 +69,40 @@ function handleResponse(response) {
   const textPromise = response.text();
 
   // When the response is converted to text, pass the result into the
-  // addHelloToDom() function.
-  textPromise.then(addHelloToDom);
+  // addCommentsToDom() function.
+  textPromise.then(addCommentsToDom);
 }
 
 /** Adds a random quote to the DOM. */
-function addHelloToDom(helloStatement) {
-  console.log('Adding "Hello Cassandra" to dom: ' + helloStatement);
+function addCommentsToDom(comments) {
 
-  const helloContainer = document.getElementById('hello-fetch-container');
-  helloContainer.innerText = helloStatement;
+    if(commentsAdded == 0){
+        console.log('Adding comments to dom: ' + comments);
+
+        const commentsContainer = document.getElementById('comments-container');
+
+        //should I check that commments is a json array first?
+        var commentArr = JSON.parse(comments);
+        console.log('Comment arr: ' + commentArr);
+        for (var i=0; i<commentArr.length; i++){
+            var comment = commentArr[i];
+            console.log('Comment: ' + comment);
+            commentTableText += '<tr class="comment-table-row"><td class="comment-table-entry">' + comment + '</td></tr>';
+        }
+
+        commentTableText += '</table>';
+
+        commentsContainer.innerHTML = commentTableText;
+
+        commentsAdded = 1;
+    }
+
 }
 
 //outside of function because we want to add to it each time addRandomFunFact is called
-var tableText = `<table style="width:100%"> 
+var factTableText = `<table style="width:100%"> 
             <tr> 
-                <th>Fun Fact</th> 
+                <th>Fun Facts</th> 
             </tr>`;
 
 var unusedFunFacts =
@@ -98,4 +115,10 @@ var unusedFunFacts =
     'Currently, I am attempting to grow potatoes outside.',
     'My favorite animal is a panda.'];
 
-var countTableEntries = 0;
+var commentTableText = `<table id="comment-table"> 
+            <tr> 
+                <th>Comments</th> 
+            </tr>`;
+
+var commentsAdded = 0;
+
