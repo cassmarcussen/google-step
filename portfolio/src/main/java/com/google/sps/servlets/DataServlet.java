@@ -19,14 +19,42 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
+import java.util.*;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/hello-response")
+@WebServlet("/comments")
 public class DataServlet extends HttpServlet {
+
+  private ArrayList<String> comments = new ArrayList<String>(
+      List.of (
+        "I hope you have a great week!",
+        "I love pizza!",
+        "Coding is fun.")
+  );
+
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
-    response.getWriter().println("Hello Cassandra!");
+
+    Gson gson = new Gson();
+    String json = gson.toJson(comments);
+   // return json;
+
+    response.getWriter().println(json);
   }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    System.out.println("Add new message to Comments section... (TODO)");
+
+    String newComment = request.getParameter("text-input");
+    comments.add(newComment);
+
+    // Redirect back to the HTML page.
+    response.sendRedirect("/step_projects.html");
+
+  }
+  
 }
