@@ -44,6 +44,44 @@ function addRandomFunFact() {
 
 }
 
+/**
+ * Fetches a "Hello Cassandra" statement from the server and adds it to the DOM.
+ Based on week-3-server/random-quotes/src/webapp/script.js from the Week-3-Server tutorial
+ */
+function getHello() {
+  console.log('Fetching a Hello statement.');
+
+  // The fetch() function returns a Promise because the request is asynchronous.
+  const responsePromise = fetch('/hello-response');
+
+  // When the request is complete, pass the response into handleResponse().
+  responsePromise.then(handleResponse);
+}
+
+/**
+ * Handles response by converting it to text and passing the result to
+ * addHelloToDom().
+ */
+function handleResponse(response) {
+  console.log('Handling the response.');
+
+  // response.text() returns a Promise, because the response is a stream of
+  // content and not a simple variable.
+  const textPromise = response.text();
+
+  // When the response is converted to text, pass the result into the
+  // addHelloToDom() function.
+  textPromise.then(addHelloToDom);
+}
+
+/** Adds a random quote to the DOM. */
+function addHelloToDom(helloStatement) {
+  console.log('Adding "Hello Cassandra" to dom: ' + helloStatement);
+
+  const helloContainer = document.getElementById('hello-fetch-container');
+  helloContainer.innerText = helloStatement;
+}
+
 //outside of function because we want to add to it each time addRandomFunFact is called
 var tableText = `<table style="width:100%"> 
             <tr> 
