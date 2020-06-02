@@ -80,7 +80,7 @@ a {
     color: darkblue;
 }
 
-button {
+button, input {
     font-size: 100%;
     background-color: white;
     border-radius: 15%;
@@ -91,6 +91,6 @@ button {
     margin-right: 10px;
 }
 
-button:hover {
+button:hover, input:hover {
     border: 2px solid darkblue;
 }
