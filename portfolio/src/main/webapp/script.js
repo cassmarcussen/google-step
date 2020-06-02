@@ -73,7 +73,7 @@ function handleResponse(response) {
   textPromise.then(addCommentsToDom);
 }
 
-/** Adds a random quote to the DOM. */
+/** Adds comments to the DOM. */
 function addCommentsToDom(comments) {
 
     if(commentsAdded == 0){
@@ -84,17 +84,50 @@ function addCommentsToDom(comments) {
         //should I check that commments is a json array first?
         var commentArr = JSON.parse(comments);
         console.log('Comment arr: ' + commentArr);
+
         for (var i=0; i<commentArr.length; i++){
+
             var comment = commentArr[i];
-            console.log('Comment: ' + comment);
-            commentTableText += '<tr class="comment-table-row"><td class="comment-table-entry">' + comment + '</td></tr>';
+            var commentName = commentArr[i].name;
+            var commentMessage = commentArr[i].message;
+
+            console.log('Comment: ' + commentName + ', ' + commentMessage);
+
+            commentTableText += '<tr class="comment-table-row"><td class="comment-table-entry">' 
+                + '<p>' + commentName + '</p>'
+                + '<p>' + commentMessage + '</p>'
+                + '</td></tr>';
         }
+
+        document.getElementById("num-comments").value = commentArr.length;
 
         commentTableText += '</table>';
 
         commentsContainer.innerHTML = commentTableText;
 
         commentsAdded = 1;
+    }
+}
+
+function setNumComments(){
+    var numComments = document.getElementById('num-comments');
+    var searchParams = new URLSearchParams(window.location.href);
+    searchParams.set("num-comments", numComments);
+    window.location.href = searchParams.toString();
+}
+
+function deleteComments(){
+    console.log('Deleting comments.');
+    
+    //Show a pop-up confirm box so the user doesn't accidentally delete all comments without confirmation
+    if (confirm("By clicking 'OK', you will delete all comments.")) {
+        // The fetch() function returns a Promise because the request is asynchronous.
+        const responseDeletePromise = fetch('/delete-data', { method: 'POST'});
+
+        //Call the function to fetch comments from the server so that the now-deleted comments are removed from the page
+        responseDeletePromise.then(getComments);
+
+        location.reload();
     }
 
 }
