@@ -29,19 +29,21 @@
         <p><button onclick=deleteComments()>Delete all comments</button></p>
         <h3>Post a new comment: </h3>
         <form action="/comments" method="POST">
+            <p>Name :</p>
+            <textarea name="commenter-name"></textarea>
             <p>Comment :</p>
             <textarea name="text-input">I love your website! :)</textarea>
             <br/><br/>
 
-            <p><button><input type="submit" /></button></p>
+            <input type="submit" />
         </form>
         <h3>Change the maximum number of comments to display: </h3>
         <form action="/comments" method="POST">
             <p>Maximum number of comments to display: </p>
-            <input name="num-comments" value=10 type="number">
+            <input id="num-comments" name="num-comments" value=10 type="number">
             <br/><br/>
 
-            <p><button><input type="submit" /></button></p>
+            <input type="submit" />
             <!--p><button onclick=setNumComments()>Update number of comments</button></p-->
         </form>
         </p>
