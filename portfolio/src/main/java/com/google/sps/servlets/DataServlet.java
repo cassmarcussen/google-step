@@ -41,7 +41,7 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    List<String> messages = new ArrayList<>();
+    List<Comment> messages = new ArrayList<Comment>();
 
     /*globalNumComments = getNumComments(request);
     System.err.println("globalNumComments: " + globalNumComments);*/
@@ -56,9 +56,12 @@ public class DataServlet extends HttpServlet {
       }
       numIterations++;
 
+      String name = (String) entity.getProperty("name");
       String message = (String) entity.getProperty("message");
+
+      Comment newComment = new Comment(name, message);
       
-      messages.add(message);
+      messages.add(newComment);
     }
 
     Gson gson = new Gson();
@@ -71,11 +74,13 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     System.out.println("Add new message to Comments section");
 
+    String name = request.getParameter("commenter-name");
     String newComment = request.getParameter("text-input");
 
     if(newComment != null){
 
         Entity taskEntity = new Entity("Comment");
+        taskEntity.setProperty("name", name);
         taskEntity.setProperty("message", newComment);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -85,6 +90,8 @@ public class DataServlet extends HttpServlet {
 
     globalNumComments = getNumComments(request);
     System.out.println("globalNumComments: " + globalNumComments);
+
+    //request.setAttribute("num-comments", globalNumComments);
 
     // Redirect back to the HTML page.
     response.sendRedirect("/step_projects.html");
@@ -111,7 +118,7 @@ public class DataServlet extends HttpServlet {
       System.err.println("Number of comments requested is out of range (must be nonnegative): " + numComments);
       numComments = 10;
     }
-
+    
     return numComments;
   }
 
