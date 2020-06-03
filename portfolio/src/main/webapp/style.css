@@ -94,3 +94,22 @@ button, input {
 button:hover, input:hover {
     border: 2px solid darkblue;
 }
+
+#num-comments {
+    width: 40px;
+}
+
+#comments-container {
+    margin: 10px;
+    margin-top: 0px;
+}
+
+.form-div {
+    border: 2px solid gainsboro;
+    border-radius: 1%;
+    padding: 10px;
+    margin:auto;
+    margin-bottom: 10px;
+    width: 40%;
+    display: inline-block;
+}
