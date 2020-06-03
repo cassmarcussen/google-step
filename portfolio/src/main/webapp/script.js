@@ -116,6 +116,16 @@ function setNumComments(){
     window.location.href = searchParams.toString();
 }
 
+function hideComments(){
+    document.getElementById('comments-container').innerText = "";
+    //Indicate that the comments are no longer added
+    commentsAdded = 0;
+    commentTableText = `<table id="comment-table"> 
+            <tr> 
+                <th>Comments</th> 
+            </tr>`;
+}
+
 function deleteComments(){
     console.log('Deleting comments.');
     
