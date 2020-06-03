@@ -22,11 +22,15 @@
       </div>
       <div class="boxed-div">
         <h2>Week 3 Servlets: Comments Section</h2>
-        <p>Click the button below to display prior comments from the server and add them to the page. 
+        <p>Click the button below to display, hide, and delete prior comments from the server. 
         </p>
-        <p><button onclick=getComments()>Display Comments</button></p>
+        <p>
+            <button onclick=getComments()>Display Comments</button>
+            <button onclick=hideComments()>Hide Comments</button>
+            <button onclick=deleteComments()>Delete all comments</button>
+        </p>
         <div id="comments-container"></div>
-        <p><button onclick=deleteComments()>Delete all comments</button></p>
+        <div class="form-div">
         <h3>Post a new comment: </h3>
         <form action="/comments" method="POST">
             <p>Name :</p>
@@ -37,6 +41,8 @@
 
             <input type="submit" />
         </form>
+        </div>
+        <div class="form-div">
         <h3>Change the maximum number of comments to display: </h3>
         <form action="/comments" method="POST">
             <p>Maximum number of comments to display: </p>
@@ -46,6 +52,7 @@
             <input type="submit" />
             <!--p><button onclick=setNumComments()>Update number of comments</button></p-->
         </form>
+        </div>
         </p>
       </div>
     </div>
