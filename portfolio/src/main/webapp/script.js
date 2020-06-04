@@ -31,7 +31,6 @@ function addRandomFunFact() {
         unusedFunFacts[randomIndex] = firstFunFact;
         unusedFunFacts.shift();
 
-        //const funFactRowText = '<tr><td>' + funfact + '</td></tr>';
         factTableText += '<tr><td>' + funfact + '</td></tr>';
         document.getElementById('funfact-message').innerHTML = "";
         
@@ -47,16 +46,44 @@ function addRandomFunFact() {
  * Fetches the comments from the server and adds it to the DOM.
  Based on week-3-server/random-quotes/src/webapp/script.js from the Week-3-Server tutorial
  */
+
+ var display = true;
 function getComments(myLocation) {
-  console.log('Fetching comments.');
 
-  // The fetch() function returns a Promise because the request is asynchronous.
-  const responsePromise = fetch('/comments?location=' + myLocation, {
-      location: myLocation
-  });
+  //first, reset by hiding comments
+  hideComments(myLocation);
+  updateNumComments(myLocation);
+  
+  //toggle between hide and display
+  if(display){
 
-  // When the request is complete, pass the response into handleResponse().
-  responsePromise.then(handleResponse);
+    console.log('Fetching comments.');
+    document.getElementById(myLocation + "-get-button").innerHTML = "Hide Comments";
+
+    setLocation(myLocation);
+
+    // The fetch() function returns a Promise because the request is asynchronous.
+    const responsePromise = fetch('/comments?location=' + myLocation, {
+        location: myLocation
+    });
+
+    // When the request is complete, pass the response into handleResponse().
+    responsePromise.then(handleResponse);
+
+    display = false;
+  }else{
+    document.getElementById(myLocation + "-get-button").innerHTML = "Display Comments";
+    display = true;
+  }
+}
+
+var currLocation = "";
+function setLocation(myLocation){
+    currLocation = myLocation;
+}
+
+function getLocation(){
+    return currLocation;
 }
 
 /**
@@ -64,6 +91,7 @@ function getComments(myLocation) {
  * addCommentsToDom().
  */
 function handleResponse(response) {
+
   console.log('Handling the response.');
 
   // response.text() returns a Promise, because the response is a stream of
@@ -81,7 +109,8 @@ function addCommentsToDom(comments) {
     if(commentsAdded == 0){
         console.log('Adding comments to dom: ' + comments);
 
-        const commentsContainer = document.getElementById('comments-container');
+        const commentsContainer = document.getElementById('comments-container-' + getLocation());
+        console.log('comments-container-' + location);
 
         //should I check that commments is a json array first?
         var commentArr = JSON.parse(comments);
@@ -101,12 +130,6 @@ function addCommentsToDom(comments) {
                 + '</td></tr>';
         }
 
-        //globalNumComments = getNumComments();
-        
-        //document.getElementById("num-comments").value = globalNumComments;
-       // console.log("numComments: " + numComments);
-        //document.getElementById("curr-num-comments").innerText = globalNumComments;
-
         commentTableText += '</table>';
 
         commentsContainer.innerHTML = commentTableText;
@@ -115,14 +138,20 @@ function addCommentsToDom(comments) {
     }
 }
 
-function getNumComments(){
+function displayCommentBoxes(sectionId){
+    //if visible, hide and change button to "show"
+    //if hidden, show and change button to "hide"
+    if(document.getElementById("forms-wrapper-" + sectionId).style.display == "block"){
+        document.getElementById("forms-wrapper-" + sectionId).style.display = "none";
+        document.getElementById(sectionId + "-display-button").innerHTML = "Post a Comment";
+    }else if(document.getElementById("forms-wrapper-" + sectionId).style.display != "block"){
+        document.getElementById("forms-wrapper-" + sectionId).style.display = "block";
+        document.getElementById(sectionId + "-display-button").innerHTML = "Hide Post Comment Boxes";
+    }
 
-   /* var nuCommentsArr = window.location.search.split("?num-comments=");
-    var numComments = 10;
-    if(numComments.length > 1){
-            //works only b/c one query param... change to be extensible
-        numComments =  numCommentsArr[1];
-    }*/
+}
+
+function getNumComments(){
 
     numComments = document.getElementById("num-comments").value;
 
@@ -132,25 +161,16 @@ function getNumComments(){
 
 function updateNumComments(myLocation){
 
-    var globalNumComments = document.getElementById("num-comments").value;
+    var globalNumComments = document.getElementById("num-comments-" + myLocation).value;
 
-    document.getElementById("curr-num-comments").innerHTML = globalNumComments;
+    //document.getElementById("curr-num-comments").innerHTML = globalNumComments;
 
     const updateNumComments = fetch('/comments?num-comments=' + globalNumComments + "&location=" + myLocation, { method: 'POST'});
 
-    //updateNumComments.then(location.reload());
-
 }
 
-/*function setNumComments(){
-    var numComments = document.getElementById('num-comments');
-    var searchParams = new URLSearchParams(window.location.href);
-    searchParams.set("num-comments", numComments);
-    window.location.href = searchParams.toString();
-}*/
-
-function hideComments(){
-    document.getElementById('comments-container').innerText = "";
+function hideComments(myLocation){
+    document.getElementById('comments-container-' + myLocation).innerText = "";
     //Indicate that the comments are no longer added
     commentsAdded = 0;
     commentTableText = `<table id="comment-table"> 
