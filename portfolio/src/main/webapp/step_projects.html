@@ -26,7 +26,6 @@
         </p>
         <p>
             <button id="Comments-get-button" onclick=getComments("Comments")>Display Comments</button>
-            <!--button onclick=hideComments("Comments")>Hide Comments</button-->
             <button onclick=deleteComments("Comments")>Delete all comments</button>
             <button id="Comments-display-button" onclick=displayCommentBoxes("Comments")>Post a Comment</button>
         </p>
@@ -48,11 +47,9 @@
             <div class="form-div" id="max-comments">
                 <h3>Change the maximum number of comments to display: </h3>
                 <p>Maximum number of comments to display: </p>
-                <input id="num-comments-Comments" name="num-comments" type="number">
+                <input class="num-comments" id="num-comments-Comments" name="num-comments" type="number">
                 <input type="hidden" name="location" value="Comment" />
                 <br/><br/>
-                <!--p>Current number of comments to display: <div id="curr-num-comments">10</div></p-->
-
                 <button onclick=updateNumComments("Comments")>Submit</button>                   
             </div>
         </div > 
