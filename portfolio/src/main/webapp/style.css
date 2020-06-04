@@ -66,8 +66,9 @@ img {
 
 .comment-table-entry {
     padding: 30px;
+    width: 400px;
     border: 2px solid gainsboro;
-    border-radius: 5%;
+    /*border-radius: 5%;*/
 }
 
 .boxed-div-colorful {
@@ -112,4 +113,39 @@ button:hover, input:hover {
     margin-bottom: 10px;
     width: 40%;
     display: inline-block;
+    height: 300px;
+    overflow: hidden;
+}
+
+.form-wrapper {
+    height: 100%;
+    margin: auto;
+    width: 80%;
+}
+
+/*Styling a comment when displayed on the STEP Internship page*/
+.commenter-name {
+    background-color: darkblue;
+    padding: 10px;
+    color: white;
+    margin-left: 10px;
+    margin-right: 40px;
+    float: left;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+}
+
+.commenter-message {
+    text-align: left;
+    vertical-align: middle;
+    justify-content: left;
+    align-items: left;
+    display: flex;
 }
