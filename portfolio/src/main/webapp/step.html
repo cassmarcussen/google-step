@@ -34,6 +34,38 @@
             is so important. The "Testing Code" video taught me about test-driven development, and the important of tests to document code and to facilitate the modification 
             of existing code. The tests are essentially the first users of the code, which was interesting for me to learn about.
         </p>
+        <p>
+            <button id="Week1-get-button" onclick=getComments("Week1")>Display Comments</button>
+            <!--button onclick=hideComments("Week1")>Hide Comments</button-->
+            <button onclick=deleteComments("Week1")>Delete all comments</button>
+            <button id="wk1-display-button" onclick=displayCommentBoxes("wk1")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week1"></div>
+        <div class="forms-wrapper" id="forms-wrapper-wk1">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week1" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input id="num-comments-Week1" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week1" />
+                <br/><br/>
+                <!--p>Current number of comments to display: <div id="curr-num-comments">10</div></p-->
+
+                <button onclick=updateNumComments("Week1")>Submit</button>                   
+            </div>
+        </div>
       </div>
       <div class="boxed-div">
         <h2>Week 2</h2>
@@ -46,6 +78,38 @@
             this week due to registration issues last week). These livestreams gave me a better sense of Google's values, internal policies, and the awesome 
             opportunities present at Google. These livestream sessions made me even more enthusiastic about my internship and the opportunity to work at Google!
         </p>
+         <p>
+            <button id="Week2-get-button" onclick=getComments("Week2")>Display Comments</button>
+            <!--button onclick=hideComments("Week2")>Hide Comments</button-->
+            <button onclick=deleteComments("Week2")>Delete all comments</button>
+            <button id="wk2-display-button" onclick=displayCommentBoxes("wk2")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week2"></div>
+        <div class="forms-wrapper" id="forms-wrapper-wk2">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week2" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input id="num-comments-Week2" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week2" />
+                <br/><br/>
+                <!--p>Current number of comments to display: <div id="curr-num-comments">10</div></p-->
+
+                <button onclick=updateNumComments("Week2")>Submit</button>                   
+            </div>
+        </div>
       </div>
        <div class="boxed-div">
         <h1>Challenges</h1>
