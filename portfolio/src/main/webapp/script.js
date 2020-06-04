@@ -50,8 +50,7 @@ function addRandomFunFact() {
  var display = true;
 function getComments(myLocation) {
 
-  //first, reset by hiding comments
-  hideComments(myLocation);
+  //first, reset by updating num comments, which also hides comments
   updateNumComments(myLocation);
   
   //toggle between hide and display
@@ -112,7 +111,7 @@ function addCommentsToDom(comments) {
         const commentsContainer = document.getElementById('comments-container-' + getLocation());
         console.log('comments-container-' + location);
 
-        //should I check that commments is a json array first?
+        //perhaps check that commments is a json array first...
         var commentArr = JSON.parse(comments);
         console.log('Comment arr: ' + commentArr);
 
@@ -163,9 +162,10 @@ function updateNumComments(myLocation){
 
     var globalNumComments = document.getElementById("num-comments-" + myLocation).value;
 
-    //document.getElementById("curr-num-comments").innerHTML = globalNumComments;
-
     const updateNumComments = fetch('/comments?num-comments=' + globalNumComments + "&location=" + myLocation, { method: 'POST'});
+
+    hideComments(myLocation);
+
 
 }
 
@@ -177,6 +177,9 @@ function hideComments(myLocation){
             <tr> 
                 <th>Comments</th> 
             </tr>`;
+    
+    document.getElementById(myLocation + "-get-button").innerHTML = "Display Comments";
+    display = true;
 }
 
 function deleteComments(myLocation){
