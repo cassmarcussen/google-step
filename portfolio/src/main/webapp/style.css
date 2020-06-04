@@ -68,7 +68,6 @@ img {
     padding: 30px;
     width: 400px;
     border: 2px solid gainsboro;
-    /*border-radius: 5%;*/
 }
 
 .boxed-div-colorful {
@@ -96,7 +95,7 @@ button:hover, input:hover {
     border: 2px solid darkblue;
 }
 
-#num-comments {
+.num-comments {
     width: 40px;
 }
 
