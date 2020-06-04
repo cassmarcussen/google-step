@@ -47,11 +47,13 @@ function addRandomFunFact() {
  * Fetches the comments from the server and adds it to the DOM.
  Based on week-3-server/random-quotes/src/webapp/script.js from the Week-3-Server tutorial
  */
-function getComments() {
+function getComments(myLocation) {
   console.log('Fetching comments.');
 
   // The fetch() function returns a Promise because the request is asynchronous.
-  const responsePromise = fetch('/comments');
+  const responsePromise = fetch('/comments', {
+      location: myLocation
+  });
 
   // When the request is complete, pass the response into handleResponse().
   responsePromise.then(handleResponse);
@@ -94,12 +96,16 @@ function addCommentsToDom(comments) {
             console.log('Comment: ' + commentName + ', ' + commentMessage);
 
             commentTableText += '<tr class="comment-table-row"><td class="comment-table-entry">' 
-                + '<p>' + commentName + '</p>'
-                + '<p>' + commentMessage + '</p>'
+                + '<div class="commenter-name">' + commentName + '</div>'
+                + '<div class="commenter-message">' + commentMessage + '</div>'
                 + '</td></tr>';
         }
 
-        document.getElementById("num-comments").value = commentArr.length;
+        //globalNumComments = getNumComments();
+        
+        document.getElementById("num-comments").value = globalNumComments;
+       // console.log("numComments: " + numComments);
+        document.getElementById("curr-num-comments").innerText = globalNumComments;
 
         commentTableText += '</table>';
 
@@ -109,12 +115,39 @@ function addCommentsToDom(comments) {
     }
 }
 
-function setNumComments(){
+function getNumComments(){
+
+   /* var nuCommentsArr = window.location.search.split("?num-comments=");
+    var numComments = 10;
+    if(numComments.length > 1){
+            //works only b/c one query param... change to be extensible
+        numComments =  numCommentsArr[1];
+    }*/
+
+    numComments = document.getElementById("num-comments").value;
+
+    return numComments;
+
+}
+
+function updateNumComments(){
+
+    var globalNumComments = document.getElementById("num-comments").value;
+
+    document.getElementById("curr-num-comments").innerHTML = globalNumComments;
+
+    const updateNumComments = fetch('/comments?num-comments=' + globalNumComments, { method: 'POST'});
+
+    //updateNumComments.then(location.reload());
+
+}
+
+/*function setNumComments(){
     var numComments = document.getElementById('num-comments');
     var searchParams = new URLSearchParams(window.location.href);
     searchParams.set("num-comments", numComments);
     window.location.href = searchParams.toString();
-}
+}*/
 
 function hideComments(){
     document.getElementById('comments-container').innerText = "";
@@ -164,4 +197,5 @@ var commentTableText = `<table id="comment-table">
             </tr>`;
 
 var commentsAdded = 0;
+var globalNumComments = 10;
 
