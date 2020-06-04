@@ -117,10 +117,14 @@ button:hover, input:hover {
     overflow: hidden;
 }
 
-.form-wrapper {
+.forms-wrapper {
     height: 100%;
     margin: auto;
+    margin-top: 15px;
     width: 80%;
+    /*Initially hide the forms for posting comments and changing the number of comments,
+    since it occupies a lot of space.*/
+    display: none;
 }
 
 /*Styling a comment when displayed on the STEP Internship page*/
