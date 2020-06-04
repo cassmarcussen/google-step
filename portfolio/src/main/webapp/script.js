@@ -51,7 +51,7 @@ function getComments(myLocation) {
   console.log('Fetching comments.');
 
   // The fetch() function returns a Promise because the request is asynchronous.
-  const responsePromise = fetch('/comments', {
+  const responsePromise = fetch('/comments?location=' + myLocation, {
       location: myLocation
   });
 
@@ -103,9 +103,9 @@ function addCommentsToDom(comments) {
 
         //globalNumComments = getNumComments();
         
-        document.getElementById("num-comments").value = globalNumComments;
+        //document.getElementById("num-comments").value = globalNumComments;
        // console.log("numComments: " + numComments);
-        document.getElementById("curr-num-comments").innerText = globalNumComments;
+        //document.getElementById("curr-num-comments").innerText = globalNumComments;
 
         commentTableText += '</table>';
 
@@ -130,13 +130,13 @@ function getNumComments(){
 
 }
 
-function updateNumComments(){
+function updateNumComments(myLocation){
 
     var globalNumComments = document.getElementById("num-comments").value;
 
     document.getElementById("curr-num-comments").innerHTML = globalNumComments;
 
-    const updateNumComments = fetch('/comments?num-comments=' + globalNumComments, { method: 'POST'});
+    const updateNumComments = fetch('/comments?num-comments=' + globalNumComments + "&location=" + myLocation, { method: 'POST'});
 
     //updateNumComments.then(location.reload());
 
@@ -159,13 +159,13 @@ function hideComments(){
             </tr>`;
 }
 
-function deleteComments(){
+function deleteComments(myLocation){
     console.log('Deleting comments.');
     
     //Show a pop-up confirm box so the user doesn't accidentally delete all comments without confirmation
     if (confirm("By clicking 'OK', you will delete all comments.")) {
         // The fetch() function returns a Promise because the request is asynchronous.
-        const responseDeletePromise = fetch('/delete-data', { method: 'POST'});
+        const responseDeletePromise = fetch('/delete-data?location=' + myLocation, { method: 'POST'});
 
         //Call the function to fetch comments from the server so that the now-deleted comments are removed from the page
         responseDeletePromise.then(getComments);
