@@ -34,8 +34,10 @@ public class DeleteDataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-    Query query = new Query("Comment");
+      
+    String queryType = request.getParameter("location");
+    System.out.println("delete queryType: " + queryType);
+    Query query = new Query(queryType);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -45,6 +47,11 @@ public class DeleteDataServlet extends HttpServlet {
     }
 
     // Redirect back to the HTML page.
-    response.sendRedirect("/step_projects.html");
+    if(queryType.equals("Comments")){
+        response.sendRedirect("/step_projects.html");
+    }else{
+        response.sendRedirect("/step.html");
+    }
+
   }
 }
