@@ -36,7 +36,6 @@
         </p>
         <p>
             <button id="Week1-get-button" onclick=getComments("Week1")>Display Comments</button>
-            <!--button onclick=hideComments("Week1")>Hide Comments</button-->
             <button onclick=deleteComments("Week1")>Delete all comments</button>
             <button id="wk1-display-button" onclick=displayCommentBoxes("wk1")>Post a Comment</button>
         </p>
@@ -58,12 +57,10 @@
             <div class="form-div" id="max-comments">
                 <h3>Change the maximum number of comments to display: </h3>
                 <p>Maximum number of comments to display: </p>
-                <input id="num-comments-Week1" name="num-comments" type="number">
+                <input class="num-comments" id="num-comments-Week1" name="num-comments" type="number">
                 <input type="hidden" name="location" value="Week1" />
                 <br/><br/>
-                <!--p>Current number of comments to display: <div id="curr-num-comments">10</div></p-->
-
-                <button onclick=updateNumComments("Week1")>Submit</button>                   
+                <button onclick=updateNumComments("Week1")>Submit</button>                
             </div>
         </div>
       </div>
@@ -80,7 +77,6 @@
         </p>
          <p>
             <button id="Week2-get-button" onclick=getComments("Week2")>Display Comments</button>
-            <!--button onclick=hideComments("Week2")>Hide Comments</button-->
             <button onclick=deleteComments("Week2")>Delete all comments</button>
             <button id="wk2-display-button" onclick=displayCommentBoxes("wk2")>Post a Comment</button>
         </p>
@@ -102,11 +98,9 @@
             <div class="form-div" id="max-comments">
                 <h3>Change the maximum number of comments to display: </h3>
                 <p>Maximum number of comments to display: </p>
-                <input id="num-comments-Week2" name="num-comments" type="number">
+                <input class="num-comments" id="num-comments-Week2" name="num-comments" type="number">
                 <input type="hidden" name="location" value="Week2" />
                 <br/><br/>
-                <!--p>Current number of comments to display: <div id="curr-num-comments">10</div></p-->
-
                 <button onclick=updateNumComments("Week2")>Submit</button>                   
             </div>
         </div>
