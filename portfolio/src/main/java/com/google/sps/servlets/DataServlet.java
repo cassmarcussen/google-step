@@ -35,18 +35,15 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
-
-    Query query = new Query("Comment");
+    
+    String queryType = request.getParameter("location");
+    System.err.println("queryType: " + queryType);
+    Query query = new Query(queryType);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
     List<Comment> messages = new ArrayList<Comment>();
-
-    /*globalNumComments = getNumComments(request);
-    System.err.println("globalNumComments: " + globalNumComments);*/
-
-    //globalNumComments = 3;
 
     int numIterations = 0;
 
@@ -76,10 +73,12 @@ public class DataServlet extends HttpServlet {
 
     String name = request.getParameter("commenter-name");
     String newComment = request.getParameter("text-input");
+    String entityType = request.getParameter("location");
+    System.out.println("entityType: " + entityType);
 
     if(newComment != null){
 
-        Entity taskEntity = new Entity("Comment");
+        Entity taskEntity = new Entity(entityType);
         taskEntity.setProperty("name", name);
         taskEntity.setProperty("message", newComment);
 
@@ -91,13 +90,14 @@ public class DataServlet extends HttpServlet {
     globalNumComments = getNumComments(request);
     System.out.println("globalNumComments: " + globalNumComments);
 
-    //request.setAttribute("num-comments", globalNumComments);
-
     // Redirect back to the HTML page.
-    response.sendRedirect("/step_projects.html");
+    if(entityType.equals("Comments")){
+        response.sendRedirect("/step_projects.html");
+    }else{
+        response.sendRedirect("/step.html");
+    }
 
   }
-
 
   /** Returns the choice entered by the player, or -1 if the choice was invalid. */
   private int getNumComments(HttpServletRequest request) {
