@@ -25,12 +25,13 @@
         <p>Click the button below to display, hide, and delete prior comments from the server. 
         </p>
         <p>
-            <button onclick=getComments("Comments")>Display Comments</button>
-            <button onclick=hideComments()>Hide Comments</button>
+            <button id="Comments-get-button" onclick=getComments("Comments")>Display Comments</button>
+            <!--button onclick=hideComments("Comments")>Hide Comments</button-->
             <button onclick=deleteComments("Comments")>Delete all comments</button>
+            <button id="Comments-display-button" onclick=displayCommentBoxes("Comments")>Post a Comment</button>
         </p>
-        <div id="comments-container"></div>
-        <div class="forms-wrapper">
+        <div id="comments-container-Comments"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Comments">
             <div class="form-div">
                 <h3>Post a new comment: </h3>
                 <form action="/comments" method="POST">
@@ -47,12 +48,12 @@
             <div class="form-div" id="max-comments">
                 <h3>Change the maximum number of comments to display: </h3>
                 <p>Maximum number of comments to display: </p>
-                <input id="num-comments" name="num-comments" type="number">
+                <input id="num-comments-Comments" name="num-comments" type="number">
                 <input type="hidden" name="location" value="Comment" />
                 <br/><br/>
-                <p>Current number of comments to display: <div id="curr-num-comments">10</div></p>
+                <!--p>Current number of comments to display: <div id="curr-num-comments">10</div></p-->
 
-                <button onclick=updateNumComments()>Submit</button>                   
+                <button onclick=updateNumComments("Comments")>Submit</button>                   
             </div>
         </div > 
       </div>
