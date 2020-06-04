@@ -112,8 +112,7 @@ public class DataServlet extends HttpServlet {
       System.err.println("Could not convert to int: " + numCommentsString);
       numComments = 10;
     }
-
-    // Check that the input is between 1 and 3.
+    
     if (numComments < 0) {
       System.err.println("Number of comments requested is out of range (must be nonnegative): " + numComments);
       numComments = 10;
