@@ -25,12 +25,9 @@
         <p>Click the button below to display, hide, and delete prior comments from the server. 
         </p>
         <p>
-            <!--getComments parameter is the location (currently, Comments)-->
-            <!--button onclick=getComments("Comments")>Display Comments</button-->
-            <!--Issue; this only does GET if a form with get-->
             <button onclick=getComments("Comments")>Display Comments</button>
             <button onclick=hideComments()>Hide Comments</button>
-            <button onclick=deleteComments()>Delete all comments</button>
+            <button onclick=deleteComments("Comments")>Delete all comments</button>
         </p>
         <div id="comments-container"></div>
         <div class="forms-wrapper">
@@ -41,7 +38,7 @@
                     <textarea name="commenter-name"></textarea>
                     <p>Comment :</p>
                     <textarea name="text-input">I love your website! :)</textarea>
-                    <input name="location" value="Comment" type="hidden" />
+                    <input name="location" value="Comments" type="hidden" />
                     <br/><br/>
 
                     <input type="submit" />
@@ -49,18 +46,13 @@
             </div>
             <div class="form-div" id="max-comments">
                 <h3>Change the maximum number of comments to display: </h3>
-                <!--This makes only the POST happen" -->
-               <!--form action="/comments" method="POST"-->
-                    <p>Maximum number of comments to display: </p>
-                    <input id="num-comments" name="num-comments" type="number">
-                    <input type="hidden" name="location" value="Comment" />
-                    <br/><br/>
-                    <p>Current number of comments to display: <div id="curr-num-comments">10</div></p>
+                <p>Maximum number of comments to display: </p>
+                <input id="num-comments" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Comment" />
+                <br/><br/>
+                <p>Current number of comments to display: <div id="curr-num-comments">10</div></p>
 
-                    <button onclick=updateNumComments()>Submit</button>                   
-                    <!--input type="submit"-->
-                    <!--p><button onclick=setNumComments()>Update number of comments</button></p-->
-                <!--/form-->
+                <button onclick=updateNumComments()>Submit</button>                   
             </div>
         </div > 
       </div>
