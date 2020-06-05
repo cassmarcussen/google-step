@@ -162,6 +162,35 @@
         <h1>Challenges</h1>
         <p>Understanding and adjusting to Google's standards for code and design, and applying these standards to my own code</p>
         <p>[To be added to throughout the internship]</p>
+        <p>
+            <button id="Challenges-get-button" onclick=getComments("Challenges")>Display Comments</button>
+            <button onclick=deleteComments("Challenges")>Delete all comments</button>
+            <button id="Challenges-display-button" onclick=displayCommentBoxes("Challenges")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Challenges"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Challenges">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Challenges" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Challenges" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Challenges" />
+                <br/><br/>
+                <button onclick=updateNumComments("Challenges")>Submit</button>                   
+            </div>
+        </div>
       </div>
        <div class="boxed-div">
         <h1>Goals</h1>
@@ -171,6 +200,35 @@
         <p>To become a stronger advocate for good design principles in my coding</p>
         <p>To gain guidance about my career from my hosts and other Googlers</p>
         <p>To learn about Google's culture and its opportunities</p>
+        <p>
+            <button id="Goals-get-button" onclick=getComments("Goals")>Display Comments</button>
+            <button onclick=deleteComments("Goals")>Delete all comments</button>
+            <button id="Goals-display-button" onclick=displayCommentBoxes("Goals")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Goals"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Goals">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Goals" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Goals" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Goals" />
+                <br/><br/>
+                <button onclick=updateNumComments("Goals")>Submit</button>                   
+            </div>
+        </div>
       </div>
     </div>
   </body>
