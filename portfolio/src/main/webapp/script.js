@@ -20,7 +20,7 @@ function addRandomFunFact() {
   // Add it to the page in a table.
   var funFactTable = document.getElementById('funfact-table');
 
-  if (unusedFunFacts.length > 0){
+  if (unusedFunFacts.length > 0) {
         // Pick a random greeting.
         var randomIndex = Math.floor(Math.random() * unusedFunFacts.length);
         const funfact = unusedFunFacts[randomIndex];
@@ -54,7 +54,7 @@ function getComments(myLocation) {
   updateNumComments(myLocation);
   
   //toggle between hide and display
-  if(display){
+  if (display) {
 
     console.log('Fetching comments.');
     document.getElementById(myLocation + "-get-button").innerHTML = "Hide Comments";
@@ -70,7 +70,7 @@ function getComments(myLocation) {
     responsePromise.then(handleResponse);
 
     display = false;
-  }else{
+  } else {
     document.getElementById(myLocation + "-get-button").innerHTML = "Display Comments";
     display = true;
   }
@@ -105,7 +105,7 @@ function handleResponse(response) {
 /** Adds comments to the DOM. */
 function addCommentsToDom(comments) {
 
-    if(commentsAdded == 0){
+    if (commentsAdded == 0) {
         console.log('Adding comments to dom: ' + comments);
 
         const commentsContainer = document.getElementById('comments-container-' + getLocation());
@@ -165,7 +165,6 @@ function updateNumComments(myLocation){
     const updateNumComments = fetch('/comments?num-comments=' + globalNumComments + "&location=" + myLocation, { method: 'POST'});
 
     hideComments(myLocation);
-
 
 }
 

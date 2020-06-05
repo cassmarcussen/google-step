@@ -48,7 +48,7 @@ public class DataServlet extends HttpServlet {
     int numIterations = 0;
 
     for (Entity entity : results.asIterable()) {
-      if(numIterations >= globalNumComments){
+      if (numIterations >= globalNumComments) {
           break;
       }
       numIterations++;
@@ -76,7 +76,7 @@ public class DataServlet extends HttpServlet {
     String entityType = request.getParameter("location");
     System.out.println("entityType: " + entityType);
 
-    if(newComment != null){
+    if (newComment != null) {
 
         Entity taskEntity = new Entity(entityType);
         taskEntity.setProperty("name", name);
@@ -91,9 +91,9 @@ public class DataServlet extends HttpServlet {
     System.out.println("globalNumComments: " + globalNumComments);
 
     // Redirect back to the HTML page.
-    if(entityType.equals("Comments")){
+    if (entityType.equals("Comments")) {
         response.sendRedirect("/step_projects.html");
-    }else{
+    } else {
         response.sendRedirect("/step.html");
     }
 

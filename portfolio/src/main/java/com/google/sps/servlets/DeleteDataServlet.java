@@ -47,9 +47,9 @@ public class DeleteDataServlet extends HttpServlet {
     }
 
     // Redirect back to the HTML page.
-    if(queryType.equals("Comments")){
+    if (queryType.equals("Comments")) {
         response.sendRedirect("/step_projects.html");
-    }else{
+    } else {
         response.sendRedirect("/step.html");
     }
 
