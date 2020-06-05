@@ -47,14 +47,15 @@ function addRandomFunFact() {
  Based on week-3-server/random-quotes/src/webapp/script.js from the Week-3-Server tutorial
  */
 
- var display = true;
+var shouldDisplay = true;
 function getComments(myLocation) {
 
   //first, reset by updating num comments, which also hides comments
-  updateNumComments(myLocation);
+  refreshNumComments(myLocation);
+  //getNumComments(myLocation);
   
   //toggle between hide and display
-  if (display) {
+  if (shouldDisplay) {
 
     console.log('Fetching comments.');
     document.getElementById(myLocation + "-get-button").innerHTML = "Hide Comments";
@@ -69,10 +70,9 @@ function getComments(myLocation) {
     // When the request is complete, pass the response into handleResponse().
     responsePromise.then(handleResponse);
 
-    display = false;
+    shouldDisplay = false;
   } else {
-    document.getElementById(myLocation + "-get-button").innerHTML = "Display Comments";
-    display = true;
+    hideComments(myLocation);
   }
 }
 
@@ -150,19 +150,26 @@ function displayCommentBoxes(sectionId){
 
 }
 
-function getNumComments(){
+function getNumComments(myLocation){
 
-    numComments = document.getElementById("num-comments").value;
+    numComments = document.getElementById("num-comments-" + myLocation).value;
 
     return numComments;
 
 }
 
-function updateNumComments(myLocation){
-
+//Used in getComments, to make sure the num comments is up to date
+function refreshNumComments(myLocation){
+   
     var globalNumComments = document.getElementById("num-comments-" + myLocation).value;
 
-    const updateNumComments = fetch('/comments?num-comments=' + globalNumComments + "&location=" + myLocation, { method: 'POST'});
+    const updateNumComments = fetch('/comments?num-comments=' + globalNumComments + "&location=" + myLocation, { method: 'PUT'});
+}
+
+//Used in updating num comments, when the number should change and the comments should be hidden.
+function updateNumComments(myLocation){
+
+    refreshNumComments(myLocation);
 
     hideComments(myLocation);
 
@@ -177,8 +184,11 @@ function hideComments(myLocation){
                 <th>Comments</th> 
             </tr>`;
     
+    //Change innerHTML of the get button here because hideComments is called in updating the number of comments
+    //to display, and we want to hide comments after changing the number of comments
     document.getElementById(myLocation + "-get-button").innerHTML = "Display Comments";
-    display = true;
+    shouldDisplay = true;
+    
 }
 
 function deleteComments(myLocation){
