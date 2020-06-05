@@ -89,7 +89,7 @@ public class DataServlet extends HttpServlet {
     System.out.println("globalNumComments: " + globalNumComments);
 
     // Redirect back to the HTML page, using Location enum
-    redirectPage(loc);
+    redirectPage(loc, response);
 
   }
 
@@ -103,26 +103,7 @@ public class DataServlet extends HttpServlet {
     System.out.println("globalNumComments: " + globalNumComments);
 
     // Redirect back to the HTML page, using Location enum
-    redirectPage(loc);
-  }
-
- // Redirect back to the HTML page, using Location enum
-  private void redirectPage(Location loc) {
-    switch(loc) {
-        case Comments: 
-            response.sendRedirect("/step_projects.html");
-            break;
-        case Week1:
-            response.sendRedirect("/step.html");
-            break;
-        case Week2:
-            response.sendRedirect("/step.html");
-            break;
-        default: 
-            //default is redirect to index
-            response.sendRedirect("/index.html");
-            break;
-    }
+    redirectPage(loc, response);
   }
 
   /** Returns the choice entered by the player, or -1 if the choice was invalid. */
@@ -147,6 +128,28 @@ public class DataServlet extends HttpServlet {
     return numComments;
   }
 
+  // Redirect back to the HTML page, using Location enum
+  private void redirectPage(Location loc, HttpServletResponse response) throws IOException {
+    switch(loc) {
+        case Comments: 
+            response.sendRedirect("/step_projects.html");
+            break;
+        case Week1:
+            response.sendRedirect("/step.html");
+            break;
+        case Week2:
+            response.sendRedirect("/step.html");
+            break;
+        case Week3:
+            response.sendRedirect("/step.html");
+            break;
+        default: 
+            //default is redirect to index
+            response.sendRedirect("/index.html");
+            break;
+    }
+  }
+
  /*
   globalNumComments (for the servlet) stores the number of comments the user has selected to display for the particular section they are displaying/hiding/posting to.
   The reason this variable has a default value of 10 is:
@@ -165,7 +168,8 @@ public class DataServlet extends HttpServlet {
   enum Location {
       Comments,
       Week1,
-      Week2
+      Week2, 
+      Week3
   }
   
 }
