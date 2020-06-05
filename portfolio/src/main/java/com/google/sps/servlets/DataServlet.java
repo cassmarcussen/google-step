@@ -76,22 +76,35 @@ public class DataServlet extends HttpServlet {
     String entityType = request.getParameter("location");
     System.out.println("entityType: " + entityType);
 
-    if (newComment != null) {
+    Entity taskEntity = new Entity(entityType);
+    taskEntity.setProperty("name", name);
+    taskEntity.setProperty("message", newComment);
 
-        Entity taskEntity = new Entity(entityType);
-        taskEntity.setProperty("name", name);
-        taskEntity.setProperty("message", newComment);
-
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(taskEntity);
-
-    }
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(taskEntity);
 
     globalNumComments = getNumComments(request);
     System.out.println("globalNumComments: " + globalNumComments);
 
     // Redirect back to the HTML page.
     if (entityType.equals("Comments")) {
+        response.sendRedirect("/step_projects.html");
+    } else {
+        response.sendRedirect("/step.html");
+    }
+
+  }
+
+  public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+    String location = request.getParameter("location");
+    System.out.println("PUT location: " + location);
+
+    globalNumComments = getNumComments(request);
+    System.out.println("globalNumComments: " + globalNumComments);
+
+    // Redirect back to the HTML page.
+    if (location.equals("Comments")) {
         response.sendRedirect("/step_projects.html");
     } else {
         response.sendRedirect("/step.html");
