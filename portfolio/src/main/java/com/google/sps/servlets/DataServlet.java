@@ -143,6 +143,18 @@ public class DataServlet extends HttpServlet {
         case Week3:
             response.sendRedirect("/step.html");
             break;
+        case Challenges:
+            response.sendRedirect("/step.html");
+            break;
+        case Goals:
+            response.sendRedirect("/step.html");
+            break;
+        case Funfacts:
+            response.sendRedirect("/funfacts.html");
+            break;
+        case Hobbies:
+            response.sendRedirect("/hobbies.html");
+            break;
         default: 
             //default is redirect to index
             response.sendRedirect("/index.html");
@@ -169,7 +181,11 @@ public class DataServlet extends HttpServlet {
         Comments,
         Week1,
         Week2, 
-        Week3
+        Week3,
+        Challenges,
+        Goals, 
+        Funfacts, 
+        Hobbies
    }
   
 }
