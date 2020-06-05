@@ -76,6 +76,8 @@ public class DataServlet extends HttpServlet {
     String entityType = request.getParameter("location");
     System.out.println("entityType: " + entityType);
 
+    Location loc = Location.valueOf(entityType);
+
     Entity taskEntity = new Entity(entityType);
     taskEntity.setProperty("name", name);
     taskEntity.setProperty("message", newComment);
@@ -86,30 +88,41 @@ public class DataServlet extends HttpServlet {
     globalNumComments = getNumComments(request);
     System.out.println("globalNumComments: " + globalNumComments);
 
-    // Redirect back to the HTML page.
-    if (entityType.equals("Comments")) {
-        response.sendRedirect("/step_projects.html");
-    } else {
-        response.sendRedirect("/step.html");
-    }
+    // Redirect back to the HTML page, using Location enum
+    redirectPage(loc);
 
   }
 
   public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     String location = request.getParameter("location");
+    Location loc = Location.valueOf(location);
     System.out.println("PUT location: " + location);
 
     globalNumComments = getNumComments(request);
     System.out.println("globalNumComments: " + globalNumComments);
 
-    // Redirect back to the HTML page.
-    if (location.equals("Comments")) {
-        response.sendRedirect("/step_projects.html");
-    } else {
-        response.sendRedirect("/step.html");
-    }
+    // Redirect back to the HTML page, using Location enum
+    redirectPage(loc);
+  }
 
+ // Redirect back to the HTML page, using Location enum
+  private void redirectPage(Location loc) {
+    switch(loc) {
+        case Comments: 
+            response.sendRedirect("/step_projects.html");
+            break;
+        case Week1:
+            response.sendRedirect("/step.html");
+            break;
+        case Week2:
+            response.sendRedirect("/step.html");
+            break;
+        default: 
+            //default is redirect to index
+            response.sendRedirect("/index.html");
+            break;
+    }
   }
 
   /** Returns the choice entered by the player, or -1 if the choice was invalid. */
@@ -150,9 +163,9 @@ public class DataServlet extends HttpServlet {
   for my Week 1 and Week 2 reflections in the STEP Internship page, correspondingly.
   */
   enum Location {
-      "Comments",
-      "Week1",
-      "Week2"
+      Comments,
+      Week1,
+      Week2
   }
   
 }
