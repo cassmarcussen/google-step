@@ -105,6 +105,59 @@
             </div>
         </div>
       </div>
+      <div class="boxed-div">
+        <h2>Week 3</h2>
+        <p>This week, I build an extensible Comments section for different aspects of my website. I have comments sections for each of the weekly reflections on the 
+            STEP Internships page (you can find a comments section below this description!). This week, there was a lot of new learning, including how to use Java 
+            servlets and how to use DataStore. I therefore spent time carefully going through the tutorials for Week 3, so that I fully and deeply understood the 
+            concepts I was learning. This was very helpful as I started to implement some of the new learnings. I ended up filling up the rest of my notebook with 
+            notes that I had taken during the tutorials.
+        </p>
+        <p>
+           This week, I really wanted to challenge myself to go above and beyond the tutorial expectations. To do so, I created a comments section in multiple locations, not 
+           just one (only one was required). This required that I send information about which Comments section to add to to my Java servlet. Doing so required a lot of 
+           debugging, sketching design ideas in my notebook, and careful thinking. I created an enum called Location which stores the different locations. I pass in the 
+           location to the JavaScript and Java servlet through a series of parameters. For example, for getComments, I'll pass in the location as getComments("Week3") to indicate 
+           that the DataStore list that we want to get comments from is Week3.
+        </p>
+        <p>
+            I thought the trickiest component of this week's project was updating the number of comments to be displayed. This was difficult when I just had one comments section, 
+            but especially when I had multiple comment sections, coordinating exactly which comment section displayed which number of comments was difficult. I had to ask myself the following questions: 
+            When do I want to get information from values that the user inputs in input fields in the HTML? When do I want to store information in my JavaScript code, and when do I 
+            want to store information on the server side, in my Java servlet code? How do I pass values between my HTML, JavaScript, and my Java servlet? I found these questions to be 
+            very insightful to think about. Because of these sorts of questions, this week challenged me to grow and improve my abilities to write code that is approaching full-stack. I really enjoyed 
+            this week's assignment, and learned so much!
+        </p>
+         <p>
+            <button id="Week3-get-button" onclick=getComments("Week3")>Display Comments</button>
+            <button onclick=deleteComments("Week3")>Delete all comments</button>
+            <button id="wk3-display-button" onclick=displayCommentBoxes("wk3")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week3"></div>
+        <div class="forms-wrapper" id="forms-wrapper-wk3">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week3" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week3" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week3" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week3")>Submit</button>                   
+            </div>
+        </div>
+       </div>
        <div class="boxed-div">
         <h1>Challenges</h1>
         <p>Understanding and adjusting to Google's standards for code and design, and applying these standards to my own code</p>
