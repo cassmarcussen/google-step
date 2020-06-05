@@ -36,6 +36,7 @@ public class DeleteDataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
       
     String queryType = request.getParameter("location");
+    Location loc = Location.valueOf(queryType);
     System.out.println("delete queryType: " + queryType);
     Query query = new Query(queryType);
 
@@ -47,11 +48,41 @@ public class DeleteDataServlet extends HttpServlet {
     }
 
     // Redirect back to the HTML page.
-    if (queryType.equals("Comments")) {
-        response.sendRedirect("/step_projects.html");
-    } else {
-        response.sendRedirect("/step.html");
-    }
-
+    redirectPage(loc, response);
   }
+
+  /*Location is an enum that keeps a record of all of the locations from which a request can be made. 
+    Each Location is representative of a different comment section. For example, Comments is the 
+    comments section in the Comments project of the STEP Projects page. Week1 and Week2 are the comments sections 
+    for my Week 1 and Week 2 reflections in the STEP Internship page, correspondingly.
+    */
+   enum Location {
+        Comments,
+        Week1,
+        Week2, 
+        Week3
+   }
+
+   // Redirect back to the HTML page, using Location enum
+  private void redirectPage(Location loc, HttpServletResponse response) throws IOException {
+    switch(loc) {
+        case Comments: 
+            response.sendRedirect("/step_projects.html");
+            break;
+        case Week1:
+            response.sendRedirect("/step.html");
+            break;
+        case Week2:
+            response.sendRedirect("/step.html");
+            break;
+        case Week3:
+            response.sendRedirect("/step.html");
+            break;
+        default: 
+            //default is redirect to index
+            response.sendRedirect("/index.html");
+            break;
+    }
+  }
+
 }
