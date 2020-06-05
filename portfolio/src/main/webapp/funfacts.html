@@ -30,6 +30,38 @@
             <img src="images/xkcd_pointers.png" id="xkcd-pointers" alt="XKCD Pointers Cartoon" width="300">
             <p>Here's a fun cartoon about pointers for the C/C++ enthusiasts reading my website.</p>
         </div>
+        <div class="boxed-div">
+           <h2>Comment on Fun Facts</h2>
+            <p>
+                <button id="Funfacts-get-button" onclick=getComments("Funfacts")>Display Comments</button>
+                <button onclick=deleteComments("Funfacts")>Delete all comments</button>
+                <button id="Funfacts-display-button" onclick=displayCommentBoxes("Funfacts")>Post a Comment</button>
+            </p>
+            <div id="comments-container-Funfacts"></div>
+            <div class="forms-wrapper" id="forms-wrapper-Funfacts">
+                <div class="form-div">
+                    <h3>Post a new comment: </h3>
+                    <form action="/comments" method="POST">
+                        <p>Name :</p>
+                        <textarea name="commenter-name"></textarea>
+                        <p>Comment :</p>
+                        <textarea name="text-input">I love your website! :)</textarea>
+                        <input name="location" value="Funfacts" type="hidden" />
+                        <br/><br/>
+
+                        <input type="submit" />
+                    </form>
+                </div>
+                <div class="form-div" id="max-comments">
+                    <h3>Change the maximum number of comments to display: </h3>
+                    <p>Maximum number of comments to display: </p>
+                    <input class="num-comments" id="num-comments-Funfacts" name="num-comments" type="number">
+                    <input type="hidden" name="location" value="Funfacts" />
+                    <br/><br/>
+                    <button onclick=updateNumComments("Funfacts")>Submit</button>                   
+                </div>
+            </div>
+        </div>
     </div>
   </body>
 </html>
