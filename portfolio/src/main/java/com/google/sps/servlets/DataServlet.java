@@ -134,6 +134,14 @@ public class DataServlet extends HttpServlet {
     return numComments;
   }
 
+ /*
+  globalNumComments (for the servlet) stores the number of comments the user has selected to display for the particular section they are displaying/hiding/posting to.
+  The reason this variable has a default value of 10 is:
+  - 10 is a reasonable amount of comments to want to display on the page. 10 comments do not take up too much space on the page while still giving the user a 
+  good picture of what people are commenting.
+  - It is optional for the user to select the number of comments to display on the page, so we need a default value in case the user does not choose 
+  to select the number of comments to display.
+ */
   int globalNumComments = 10;
   
 }
