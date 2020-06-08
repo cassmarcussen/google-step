@@ -120,7 +120,6 @@ public class DataServlet extends HttpServlet {
     redirectPage(loc, response);
   }
 
-  /** Returns the choice entered by the player, or -1 if the choice was invalid. */
   private int getNumComments(HttpServletRequest request) {
 
     String numCommentsString = request.getParameter("num-comments");

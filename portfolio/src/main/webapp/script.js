@@ -52,7 +52,6 @@ function getComments(myLocation) {
 
   //first, reset by updating num comments, which also hides comments
   refreshNumComments(myLocation);
-  //getNumComments(myLocation);
   
   //toggle between hide and display
   if (shouldDisplay) {
