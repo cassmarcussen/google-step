@@ -50,7 +50,6 @@ public class DeleteDataServlet extends HttpServlet {
         loc = Location.valueOf(queryType);
     }
     
-    System.out.println("delete queryType: " + queryType);
     Query query = new Query(queryType);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

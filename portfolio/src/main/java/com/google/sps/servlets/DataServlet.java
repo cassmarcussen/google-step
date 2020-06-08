@@ -42,7 +42,7 @@ public class DataServlet extends HttpServlet {
     Since my website has multiple comments sections on the different pages, I need to specify which 
     comment section to retrieve the comments for. This is specified by the location parameter. */
     String queryType = request.getParameter("location");
-    System.err.println("queryType: " + queryType);
+
     Query query = new Query(queryType);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -83,7 +83,6 @@ public class DataServlet extends HttpServlet {
     Since my website has multiple comments sections on the different pages, I need to specify which 
     comment section to post a comment to. This is specified by the location parameter. */
     String entityType = request.getParameter("location");
-    System.out.println("entityType: " + entityType);
 
     Location loc;
     /* In writing the comments to the page, we need "location" to be specific to the particular week
@@ -103,7 +102,6 @@ public class DataServlet extends HttpServlet {
     datastore.put(taskEntity);
 
     globalNumComments = getNumComments(request);
-    System.out.println("globalNumComments: " + globalNumComments);
 
     // Redirect back to the HTML page, using Location enum
     redirectPage(loc, response);
@@ -132,10 +130,8 @@ public class DataServlet extends HttpServlet {
     } else{
         loc = Location.valueOf(location);
     }
-    System.out.println("PUT location: " + location);
 
     globalNumComments = getNumComments(request);
-    System.out.println("globalNumComments: " + globalNumComments);
 
     // Redirect back to the HTML page, using Location enum
     redirectPage(loc, response);

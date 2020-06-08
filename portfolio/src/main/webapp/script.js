@@ -111,19 +111,15 @@ function addCommentsToDom(comments) {
     console.log('Adding comments to dom: ' + comments);
 
     const commentsContainer = document.getElementById('comments-container-' + getLocation());
-    console.log('comments-container-' + location);
 
     // Perhaps check that commments is a json array first...
     var commentArr = JSON.parse(comments);
-    console.log('Comment arr: ' + commentArr);
 
     for (var i=0; i<commentArr.length; i++){
 
         var comment = commentArr[i];
         var commentName = commentArr[i].name;
         var commentMessage = commentArr[i].message;
-
-        console.log('Comment: ' + commentName + ', ' + commentMessage);
 
         commentTableText += '<tr class="comment-table-row"><td class="comment-table-entry">' 
             + '<div class="commenter-name">' + commentName + '</div>'
