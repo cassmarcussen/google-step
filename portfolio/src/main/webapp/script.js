@@ -200,6 +200,7 @@ function deleteComments(myLocation){
         // Call the function to fetch comments from the server so that the now-deleted comments are removed from the page
         responseDeletePromise.then(getComments);
 
+        /* location.reload() is a predefined JS function for a predefined JS class named location. */
         location.reload();
     }
 
