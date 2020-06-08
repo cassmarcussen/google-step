@@ -98,6 +98,11 @@ public class DataServlet extends HttpServlet {
 
   }
 
+  /* doPut updates the number of comments to display for the current commenting location. 
+  The reason I am using doPut is because, when updating the number of comments in the POST request, 
+  this resulted in content validation on the server side as well as confusing checks. Pulling out 
+  updating the number of comments to doPut provides the clarity and functionality we need.
+  */
   public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     String location = request.getParameter("location");
