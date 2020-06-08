@@ -32,6 +32,7 @@ import java.util.*;
 @WebServlet("/comments")
 public class DataServlet extends HttpServlet {
 
+  /* doGet gets the comments from DataStore to display them in the current commenting location on the page. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
@@ -64,6 +65,7 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(gson.toJson(messages));
   }
 
+  /* doPost posts comments to the current commenting location. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     System.out.println("Add new message to Comments section");
