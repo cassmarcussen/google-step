@@ -43,15 +43,12 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    List<Comment> messages = new ArrayList<Comment>();
-
-    int numIterations = 0;
+    List<Comment> messages = new ArrayList<Comment>()
 
     for (Entity entity : results.asIterable()) {
-      if (numIterations >= globalNumComments) {
+      if (messages.size() >= globalNumComments) {
           break;
       }
-      numIterations++;
 
       String name = (String) entity.getProperty("name");
       String message = (String) entity.getProperty("message");
@@ -76,7 +73,15 @@ public class DataServlet extends HttpServlet {
     String entityType = request.getParameter("location");
     System.out.println("entityType: " + entityType);
 
-    Location loc = Location.valueOf(entityType);
+    Location loc;
+    /* In writing the comments to the page, we need "location" to be specific to the particular week
+     (e.g. Week1, Week2, etc.). But, for the purpose of reloading the page in the Java code, we only need 
+     to know we are writing comments to a Week. So, we assign all weeks to Location enum value Week. */
+    if (entityType.length() > 4 && entityType.substring(0, 4).equals("Week")) {
+        loc = Location.valueOf("Week");
+    } else{
+        loc = Location.valueOf(entityType);
+    }
 
     Entity taskEntity = new Entity(entityType);
     taskEntity.setProperty("name", name);
@@ -96,7 +101,16 @@ public class DataServlet extends HttpServlet {
   public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     String location = request.getParameter("location");
-    Location loc = Location.valueOf(location);
+    Location loc;
+
+    /* In writing the comments to the page, we need "location" to be specific to the particular week
+     (e.g. Week1, Week2, etc.). But, for the purpose of reloading the page in the Java code, we only need 
+     to know we are writing comments to a Week. So, we assign all weeks to Location enum value Week. */
+    if (location.length() > 4 && location.substring(0, 4).equals("Week")) {
+        loc = Location.valueOf("Week");
+    } else{
+        loc = Location.valueOf(location);
+    }
     System.out.println("PUT location: " + location);
 
     globalNumComments = getNumComments(request);
@@ -134,13 +148,7 @@ public class DataServlet extends HttpServlet {
         case Comments: 
             response.sendRedirect("/step_projects.html");
             break;
-        case Week1:
-            response.sendRedirect("/step.html");
-            break;
-        case Week2:
-            response.sendRedirect("/step.html");
-            break;
-        case Week3:
+        case Week:
             response.sendRedirect("/step.html");
             break;
         case Challenges:
@@ -179,9 +187,7 @@ public class DataServlet extends HttpServlet {
     */
    enum Location {
         Comments,
-        Week1,
-        Week2, 
-        Week3,
+        Week,
         Challenges,
         Goals, 
         Funfacts, 
