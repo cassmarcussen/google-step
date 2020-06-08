@@ -146,17 +146,17 @@ public class DataServlet extends HttpServlet {
     String numCommentsString = request.getParameter("num-comments");
 
     // Convert the input to an int.
-    int numComments = 10;
+    int numComments = defaultNumComments;
     try {
       numComments = Integer.parseInt(numCommentsString);
     } catch (NumberFormatException e) {
       System.err.println("Could not convert to int: " + numCommentsString);
-      numComments = 10;
+      numComments = defaultNumComments;
     }
     
     if (numComments < 0) {
       System.err.println("Number of comments requested is out of range (must be nonnegative): " + numComments);
-      numComments = 10;
+      numComments = defaultNumComments;
     }
     
     return numComments;
@@ -190,28 +190,35 @@ public class DataServlet extends HttpServlet {
     }
   }
 
- /*
-  globalNumComments (for the servlet) stores the number of comments the user has selected to display for the particular section they are displaying/hiding/posting to.
-  The reason this variable has a default value of 10 is:
-  - 10 is a reasonable amount of comments to want to display on the page. 10 comments do not take up too much space on the page while still giving the user a 
-  good picture of what people are commenting.
-  - It is optional for the user to select the number of comments to display on the page, so we need a default value in case the user does not choose 
-  to select the number of comments to display.
- */
-  int globalNumComments = 10;
+/*defaultNumComments stores the default number of comments to display on the screen.
+It is set as final because it is not and should not be modified throughout the duration of the program running.
+The reason this variable has a default value of 10 is:
+- 10 is a reasonable amount of comments to want to display on the page. 10 comments do not take up too much space on the page while still giving the user a 
+good picture of what people are commenting.
+- It is optional for the user to select the number of comments to display on the page, so we need a default value in case the user does not choose 
+to select the number of comments to display.
+*/
+final int defaultNumComments = 10;
 
-    /*Location is an enum that keeps a record of all of the locations from which a request can be made. 
-    Each Location is representative of a different comment section. For example, Comments is the 
-    comments section in the Comments project of the STEP Projects page. Week1 and Week2 are the comments sections 
-    for my Week 1 and Week 2 reflections in the STEP Internship page, correspondingly.
-    */
-   enum Location {
-        Comments,
-        Week,
-        Challenges,
-        Goals, 
-        Funfacts, 
-        Hobbies
-   }
+/*
+globalNumComments (for the servlet) stores the number of comments the user has selected to display for the particular section they are displaying/hiding/posting to.
+It keeps an updated number of comments, and since it changes but defaultNumComments does not, it needs to be separated from defaultNumComments.
+*/
+int globalNumComments = defaultNumComments;
+
+
+/*Location is an enum that keeps a record of all of the locations from which a request can be made. 
+Each Location is representative of a different comment section. For example, Comments is the 
+comments section in the Comments project of the STEP Projects page. Week1 and Week2 are the comments sections 
+for my Week 1 and Week 2 reflections in the STEP Internship page, correspondingly.
+*/
+enum Location {
+    Comments,
+    Week,
+    Challenges,
+    Goals, 
+    Funfacts, 
+    Hobbies
+}
   
 }
