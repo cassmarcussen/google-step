@@ -67,6 +67,12 @@ function getComments(myLocation) {
     // When the request is complete, pass the response into handleResponse().
     responsePromise.then(handleResponse);
 
+    /* For displaying comments, shouldDisplay controls whether the comments should be displayed or hidden.
+    The reason for the existence of this variable is my decision to have the Display Comments button alternate between 
+    "Display Comments" and "Hide Comments". I like the UI and display for this alternating button, which is why I have 
+    implemented it in this way. We set shouldDisplay = false to indicate that, the next time we click our 'get Comments' 
+    button, we should hide our comments, i.e. should not display them.
+    */
     shouldDisplay = false;
   } else {
     hideComments(myLocation);
