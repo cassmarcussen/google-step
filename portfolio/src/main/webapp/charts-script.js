@@ -1,8 +1,8 @@
 google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
+google.charts.setOnLoadCallback(drawPieChart);
 
 /** Creates a chart and adds it to the page. */
-function drawChart() {
+function drawPieChart() {
   const data = new google.visualization.DataTable();
   data.addColumn('string', 'Pet Species');
   data.addColumn('number', 'Count');
@@ -20,6 +20,6 @@ function drawChart() {
   };
 
   const chart = new google.visualization.PieChart(
-      document.getElementById('chart-container'));
+      document.getElementById('pie-chart-container'));
   chart.draw(data, options);
 }
