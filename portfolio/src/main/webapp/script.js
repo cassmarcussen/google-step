@@ -48,10 +48,10 @@ function addRandomFunFact() {
  */
 function getComments(myLocation) {
 
-  //first, reset by updating num comments, which also hides comments
+  // First, reset by updating num comments, which also hides comments
   refreshNumComments(myLocation);
   
-  //toggle between hide and display
+  // Toggle between hide and display
   if (shouldDisplay) {
 
     console.log('Fetching comments.');
@@ -113,7 +113,7 @@ function addCommentsToDom(comments) {
     const commentsContainer = document.getElementById('comments-container-' + getLocation());
     console.log('comments-container-' + location);
 
-    //perhaps check that commments is a json array first...
+    // Perhaps check that commments is a json array first...
     var commentArr = JSON.parse(comments);
     console.log('Comment arr: ' + commentArr);
 
@@ -137,8 +137,8 @@ function addCommentsToDom(comments) {
 }
 
 function displayCommentBoxes(sectionId){
-    //if visible, hide and change button to "show"
-    //if hidden, show and change button to "hide"
+    // If visible, hide and change button to "show"
+    // If hidden, show and change button to "hide"
     if(document.getElementById("forms-wrapper-" + sectionId).style.display == "block"){
         document.getElementById("forms-wrapper-" + sectionId).style.display = "none";
         document.getElementById(sectionId + "-display-button").innerHTML = "Post a Comment";
@@ -157,7 +157,7 @@ function getNumComments(myLocation){
 
 }
 
-//Used in getComments, to make sure the num comments is up to date
+// Used in getComments, to make sure the num comments is up to date
 function refreshNumComments(myLocation){
    
     var globalNumComments = document.getElementById("num-comments-" + myLocation).value;
@@ -165,7 +165,7 @@ function refreshNumComments(myLocation){
     const updateNumComments = fetch('/comments?num-comments=' + globalNumComments + "&location=" + myLocation, { method: 'PUT'});
 }
 
-//Used in updating num comments, when the number should change and the comments should be hidden.
+// Used in updating num comments, when the number should change and the comments should be hidden.
 function updateNumComments(myLocation){
 
     refreshNumComments(myLocation);
@@ -182,8 +182,8 @@ function hideComments(myLocation){
                 <th>Comments</th> 
             </tr>`;
     
-    //Change innerHTML of the get button here because hideComments is called in updating the number of comments
-    //to display, and we want to hide comments after changing the number of comments
+    // Change innerHTML of the get button here because hideComments is called in updating the number of comments
+    // to display, and we want to hide comments after changing the number of comments
     document.getElementById(myLocation + "-get-button").innerHTML = "Display Comments";
     shouldDisplay = true;
 
@@ -192,12 +192,12 @@ function hideComments(myLocation){
 function deleteComments(myLocation){
     console.log('Deleting comments.');
     
-    //Show a pop-up confirm box so the user doesn't accidentally delete all comments without confirmation
+    // Show a pop-up confirm box so the user doesn't accidentally delete all comments without confirmation
     if (confirm("By clicking 'OK', you will delete all comments.")) {
         // The fetch() function returns a Promise because the request is asynchronous.
         const responseDeletePromise = fetch('/delete-data?location=' + myLocation, { method: 'POST'});
 
-        //Call the function to fetch comments from the server so that the now-deleted comments are removed from the page
+        // Call the function to fetch comments from the server so that the now-deleted comments are removed from the page
         responseDeletePromise.then(getComments);
 
         location.reload();
