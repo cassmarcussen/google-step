@@ -38,6 +38,9 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
     
+    /* location is a hidden input variable in the HTML for the comments sections. 
+    Since my website has multiple comments sections on the different pages, I need to specify which 
+    comment section to retrieve the comments for. This is specified by the location parameter. */
     String queryType = request.getParameter("location");
     System.err.println("queryType: " + queryType);
     Query query = new Query(queryType);
@@ -75,6 +78,10 @@ public class DataServlet extends HttpServlet {
 
     String name = request.getParameter("commenter-name");
     String newComment = request.getParameter("text-input");
+
+    /* location is a hidden input variable in the HTML for the comments sections. 
+    Since my website has multiple comments sections on the different pages, I need to specify which 
+    comment section to post a comment to. This is specified by the location parameter. */
     String entityType = request.getParameter("location");
     System.out.println("entityType: " + entityType);
 
@@ -111,6 +118,9 @@ public class DataServlet extends HttpServlet {
   */
   public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+    /* location is a hidden input variable in the HTML for the comments sections. 
+    Since my website has multiple comments sections on the different pages, I need to specify which 
+    comment section to update the number of comments for. This is specified by the location parameter. */
     String location = request.getParameter("location");
     Location loc;
 

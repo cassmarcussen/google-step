@@ -35,6 +35,9 @@ public class DeleteDataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
       
+    /* location is a hidden input variable in the HTML for the comments sections. 
+    Since my website has multiple comments sections on the different pages, I need to specify which 
+    comment section to delete the comments for. This is specified by the location parameter. */
     String queryType = request.getParameter("location");
     Location loc;
 
