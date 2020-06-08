@@ -10,8 +10,8 @@ public class Comment {
     private String message;
 
     public Comment(){
-        name = "";
-        message = "";
+        name = "[Anon]";
+        message = "[No comment]";
     }
 
     public Comment(String newName, String newComment){
