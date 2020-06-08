@@ -46,8 +46,6 @@ function addRandomFunFact() {
  * Fetches the comments from the server and adds it to the DOM.
  Based on week-3-server/random-quotes/src/webapp/script.js from the Week-3-Server tutorial
  */
-
-var shouldDisplay = true;
 function getComments(myLocation) {
 
   //first, reset by updating num comments, which also hides comments
@@ -75,7 +73,7 @@ function getComments(myLocation) {
   }
 }
 
-var currLocation = "";
+// Used in getComments to establish which location the comments should be loaded in
 function setLocation(myLocation){
     currLocation = myLocation;
 }
@@ -206,7 +204,17 @@ function deleteComments(myLocation){
 
 }
 
-//outside of function because we want to add to it each time addRandomFunFact is called
+/* For displaying comments, shouldDisplay controls whether the comments should be displayed or hidden.
+The reason for the existence of this variable is my decision to have the Display Comments button alternate between 
+"Display Comments" and "Hide Comments". I like the UI and display for this alternating button, which is why I have 
+implemented it in this way.
+*/
+var shouldDisplay = true;
+
+/* currLocation stores the current location that we should display and delete comments from. */
+var currLocation = "";
+
+// Outside of function because we want to add to it each time addRandomFunFact is called
 var factTableText = `<table style="width:100%"> 
             <tr> 
                 <th>Fun Facts</th> 
