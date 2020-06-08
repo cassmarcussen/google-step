@@ -32,7 +32,8 @@ import java.util.*;
 @WebServlet("/comments")
 public class DataServlet extends HttpServlet {
 
-  /* doGet gets the comments from DataStore to display them in the current commenting location on the page. */
+  /* doGet gets the comments from DataStore to display them in the current commenting location on the page. 
+  This function is executed when the user selects to display comments on the page using the corresponding button "Display Comments".*/
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
@@ -65,7 +66,9 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(gson.toJson(messages));
   }
 
-  /* doPost posts comments to the current commenting location. */
+  /* doPost posts comments to the current commenting location. 
+  This function is executed when the user clicks the button to post a new comment to the page in the 
+  new comments entry form. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     System.out.println("Add new message to Comments section");
@@ -103,7 +106,8 @@ public class DataServlet extends HttpServlet {
   /* doPut updates the number of comments to display for the current commenting location. 
   The reason I am using doPut is because, when updating the number of comments in the POST request, 
   this resulted in content validation on the server side as well as confusing checks. Pulling out 
-  updating the number of comments to doPut provides the clarity and functionality we need.
+  updating the number of comments to doPut provides the clarity and functionality we need. 
+  This function is executed when the user clicks the button on the page to update the number of comments.
   */
   public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
