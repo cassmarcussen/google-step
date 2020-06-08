@@ -71,7 +71,7 @@ function getComments(myLocation) {
     The reason for the existence of this variable is my decision to have the Display Comments button alternate between 
     "Display Comments" and "Hide Comments". I like the UI and display for this alternating button, which is why I have 
     implemented it in this way. We set shouldDisplay = false to indicate that, the next time we click our 'get Comments' 
-    button, we should hide our comments, i.e. should not display them.
+    button, we should hide our comments, i.e. should not display them.c
     */
     shouldDisplay = false;
   } else {
@@ -108,36 +108,32 @@ function handleResponse(response) {
 /** Adds comments to the DOM. */
 function addCommentsToDom(comments) {
 
-    if (commentsAdded == 0) {
-        console.log('Adding comments to dom: ' + comments);
+    console.log('Adding comments to dom: ' + comments);
 
-        const commentsContainer = document.getElementById('comments-container-' + getLocation());
-        console.log('comments-container-' + location);
+    const commentsContainer = document.getElementById('comments-container-' + getLocation());
+    console.log('comments-container-' + location);
 
-        //perhaps check that commments is a json array first...
-        var commentArr = JSON.parse(comments);
-        console.log('Comment arr: ' + commentArr);
+    //perhaps check that commments is a json array first...
+    var commentArr = JSON.parse(comments);
+    console.log('Comment arr: ' + commentArr);
 
-        for (var i=0; i<commentArr.length; i++){
+    for (var i=0; i<commentArr.length; i++){
 
-            var comment = commentArr[i];
-            var commentName = commentArr[i].name;
-            var commentMessage = commentArr[i].message;
+        var comment = commentArr[i];
+        var commentName = commentArr[i].name;
+        var commentMessage = commentArr[i].message;
 
-            console.log('Comment: ' + commentName + ', ' + commentMessage);
+        console.log('Comment: ' + commentName + ', ' + commentMessage);
 
-            commentTableText += '<tr class="comment-table-row"><td class="comment-table-entry">' 
-                + '<div class="commenter-name">' + commentName + '</div>'
-                + '<div class="commenter-message">' + commentMessage + '</div>'
-                + '</td></tr>';
-        }
-
-        commentTableText += '</table>';
-
-        commentsContainer.innerHTML = commentTableText;
-
-        commentsAdded = 1;
+        commentTableText += '<tr class="comment-table-row"><td class="comment-table-entry">' 
+            + '<div class="commenter-name">' + commentName + '</div>'
+            + '<div class="commenter-message">' + commentMessage + '</div>'
+            + '</td></tr>';
     }
+
+    commentTableText += '</table>';
+
+    commentsContainer.innerHTML = commentTableText;
 }
 
 function displayCommentBoxes(sectionId){
@@ -180,8 +176,7 @@ function updateNumComments(myLocation){
 
 function hideComments(myLocation){
     document.getElementById('comments-container-' + myLocation).innerText = "";
-    //Indicate that the comments are no longer added
-    commentsAdded = 0;
+
     commentTableText = `<table id="comment-table"> 
             <tr> 
                 <th>Comments</th> 
@@ -240,8 +235,6 @@ var commentTableText = `<table id="comment-table">
             <tr> 
                 <th>Comments</th> 
             </tr>`;
-
-var commentsAdded = 0;
 
  /*
   globalNumComments (for the client) stores the number of comments the user has selected to display for the particular section they are displaying/hiding/posting to.
