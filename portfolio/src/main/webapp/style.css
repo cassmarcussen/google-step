@@ -26,6 +26,8 @@ div {
   top: 0;
   width: 100%;
   text-align: center;
+  /*z-index 1 ensures that the navbar appears over all other elements */
+  z-index: 1;
 }
 
 .navbar a {
