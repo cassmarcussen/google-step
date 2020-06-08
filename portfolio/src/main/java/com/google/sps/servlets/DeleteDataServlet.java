@@ -36,7 +36,17 @@ public class DeleteDataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
       
     String queryType = request.getParameter("location");
-    Location loc = Location.valueOf(queryType);
+    Location loc;
+
+    /* In writing the comments to the page, we need "location" to be specific to the particular week
+     (e.g. Week1, Week2, etc.). But, for the purpose of reloading the page in the Java code, we only need 
+     to know we are writing comments to a Week. So, we assign all weeks to Location enum value Week. */
+    if (queryType.length() > 4 && queryType.substring(0, 4).equals("Week")) {
+        loc = Location.valueOf("Week");
+    } else{
+        loc = Location.valueOf(queryType);
+    }
+    
     System.out.println("delete queryType: " + queryType);
     Query query = new Query(queryType);
 
@@ -58,9 +68,7 @@ public class DeleteDataServlet extends HttpServlet {
     */
    enum Location {
         Comments,
-        Week1,
-        Week2, 
-        Week3,
+        Week,
         Challenges,
         Goals,
         Funfacts, 
@@ -73,13 +81,7 @@ public class DeleteDataServlet extends HttpServlet {
         case Comments: 
             response.sendRedirect("/step_projects.html");
             break;
-        case Week1:
-            response.sendRedirect("/step.html");
-            break;
-        case Week2:
-            response.sendRedirect("/step.html");
-            break;
-        case Week3:
+        case Week:
             response.sendRedirect("/step.html");
             break;
         case Challenges:
