@@ -98,11 +98,11 @@ function handleResponse(response) {
 
   // response.text() returns a Promise, because the response is a stream of
   // content and not a simple variable.
-  const textPromise = response.text();
+  const commentPromise = response.text();
 
   // When the response is converted to text, pass the result into the
   // addCommentsToDom() function.
-  textPromise.then(addCommentsToDom);
+  commentPromise.then(addCommentsToDom);
 }
 
 /** Adds comments to the DOM. */
