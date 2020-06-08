@@ -35,8 +35,6 @@ public class GlobalWarmingDataServlet extends HttpServlet {
           continue;
       }
 
-     // String existence_confidence = (String) cells[2];
-
       globalWarmingSentiment.put(tweet, existence);
     }
     scanner.close();
