@@ -43,7 +43,7 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    List<Comment> messages = new ArrayList<Comment>()
+    List<Comment> messages = new ArrayList<Comment>();
 
     for (Entity entity : results.asIterable()) {
       if (messages.size() >= globalNumComments) {
@@ -163,7 +163,7 @@ public class DataServlet extends HttpServlet {
             response.sendRedirect("/hobbies.html");
             break;
         default: 
-            //default is redirect to index
+            // Default is redirect to index
             response.sendRedirect("/index.html");
             break;
     }

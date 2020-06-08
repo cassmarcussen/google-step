@@ -61,7 +61,7 @@ public class DeleteDataServlet extends HttpServlet {
     redirectPage(loc, response);
   }
 
-  /*Location is an enum that keeps a record of all of the locations from which a request can be made. 
+  /* Location is an enum that keeps a record of all of the locations from which a request can be made. 
     Each Location is representative of a different comment section. For example, Comments is the 
     comments section in the Comments project of the STEP Projects page. Week1 and Week2 are the comments sections 
     for my Week 1 and Week 2 reflections in the STEP Internship page, correspondingly.
@@ -97,7 +97,7 @@ public class DeleteDataServlet extends HttpServlet {
             response.sendRedirect("/hobbies.html");
             break;
         default: 
-            //default is redirect to index
+            // Default is redirect to index
             response.sendRedirect("/index.html");
             break;
     }
