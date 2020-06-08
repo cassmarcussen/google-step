@@ -237,13 +237,21 @@ var commentTableText = `<table id="comment-table">
                 <th>Comments</th> 
             </tr>`;
 
- /*
-  globalNumComments (for the client) stores the number of comments the user has selected to display for the particular section they are displaying/hiding/posting to.
-  The reason this variable has a default value of 10 is:
-  - 10 is a reasonable amount of comments to want to display on the page. 10 comments do not take up too much space on the page while still giving the user a 
-  good picture of what people are commenting.
-  - It is optional for the user to select the number of comments to display on the page, so we need a default value in case the user does not choose 
-  to select the number of comments to display.
- */
-var globalNumComments = 10;
+
+
+/*defaultNumComments stores the default number of comments to display on the screen.
+It is set as const because it is not and should not be modified throughout the duration of the program running.
+The reason this variable has a default value of 10 is:
+- 10 is a reasonable amount of comments to want to display on the page. 10 comments do not take up too much space on the page while still giving the user a 
+good picture of what people are commenting.
+- It is optional for the user to select the number of comments to display on the page, so we need a default value in case the user does not choose 
+to select the number of comments to display.
+*/
+const defaultNumComments = 10;
+
+/*
+globalNumComments (for the servlet) stores the number of comments the user has selected to display for the particular section they are displaying/hiding/posting to.
+It keeps an updated number of comments, and since it changes but defaultNumComments does not, it needs to be separated from defaultNumComments.
+*/
+var globalNumComments = defaultNumComments;
 
