@@ -6,8 +6,17 @@ The reasoning behind drawCharts is that setOnLoadCallback executes one function 
  and drawCharts provides a centralized place for which to load all of the charts on the website.
 */
 function drawCharts(){
-    //drawPieChart();
-    drawGlobalWarmingChart();
+    //Since we draw charts from different pages, we only want to add in particular charts if they are defined on that page.
+    var pieChart = document.getElementById('pie-chart-container');
+    if (typeof(pieChart) != 'undefined' && pieChart != null){
+        drawPieChart();
+    }
+
+    var gwChart = document.getElementById('globalwarming-chart-container');
+    if (typeof(gwChart) != 'undefined' && gwChart != null){
+        drawGlobalWarmingChart();
+    }
+
 }
 
 /** Creates a chart and adds it to the page. */
@@ -30,7 +39,9 @@ function drawPieChart() {
 
   const chart = new google.visualization.PieChart(
       document.getElementById('pie-chart-container'));
+
   chart.draw(data, options);
+
 }
 
 /** Fetches bigfoot sightings data and uses it to create a chart. */
@@ -54,6 +65,7 @@ function drawGlobalWarmingChart() {
 
     const chart = new google.visualization.Histogram(
         document.getElementById('globalwarming-chart-container'));
+    
     chart.draw(data, options);
   });
 }
