@@ -204,7 +204,7 @@ function deleteComments(myLocation){
 
 /* Google Maps integration - Week 4 Libraries project */
 /** Creates a map and adds it to the page. */
-function createMap() {
+function createColumbiaMap() {
   const map = new google.maps.Map(
       document.getElementById('map'),
       {center: {lat: 40.8075, lng: -73.9626}, zoom: 16});
@@ -225,6 +225,19 @@ function createMap() {
       map, 40.807928, -73.964338, 'Pret',
       'Pret - the best place to grab some espresso');
 
+}
+
+function createWildlifeManagementMap() {
+
+    /* Create a map that displays all of Vermont */
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 7,
+        center: {lat: 43.8306202, lng: -72.309127}
+    });
+
+    // NOTE: This uses cross-domain XHR, and may not work on older browsers.
+    map.data.loadGeoJson(
+        'https://geodata.vermont.gov/datasets/5c9be3e39d9945a0bf1d58e1e812a554_164.geojson');
 }
 
 /** Adds a marker that shows an info window when clicked. */
