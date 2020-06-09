@@ -207,7 +207,35 @@ function deleteComments(myLocation){
 function createMap() {
   const map = new google.maps.Map(
       document.getElementById('map'),
-      {center: {lat: 37.422, lng: -122.084}, zoom: 16});
+      {center: {lat: 40.8075, lng: -73.9626}, zoom: 16});
+
+  addFavoriteSpot(
+      map, 40.8093798, -73.9599676, 'Mudd (CS Building)',
+      'The CS building! You can often find me coding away here...')
+
+  addFavoriteSpot(
+      map, 40.806427, -73.961655, 'Hartley Hall',
+      'My dorm room from Sophomore year! I lived in a suite with a couple friends, and across the hall from my girlfriend!');
+
+  addFavoriteSpot(
+      map, 40.808345, -73.960949, 'Avery',
+      'My favorite library: Avery');
+
+  addFavoriteSpot(
+      map, 40.807928, -73.964338, 'Pret',
+      'Pret - the best place to grab some espresso');
+
+}
+
+/** Adds a marker that shows an info window when clicked. */
+function addFavoriteSpot(map, lat, lng, title, description) {
+  const marker = new google.maps.Marker(
+      {position: {lat: lat, lng: lng}, map: map, title: title});
+
+  const infoWindow = new google.maps.InfoWindow({content: description});
+  marker.addListener('click', () => {
+    infoWindow.open(map, marker);
+  });
 }
 
 
