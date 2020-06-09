@@ -202,6 +202,15 @@ function deleteComments(myLocation){
 
 }
 
+/* Google Maps integration - Week 4 Libraries project */
+/** Creates a map and adds it to the page. */
+function createMap() {
+  const map = new google.maps.Map(
+      document.getElementById('map'),
+      {center: {lat: 37.422, lng: -122.084}, zoom: 16});
+}
+
+
 /* For displaying comments, shouldDisplay controls whether the comments should be displayed or hidden.
 The reason for the existence of this variable is my decision to have the Display Comments button alternate between 
 "Display Comments" and "Hide Comments". I like the UI and display for this alternating button, which is why I have 
