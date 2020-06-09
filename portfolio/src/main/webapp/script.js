@@ -20,7 +20,7 @@ function addRandomFunFact() {
   // Add it to the page in a table.
   var funFactTable = document.getElementById('funfact-table');
 
-  if (unusedFunFacts.length > 0){
+  if (unusedFunFacts.length > 0) {
         // Pick a random greeting.
         var randomIndex = Math.floor(Math.random() * unusedFunFacts.length);
         const funfact = unusedFunFacts[randomIndex];
@@ -31,12 +31,10 @@ function addRandomFunFact() {
         unusedFunFacts[randomIndex] = firstFunFact;
         unusedFunFacts.shift();
 
-        const funFactRowText = '<tr><td>' + funfact + '</td></tr>';
-        tableText += '<tr><td>' + funfact + '</td></tr>';
-        countTableEntries++;
+        factTableText += '<tr><td>' + funfact + '</td></tr>';
         document.getElementById('funfact-message').innerHTML = "";
         
-        funFactTable.innerHTML = tableText + '</table>';
+        funFactTable.innerHTML = factTableText + '</table>';
 
   } else {
       document.getElementById('funfact-message').innerHTML = "Congrats - you've gone through all of the fun facts!";
@@ -44,10 +42,180 @@ function addRandomFunFact() {
 
 }
 
-//outside of function because we want to add to it each time addRandomFunFact is called
-var tableText = `<table style="width:100%"> 
+/**
+ * Fetches the comments from the server and adds it to the DOM.
+ Based on week-3-server/random-quotes/src/webapp/script.js from the Week-3-Server tutorial
+ */
+function getComments(myLocation) {
+
+  // First, reset by updating num comments, which also hides comments
+  refreshNumComments(myLocation);
+  
+  // Toggle between hide and display
+  if (showingDisplayCommentButton) {
+
+    console.log('Fetching comments.');
+    document.getElementById(myLocation + "-get-button").innerHTML = "Hide Comments";
+
+    setLocation(myLocation);
+
+    // The fetch() function returns a Promise because the request is asynchronous.
+    const responsePromise = fetch('/comments?location=' + myLocation, {
+        location: myLocation
+    });
+
+    // When the request is complete, pass the response into handleResponse().
+    responsePromise.then(handleResponse);
+
+    /* For displaying comments, showingDisplayCommentButton controls whether the comments should be displayed or hidden.
+    The reason for the existence of this variable is my decision to have the Display Comments button alternate between 
+    "Display Comments" and "Hide Comments". I like the UI and display for this alternating button, which is why I have 
+    implemented it in this way. We set showingDisplayCommentButton = false to indicate that, the next time we click our 'get Comments' 
+    button, we should hide our comments, i.e. should not display them.c
+    */
+    showingDisplayCommentButton = false;
+  } else {
+    hideComments(myLocation);
+  }
+}
+
+// Used in getComments to establish which location the comments should be loaded in
+function setLocation(myLocation){
+    currLocation = myLocation;
+}
+
+function getLocation(){
+    return currLocation;
+}
+
+/**
+ * Handles response by converting it to text and passing the result to
+ * addCommentsToDom().
+ */
+function handleResponse(response) {
+
+  console.log('Handling the response.');
+
+  // response.text() returns a Promise, because the response is a stream of
+  // content and not a simple variable.
+  const commentPromise = response.text();
+
+  // When the response is converted to text, pass the result into the
+  // addCommentsToDom() function.
+  commentPromise.then(addCommentsToDom);
+}
+
+/** Adds comments to the DOM. */
+function addCommentsToDom(comments) {
+
+    console.log('Adding comments to dom: ' + comments);
+
+    const commentsContainer = document.getElementById('comments-container-' + getLocation());
+
+    // Perhaps check that commments is a json array first...
+    var commentArr = JSON.parse(comments);
+
+    for (var i=0; i<commentArr.length; i++){
+
+        var comment = commentArr[i];
+        var commentName = commentArr[i].name;
+        var commentMessage = commentArr[i].message;
+
+        commentTableText += '<tr class="comment-table-row"><td class="comment-table-entry">' 
+            + '<div class="commenter-name">' + commentName + '</div>'
+            + '<div class="commenter-message">' + commentMessage + '</div>'
+            + '</td></tr>';
+    }
+
+    commentTableText += '</table>';
+
+    commentsContainer.innerHTML = commentTableText;
+}
+
+function displayCommentBoxes(sectionId){
+    // If visible, hide and change button to "show"
+    // If hidden, show and change button to "hide"
+    if(document.getElementById("forms-wrapper-" + sectionId).style.display == "block"){
+        document.getElementById("forms-wrapper-" + sectionId).style.display = "none";
+        document.getElementById(sectionId + "-display-button").innerHTML = "Post a Comment";
+    }else if(document.getElementById("forms-wrapper-" + sectionId).style.display != "block"){
+        document.getElementById("forms-wrapper-" + sectionId).style.display = "block";
+        document.getElementById(sectionId + "-display-button").innerHTML = "Hide Post Comment Boxes";
+    }
+
+}
+
+function getNumComments(myLocation){
+
+    numComments = document.getElementById("num-comments-" + myLocation).value;
+
+    return numComments;
+
+}
+
+// Used in getComments, to make sure the num comments is up to date
+function refreshNumComments(myLocation){
+   
+    var globalNumComments = document.getElementById("num-comments-" + myLocation).value;
+
+    const updateNumComments = fetch('/comments?num-comments=' + globalNumComments + "&location=" + myLocation, { method: 'PUT'});
+}
+
+// Used in updating num comments, when the number should change and the comments should be hidden.
+function updateNumComments(myLocation){
+
+    refreshNumComments(myLocation);
+
+    hideComments(myLocation);
+
+}
+
+function hideComments(myLocation){
+    document.getElementById('comments-container-' + myLocation).innerText = "";
+
+    commentTableText = `<table id="comment-table"> 
             <tr> 
-                <th>Fun Fact</th> 
+                <th>Comments</th> 
+            </tr>`;
+    
+    // Change innerHTML of the get button here because hideComments is called in updating the number of comments
+    // to display, and we want to hide comments after changing the number of comments
+    document.getElementById(myLocation + "-get-button").innerHTML = "Display Comments";
+    showingDisplayCommentButton = true;
+
+}
+
+function deleteComments(myLocation){
+    console.log('Deleting comments.');
+    
+    // Show a pop-up confirm box so the user doesn't accidentally delete all comments without confirmation
+    if (confirm("By clicking 'OK', you will delete all comments.")) {
+        // The fetch() function returns a Promise because the request is asynchronous.
+        const responseDeletePromise = fetch('/delete-data?location=' + myLocation, { method: 'POST'});
+
+        // Call the function to fetch comments from the server so that the now-deleted comments are removed from the page
+        responseDeletePromise.then(getComments);
+
+        /* location.reload() is a predefined JS function for a predefined JS class named location. */
+        location.reload();
+    }
+
+}
+
+/* For displaying comments, showingDisplayCommentButton controls whether the comments should be displayed or hidden.
+The reason for the existence of this variable is my decision to have the Display Comments button alternate between 
+"Display Comments" and "Hide Comments". I like the UI and display for this alternating button, which is why I have 
+implemented it in this way.
+*/
+var showingDisplayCommentButton = true;
+
+/* currLocation stores the current location that we should display and delete comments from. */
+var currLocation = "";
+
+// Outside of function because we want to add to it each time addRandomFunFact is called
+var factTableText = `<table style="width:100%"> 
+            <tr> 
+                <th>Fun Facts</th> 
             </tr>`;
 
 var unusedFunFacts =
@@ -60,4 +228,26 @@ var unusedFunFacts =
     'Currently, I am attempting to grow potatoes outside.',
     'My favorite animal is a panda.'];
 
-var countTableEntries = 0;
+var commentTableText = `<table id="comment-table"> 
+            <tr> 
+                <th>Comments</th> 
+            </tr>`;
+
+
+
+/*defaultNumComments stores the default number of comments to display on the screen.
+It is set as const because it is not and should not be modified throughout the duration of the program running.
+The reason this variable has a default value of 10 is:
+- 10 is a reasonable amount of comments to want to display on the page. 10 comments do not take up too much space on the page while still giving the user a 
+good picture of what people are commenting.
+- It is optional for the user to select the number of comments to display on the page, so we need a default value in case the user does not choose 
+to select the number of comments to display.
+*/
+const defaultNumComments = 10;
+
+/*
+globalNumComments (for the servlet) stores the number of comments the user has selected to display for the particular section they are displaying/hiding/posting to.
+It keeps an updated number of comments, and since it changes but defaultNumComments does not, it needs to be separated from defaultNumComments.
+*/
+var globalNumComments = defaultNumComments;
+

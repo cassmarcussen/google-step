@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Cassandra's Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=B612&display=swap" rel="stylesheet">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="step.html">STEP Internship</a>
+        <a href="step_projects.html">STEP Projects</a>
+        <a href="hobbies.html">Hobbies</a>
+        <a href="funfacts.html">Fun Facts</a>
+    </div>
+    <div id="content">
+      <div class="boxed-div-colorful">
+        <h1>STEP Internship Projects</h1>
+        <p>The sub-projects for the portfolio project of the STEP Internship 2020</p>
+      </div>
+      <div class="boxed-div">
+        <h2>Week 3 Servlets: Comments Section</h2>
+        <p>Click the button below to display, hide, and delete prior comments from the server. 
+        </p>
+        <p>
+            <button id="Comments-get-button" onclick=getComments("Comments")>Display Comments</button>
+            <button onclick=deleteComments("Comments")>Delete all comments</button>
+            <button id="Comments-display-button" onclick=displayCommentBoxes("Comments")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Comments"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Comments">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Comments" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Comments" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Comment" />
+                <br/><br/>
+                <button onclick=updateNumComments("Comments")>Submit</button>                   
+            </div>
+        </div > 
+      </div>
+    </div>
+  </body>
+</html>

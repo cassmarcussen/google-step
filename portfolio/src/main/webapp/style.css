@@ -13,6 +13,10 @@ body {
   border-bottom: 2px solid black;
 }
 
+div {
+    text-align: center;
+}
+
 /* https://www.w3schools.com/howto/howto_js_navbar_sticky.asp */
 .navbar {
   overflow: hidden;
@@ -55,6 +59,17 @@ img {
     margin: 10px 5px;
 }
 
+#comment-table {
+    width:50%;
+    margin: auto;
+}
+
+.comment-table-entry {
+    padding: 30px;
+    width: 400px;
+    border: 2px solid gainsboro;
+}
+
 .boxed-div-colorful {
     color: darkblue;
     padding: 25px 50px 25px;
@@ -65,7 +80,7 @@ a {
     color: darkblue;
 }
 
-button {
+button, input {
     font-size: 100%;
     background-color: white;
     border-radius: 15%;
@@ -76,6 +91,64 @@ button {
     margin-right: 10px;
 }
 
-button:hover {
+button:hover, input:hover {
     border: 2px solid darkblue;
+}
+
+.num-comments {
+    width: 40px;
+}
+
+#comments-container {
+    margin: 10px;
+    margin-top: 0px;
+}
+
+.form-div {
+    border: 2px solid gainsboro;
+    border-radius: 1%;
+    padding: 10px;
+    margin:auto;
+    margin-bottom: 10px;
+    width: 40%;
+    display: inline-block;
+    height: 300px;
+    overflow: hidden;
+}
+
+.forms-wrapper {
+    height: 100%;
+    margin: auto;
+    margin-top: 15px;
+    width: 80%;
+    /*Initially hide the forms for posting comments and changing the number of comments,
+    since it occupies a lot of space.*/
+    display: none;
+}
+
+/*Styling a comment when displayed on the STEP Internship page*/
+.commenter-name {
+    background-color: darkblue;
+    padding: 10px;
+    color: white;
+    margin-left: 10px;
+    margin-right: 40px;
+    float: left;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+}
+
+.commenter-message {
+    text-align: left;
+    vertical-align: middle;
+    justify-content: left;
+    align-items: left;
+    display: flex;
 }

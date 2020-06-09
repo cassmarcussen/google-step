@@ -11,6 +11,7 @@
     <div class="navbar">
         <a href="index.html">Home</a>
         <a href="step.html">STEP Internship</a>
+        <a href="step_projects.html">STEP Projects</a>
         <a href="hobbies.html">Hobbies</a>
         <a href="funfacts.html">Fun Facts</a>
     </div>
@@ -33,6 +34,35 @@
             is so important. The "Testing Code" video taught me about test-driven development, and the important of tests to document code and to facilitate the modification 
             of existing code. The tests are essentially the first users of the code, which was interesting for me to learn about.
         </p>
+        <p>
+            <button id="Week1-get-button" onclick=getComments("Week1")>Display Comments</button>
+            <button onclick=deleteComments("Week1")>Delete all comments</button>
+            <button id="Week1-display-button" onclick=displayCommentBoxes("Week1")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week1"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week1">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week1" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week1" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week1" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week1")>Submit</button>                
+            </div>
+        </div>
       </div>
       <div class="boxed-div">
         <h2>Week 2</h2>
@@ -45,11 +75,122 @@
             this week due to registration issues last week). These livestreams gave me a better sense of Google's values, internal policies, and the awesome 
             opportunities present at Google. These livestream sessions made me even more enthusiastic about my internship and the opportunity to work at Google!
         </p>
+         <p>
+            <button id="Week2-get-button" onclick=getComments("Week2")>Display Comments</button>
+            <button onclick=deleteComments("Week2")>Delete all comments</button>
+            <button id="Week2-display-button" onclick=displayCommentBoxes("Week2")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week2"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week2">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week2" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week2" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week2" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week2")>Submit</button>                   
+            </div>
+        </div>
       </div>
+      <div class="boxed-div">
+        <h2>Week 3</h2>
+        <p>This week, I build an extensible Comments section for different aspects of my website. I have comments sections for each of the weekly reflections on the 
+            STEP Internships page (you can find a comments section below this description!). This week, there was a lot of new learning, including how to use Java 
+            servlets and how to use DataStore. I therefore spent time carefully going through the tutorials for Week 3, so that I fully and deeply understood the 
+            concepts I was learning. This was very helpful as I started to implement some of the new learnings. I ended up filling up the rest of my notebook with 
+            notes that I had taken during the tutorials.
+        </p>
+        <p>
+           This week, I really wanted to challenge myself to go above and beyond the tutorial expectations. To do so, I created a comments section in multiple locations, not 
+           just one (only one was required). This required that I send information about which Comments section to add to to my Java servlet. Doing so required a lot of 
+           debugging, sketching design ideas in my notebook, and careful thinking. I created an enum called Location which stores the different locations. I pass in the 
+           location to the JavaScript and Java servlet through a series of parameters. For example, for getComments, I'll pass in the location as getComments("Week3") to indicate 
+           that the DataStore list that we want to get comments from is Week3.
+        </p>
+        <p>
+            I thought the trickiest component of this week's project was updating the number of comments to be displayed. This was difficult when I just had one comments section, 
+            but especially when I had multiple comment sections, coordinating exactly which comment section displayed which number of comments was difficult. I had to ask myself the following questions: 
+            When do I want to get information from values that the user inputs in input fields in the HTML? When do I want to store information in my JavaScript code, and when do I 
+            want to store information on the server side, in my Java servlet code? How do I pass values between my HTML, JavaScript, and my Java servlet? I found these questions to be 
+            very insightful to think about. Because of these sorts of questions, this week challenged me to grow and improve my abilities to write code that is approaching full-stack. I really enjoyed 
+            this week's assignment, and learned so much!
+        </p>
+         <p>
+            <button id="Week3-get-button" onclick=getComments("Week3")>Display Comments</button>
+            <button onclick=deleteComments("Week3")>Delete all comments</button>
+            <button id="Week3-display-button" onclick=displayCommentBoxes("Week3")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week3"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week3">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week3" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week3" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week3" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week3")>Submit</button>                   
+            </div>
+        </div>
+       </div>
        <div class="boxed-div">
         <h1>Challenges</h1>
         <p>Understanding and adjusting to Google's standards for code and design, and applying these standards to my own code</p>
         <p>[To be added to throughout the internship]</p>
+        <p>
+            <button id="Challenges-get-button" onclick=getComments("Challenges")>Display Comments</button>
+            <button onclick=deleteComments("Challenges")>Delete all comments</button>
+            <button id="Challenges-display-button" onclick=displayCommentBoxes("Challenges")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Challenges"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Challenges">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Challenges" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Challenges" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Challenges" />
+                <br/><br/>
+                <button onclick=updateNumComments("Challenges")>Submit</button>                   
+            </div>
+        </div>
       </div>
        <div class="boxed-div">
         <h1>Goals</h1>
@@ -59,6 +200,35 @@
         <p>To become a stronger advocate for good design principles in my coding</p>
         <p>To gain guidance about my career from my hosts and other Googlers</p>
         <p>To learn about Google's culture and its opportunities</p>
+        <p>
+            <button id="Goals-get-button" onclick=getComments("Goals")>Display Comments</button>
+            <button onclick=deleteComments("Goals")>Delete all comments</button>
+            <button id="Goals-display-button" onclick=displayCommentBoxes("Goals")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Goals"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Goals">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Goals" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Goals" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Goals" />
+                <br/><br/>
+                <button onclick=updateNumComments("Goals")>Submit</button>                   
+            </div>
+        </div>
       </div>
     </div>
   </body>

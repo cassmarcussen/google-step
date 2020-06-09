@@ -11,6 +11,7 @@
     <div class="navbar">
         <a href="index.html">Home</a>
         <a href="step.html">STEP Internship</a>
+        <a href="step_projects.html">STEP Projects</a>
         <a href="hobbies.html">Hobbies</a>
         <a href="funfacts.html">Fun Facts</a>
     </div>
@@ -81,6 +82,38 @@
         </p>
         <img src="images/hiking.jpg" alt="Hiking on mountain" width="500">
       </div>
+      <div class="boxed-div">
+           <h2>Comment on Hobbies</h2>
+            <p>
+                <button id="Hobbies-get-button" onclick=getComments("Hobbies")>Display Comments</button>
+                <button onclick=deleteComments("Hobbies")>Delete all comments</button>
+                <button id="Hobbies-display-button" onclick=displayCommentBoxes("Hobbies")>Post a Comment</button>
+            </p>
+            <div id="comments-container-Hobbies"></div>
+            <div class="forms-wrapper" id="forms-wrapper-Hobbies">
+                <div class="form-div">
+                    <h3>Post a new comment: </h3>
+                    <form action="/comments" method="POST">
+                        <p>Name :</p>
+                        <textarea name="commenter-name"></textarea>
+                        <p>Comment :</p>
+                        <textarea name="text-input">I love your website! :)</textarea>
+                        <input name="location" value="Hobbies" type="hidden" />
+                        <br/><br/>
+
+                        <input type="submit" />
+                    </form>
+                </div>
+                <div class="form-div" id="max-comments">
+                    <h3>Change the maximum number of comments to display: </h3>
+                    <p>Maximum number of comments to display: </p>
+                    <input class="num-comments" id="num-comments-Hobbies" name="num-comments" type="number">
+                    <input type="hidden" name="location" value="Hobbies" />
+                    <br/><br/>
+                    <button onclick=updateNumComments("Hobbies")>Submit</button>                   
+                </div>
+            </div>
+        </div>
     </div>
   </body>
 </html>
