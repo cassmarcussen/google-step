@@ -170,9 +170,9 @@ button:hover, input:hover {
 /* Week 4 - Google Maps */
 
 #map {
-    border: thin solid black;
+    border: 2px solid gainsboro;
     height: 500px;
-    width: 500px;
+    width: 750px;
     text-align: center;
     justify-content: center;
     align-items: center;
