@@ -13,7 +13,7 @@ function drawCharts(){
     }
 
     var gwChart = document.getElementById('globalwarming-chart-container');
-    if (typeof(gwChart) != 'undefined' && gwChart != null){
+    if (typeof(gwChart) != 'undefined' && gwChart != null) {
         drawGlobalWarmingChart();
     }
 

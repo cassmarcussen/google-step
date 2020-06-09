@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Returns global warming sentiment data as a JSON object, e.g. {"2017": 52, "2018": 34}] */
+/** Returns global warming sentiment data as a JSON object */
 @WebServlet("/global-warming-sentiment-data")
 public class GlobalWarmingDataServlet extends HttpServlet {
 
@@ -26,11 +26,11 @@ public class GlobalWarmingDataServlet extends HttpServlet {
 
       String tweet = (String) cells[0];
       Integer existence = 0;
-      if(((String) cells[1]).equals("Yes")){
+      if (((String) cells[1]).equals("Yes")) {
           existence = 1;
-      }else if (((String) cells[1]).equals("No")){
+      } else if (((String) cells[1]).equals("No")) {
           existence = 0;
-      }else{
+      } else {
           //Go to the next iteration of the while loop, because we don't want to add in values such as N/A.
           continue;
       }
