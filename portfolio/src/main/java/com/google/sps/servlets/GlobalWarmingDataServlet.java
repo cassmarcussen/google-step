@@ -25,6 +25,10 @@ public class GlobalWarmingDataServlet extends HttpServlet {
       String[] tweetAndSentiment = line.split(",");
 
       String tweet = (String) tweetAndSentiment[0];
+
+      /* 1 represents that a person's tweet implies a belief that climate change exists, 
+      and 0 represents that a person's tweet implies a belief that climate change does not exist.
+      */
       Integer existence = 0;
       if (((String) tweetAndSentiment[1]).equals("Yes")) {
           existence = 1;
