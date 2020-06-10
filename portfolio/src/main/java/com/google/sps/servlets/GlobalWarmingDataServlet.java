@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/global-warming-sentiment-data")
 public class GlobalWarmingDataServlet extends HttpServlet {
 
+  /*The reason I am using LinkedHashMap is that LinkedHashMap maintains the insertion order of the keys, while HashMap does not. 
+  It provides an extra level of consistency in the chart that will be displayed.*/
   private LinkedHashMap<String, Integer> globalWarmingSentiment = new LinkedHashMap<>();
 
   @Override
@@ -32,7 +34,6 @@ public class GlobalWarmingDataServlet extends HttpServlet {
       /* Yes represents that a person's tweet implies a belief that climate change exists, 
       and No represents that a person's tweet implies a belief that climate change does not exist.
       */
-
       if (((String) tweetAndSentiment[1]).equals("Yes")) {
           countOfYes++;
       } else if (((String) tweetAndSentiment[1]).equals("No")) {
