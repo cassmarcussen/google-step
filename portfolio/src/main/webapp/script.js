@@ -273,6 +273,44 @@ function addFavoriteSpot(map, lat, lng, title, description) {
   });
 }
 
+/* Week 4 - Blobstore usage on Locations page. The form on the page uses Blobstore to allow users to post pictures 
+of their favorite locations to the page. */
+
+function addLocationImage() {
+    //fetchBlobstoreLocationsUrlAndShowForm();
+    //fetch('/location-form-handler', {method: 'POST'});
+
+}
+
+function fetchBlobstoreLocationsUrlAndShowForm() {
+  fetch('/blobstore-upload-location-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((locationImg) => {
+        
+        const imagesLocationContainer = document.getElementById('location-imgs');
+
+        // Perhaps check that commments is a json array first...
+        var imgArr = JSON.parse(locationImg);
+
+        var imgDivText = "<p>hiii</p>";
+
+        //nothing in here yet
+        for (var i=0; i<imgArr.length; i++){
+
+            var img = imgArr[i].imgUrl;
+            var message = imgArr[i].message;
+            var commentMessage = imgArr[i].message;
+
+            imgDivText += '<p>' + message + "</p>";
+        }
+
+        imagesLocationContainer.innerHTML = imgDivText;
+      });
+    
+}
+
 
 /* For displaying comments, shouldDisplay controls whether the comments should be displayed or hidden.
 The reason for the existence of this variable is my decision to have the Display Comments button alternate between 
