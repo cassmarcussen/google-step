@@ -60,12 +60,18 @@ function drawGlobalWarmingChart() {
     });
 
     const gwChartOptions = {
-      'title': 'Global Warming Sentiment',
-      'width':600,
+      'title': 'Number of Tweets confirming (Yes) or denying (No) Global Warming',
+      'width':500,
       'height':500,
       legend: 'none',
       bar: {groupWidth: '95%'},
-      vAxis: { gridlines: { count: 4 } }
+      vAxis: { 
+          gridlines: { count: 4 },
+          'title': 'Number of Tweets'
+       },
+       hAxis: { 
+          'title': 'Sentiment (Yes = confirm global warming, No = deny global warming)'
+       }
     };
 
     const chart = new google.visualization.ColumnChart(
