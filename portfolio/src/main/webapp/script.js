@@ -300,8 +300,7 @@ function fetchBlobstoreLocationsUrlAndShowForm() {
         for (var i=0; i<imgArr.length; i++){
 
             var img = imgArr[i].imgUrl;
-            var message = imgArr[i].message;
-            var commentMessage = imgArr[i].message;
+            var message = imgArr[i].imgMessage;
 
             imgDivText += '<p>' + message + "</p>";
         }
