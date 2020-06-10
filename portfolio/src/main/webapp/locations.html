@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=B612&display=swap" rel="stylesheet">
 </head>
+<body onload="createColumbiaMap(); fetchBlobstoreLocationsUrlAndShowForm();">
 <body onload="createColumbiaMap();">
     <div class="navbar">
         <a href="index.html">Home</a>
@@ -30,6 +31,20 @@
               Click on the markers to learn more about my favorite spots on campus. 
             </p>
             <div id="map"></div>
+        </div>
+        <div class="boxed-div">
+            <h2>What's your favorite location? </h2>
+            <p>Use the form below to submit a photo of your favorite location to upload on this website.</p>
+            <form id="location-blobstore-form" class="hidden" method="POST" enctype="multipart/form-data">
+                <p>Describe your favorite location:</p>
+                <textarea name="message"></textarea>
+                <br/>
+                <p>Upload an image:</p>
+                <input type="file" name="image">
+                <br/><br/>
+                <button onclick="/submit">Submit</button>
+            </form>
+            <div id="location-imgs"></div>
         </div>
     </div>
 </body>
