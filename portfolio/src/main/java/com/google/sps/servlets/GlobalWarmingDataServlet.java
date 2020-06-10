@@ -22,13 +22,13 @@ public class GlobalWarmingDataServlet extends HttpServlet {
     
     while (scanner.hasNextLine()) {
       String line = scanner.nextLine();
-      String[] cells = line.split(",");
+      String[] tweetAndSentiment = line.split(",");
 
-      String tweet = (String) cells[0];
+      String tweet = (String) tweetAndSentiment[0];
       Integer existence = 0;
-      if (((String) cells[1]).equals("Yes")) {
+      if (((String) tweetAndSentiment[1]).equals("Yes")) {
           existence = 1;
-      } else if (((String) cells[1]).equals("No")) {
+      } else if (((String) tweetAndSentiment[1]).equals("No")) {
           existence = 0;
       } else {
           //Go to the next iteration of the while loop, because we don't want to add in values such as N/A.
