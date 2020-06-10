@@ -225,6 +225,22 @@ function createColumbiaMap() {
       map, 40.807928, -73.964338, 'Pret',
       'Pret - the best place to grab some espresso');
 
+  addFavoriteSpot(
+      map, 40.807854, -73.960917, 'Postcrypt Coffeehouse',
+      'Postcrypt is one of the most special places on campus. It is a rather hidden music venue in the postcrypt of the chapel on campus, where student musicians can perform their pieces.');
+
+  addFavoriteSpot(
+      map, 40.806403, -73.96322, 'Butler Library',
+      `Butler Library is an enormous, beautiful library on campus. To be honest, I spend most of my time there, at any time from the morning to midnight. 
+      I have really fond memories of grabbing espresso and chips at Blue Java, the coffee shop inside the library, and expanding my set of knowledge while 
+      reading and studying for hours on end. It's really fun when you bring friends along to study!`);
+
+   addFavoriteSpot(
+      map, 40.807845, -73.962125, 'Low Steps',
+      `Low Steps (also known as Low Beach when it is sunny outside, due to the crowds of people who sit on the steps) is one of the most well-known places 
+      on campus. It's an iconic place to take a photo if you are visiting campus. For me, when it's sunny outside, I love to study on the steps. This place is 
+      especially special to me because it's one of the places my girlfriend and I spent our first date.`);
+
 }
 
 function createWildlifeManagementMap() {
@@ -233,6 +249,12 @@ function createWildlifeManagementMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 7,
         center: {lat: 43.8306202, lng: -72.309127}
+    });
+
+    // Set the stroke width, and fill color for each polygon
+    map.data.setStyle({
+        fillColor: 'blue',
+        strokeWeight: 1
     });
 
     // NOTE: This uses cross-domain XHR, and may not work on older browsers.
