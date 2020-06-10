@@ -31,7 +31,7 @@ function drawPieChart() {
           ['Birds', 3]
         ]);
 
-  const options = {
+  const pieChartOptions = {
     'title': 'My Pets',
     'width':500,
     'height':400
@@ -40,32 +40,38 @@ function drawPieChart() {
   const chart = new google.visualization.PieChart(
       document.getElementById('pie-chart-container'));
 
-  chart.draw(data, options);
+  chart.draw(data, pieChartOptions);
 
 }
 
-/** Fetches bigfoot sightings data and uses it to create a chart. */
+/** Fetches global warming data and uses it to create a chart. */
 function drawGlobalWarmingChart() {
   fetch('/global-warming-sentiment-data').then(response => response.json())
   .then((globalWarmingSentiment) => {
     const data = new google.visualization.DataTable();
-    //have Sentiment and frequency/amount of occurrence
-    data.addColumn('string', 'Tweet');
-    data.addColumn('number', 'Sentiment');
-    Object.keys(globalWarmingSentiment).forEach((tweet) => {
-      data.addRow([tweet, globalWarmingSentiment[tweet]]);
+    
+    /*Sentiment is Yes or No, i.e. if the tweet affirms the existence of Global Warming or denies it.
+    Number of Tweets is the number of tweets corresponding to each sentiment (Yes or No) */
+    data.addColumn('string', 'Sentiment');
+    data.addColumn('number', 'Number of Tweets');
+
+    Object.keys(globalWarmingSentiment).forEach((sentiment) => {
+      data.addRow([sentiment, globalWarmingSentiment[sentiment]]);
     });
 
-    const options = {
+    const gwChartOptions = {
       'title': 'Global Warming Sentiment',
       'width':600,
       'height':500,
-       histogram: { bucketSize: 1 }
+      legend: 'none',
+      bar: {groupWidth: '95%'},
+      vAxis: { gridlines: { count: 4 } }
     };
 
-    const chart = new google.visualization.Histogram(
+    const chart = new google.visualization.ColumnChart(
         document.getElementById('globalwarming-chart-container'));
     
-    chart.draw(data, options);
+    chart.draw(data, gwChartOptions);
+
   });
 }
