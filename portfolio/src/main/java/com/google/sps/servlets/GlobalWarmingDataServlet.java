@@ -20,27 +20,33 @@ public class GlobalWarmingDataServlet extends HttpServlet {
     Scanner scanner = new Scanner(getServletContext().getResourceAsStream(
         "/WEB-INF/global-warming-sentiment-data.csv"));
     
+    // Initialize the count of "Yes" and "No" seen so far to 0
+    int countOfYes = 0;
+    int countOfNo = 0;
+
+    // In the while loop, count and increment the number of "Yes" and "No" entries in the dataset
     while (scanner.hasNextLine()) {
       String line = scanner.nextLine();
       String[] tweetAndSentiment = line.split(",");
 
-      String tweet = (String) tweetAndSentiment[0];
-
-      /* 1 represents that a person's tweet implies a belief that climate change exists, 
-      and 0 represents that a person's tweet implies a belief that climate change does not exist.
+      /* Yes represents that a person's tweet implies a belief that climate change exists, 
+      and No represents that a person's tweet implies a belief that climate change does not exist.
       */
-      Integer existence = 0;
+
       if (((String) tweetAndSentiment[1]).equals("Yes")) {
-          existence = 1;
+          countOfYes++;
       } else if (((String) tweetAndSentiment[1]).equals("No")) {
-          existence = 0;
+          countOfNo++;
       } else {
-          //Go to the next iteration of the while loop, because we don't want to add in values such as N/A.
+          // Go to the next iteration of the while loop, because we don't want to add in values such as N/A.
           continue;
       }
-
-      globalWarmingSentiment.put(tweet, existence);
+    
     }
+
+    globalWarmingSentiment.put("Yes", countOfYes);
+    globalWarmingSentiment.put("No", countOfNo);
+
     scanner.close();
   }
 
