@@ -5,10 +5,10 @@ google.charts.setOnLoadCallback(drawCharts);
 The reasoning behind drawCharts is that setOnLoadCallback executes one function on load,
  and drawCharts provides a centralized place for which to load all of the charts on the website.
 */
-function drawCharts(){
-    //Since we draw charts from different pages, we only want to add in particular charts if they are defined on that page.
+function drawCharts() {
+    // Since we draw charts from different pages, we only want to add in particular charts if they are defined on that page.
     var pieChart = document.getElementById('pie-chart-container');
-    if (typeof(pieChart) != 'undefined' && pieChart != null){
+    if (typeof(pieChart) != 'undefined' && pieChart != null) {
         drawPieChart();
     }
 
