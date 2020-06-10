@@ -19,7 +19,8 @@ function drawCharts() {
 
 }
 
-/** Creates a chart and adds it to the page. */
+/** Creates a pie chart and adds it to the page. This pie chart represents the distribution of my pets. 
+Since my pets are very important to me, I thought this would be a fun and interactive addition to the "Fun Facts" page. */
 function drawPieChart() {
   const data = new google.visualization.DataTable();
   data.addColumn('string', 'Pet Species');
