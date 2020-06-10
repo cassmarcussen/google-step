@@ -27,6 +27,9 @@ public class BlobstoreUploadLocationServlet extends HttpServlet {
   //called whenever Locations loads (in its body load)
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    String uploadUrl = blobstoreService.createUploadUrl("/location-blobstore-form");
     
     System.out.println("doGet");
     Query query = new Query("LocationFiles");
@@ -34,6 +37,10 @@ public class BlobstoreUploadLocationServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
 
     List<LocationImg> locationImgs = new ArrayList<LocationImg>();
+
+    LocationImg img2 = new LocationImg("hi", "byeeee", (long)0);
+
+    locationImgs.add(img2);
 
     for (Entity entity : results.asIterable()) {
       
@@ -44,7 +51,6 @@ public class BlobstoreUploadLocationServlet extends HttpServlet {
       LocationImg img = new LocationImg(url, message, id);
 
       locationImgs.add(img);
-
     
     }
 
