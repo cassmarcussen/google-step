@@ -34,16 +34,8 @@
         </div>
         <div class="boxed-div">
             <h2>What's your favorite location? </h2>
-            <p>Use the form below to submit a photo of your favorite location to upload on this website.</p>
-            <form id="location-blobstore-form" class="hidden" method="POST" enctype="multipart/form-data">
-                <p>Describe your favorite location:</p>
-                <textarea name="message"></textarea>
-                <br/>
-                <p>Upload an image:</p>
-                <input type="file" name="image">
-                <br/><br/>
-                <button>Submit</button>
-            </form>
+            <p>Click the button below to redirect to a form to submit a photo of your favorite location to upload on this website.</p>
+            <button onclick="location.href='/location_imgupload.jsp'">Submit a photo</button>
             <div id="location-imgs"></div>
         </div>
     </div>
