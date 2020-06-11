@@ -10,11 +10,8 @@ public class LocationImg {
     private long itemId;
 
     public LocationImg(String url, String msg, long id) {
-        
         imgUrl = url;
         imgMessage = msg;
         itemId = id;
-
     }
-
 }
