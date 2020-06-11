@@ -182,8 +182,6 @@ button:hover, input:hover {
 /* Week 4 - Blobstore */
 
 #location-imgs {
-    /*NT fix height*/
-    height: 500px;
     margin: 20px;
     display: inline;
     text-align: center;
@@ -194,13 +192,14 @@ button:hover, input:hover {
 
 div.gallery {
   margin: 5px;
-  border: 1px solid #ccc;
+  border: 2px solid gainsboro;
   float: left;
   width: 300px;
+  border-radius: 5%;
 }
 
 div.gallery:hover {
-  border: 1px solid #777;
+  border: 2px solid #777;
 }
 
 div.gallery img {
