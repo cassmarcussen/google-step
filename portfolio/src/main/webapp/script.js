@@ -288,7 +288,7 @@ function fetchBlobstoreLocationsUrlAndShowForm() {
         // Perhaps check that commments is a json array first...
         var imgArr = JSON.parse(locationImg);
 
-        var imgParagraph = document.createElement("p");
+        var imgDiv = document.createElement("div");
 
         //nothing in here yet
         for (var i=0; i<imgArr.length; i++){
@@ -297,18 +297,26 @@ function fetchBlobstoreLocationsUrlAndShowForm() {
             img.src = imgArr[i].imgUrl;
 
             if(img.src){
+
+                //for one image
+                var singularImageDiv = document.createElement("div");
+                singularImageDiv.classList.add("gallery");
+
                 var message = imgArr[i].imgMessage;
                 var imgText = document.createElement("p");
                 imgText.innerHTML = '<p>' + message + '</p>';
+                imgText.classList.add("img-caption");
 
-                imgParagraph.appendChild(img);
-                imgParagraph.appendChild(imgText);
+                singularImageDiv.appendChild(img);
+                singularImageDiv.appendChild(imgText);
+
+                imgDiv.appendChild(singularImageDiv);
 
             }
 
         }
 
-        imagesLocationContainer.append(imgParagraph);
+        imagesLocationContainer.append(imgDiv);
 
       });
     
