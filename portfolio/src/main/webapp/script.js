@@ -52,7 +52,7 @@ function getComments(myLocation) {
   refreshNumComments(myLocation);
   
   // Toggle between hide and display
-  if (shouldDisplay) {
+  if (showingDisplayCommentButton) {
 
     console.log('Fetching comments.');
     document.getElementById(myLocation + "-get-button").innerHTML = "Hide Comments";
@@ -67,13 +67,13 @@ function getComments(myLocation) {
     // When the request is complete, pass the response into handleResponse().
     responsePromise.then(handleResponse);
 
-    /* For displaying comments, shouldDisplay controls whether the comments should be displayed or hidden.
+    /* For displaying comments, showingDisplayCommentButton controls whether the comments should be displayed or hidden.
     The reason for the existence of this variable is my decision to have the Display Comments button alternate between 
     "Display Comments" and "Hide Comments". I like the UI and display for this alternating button, which is why I have 
-    implemented it in this way. We set shouldDisplay = false to indicate that, the next time we click our 'get Comments' 
+    implemented it in this way. We set showingDisplayCommentButton = false to indicate that, the next time we click our 'get Comments' 
     button, we should hide our comments, i.e. should not display them.c
     */
-    shouldDisplay = false;
+    showingDisplayCommentButton = false;
   } else {
     hideComments(myLocation);
   }
@@ -98,11 +98,11 @@ function handleResponse(response) {
 
   // response.text() returns a Promise, because the response is a stream of
   // content and not a simple variable.
-  const textPromise = response.text();
+  const commentPromise = response.text();
 
   // When the response is converted to text, pass the result into the
   // addCommentsToDom() function.
-  textPromise.then(addCommentsToDom);
+  commentPromise.then(addCommentsToDom);
 }
 
 /** Adds comments to the DOM. */
@@ -181,7 +181,7 @@ function hideComments(myLocation){
     // Change innerHTML of the get button here because hideComments is called in updating the number of comments
     // to display, and we want to hide comments after changing the number of comments
     document.getElementById(myLocation + "-get-button").innerHTML = "Display Comments";
-    shouldDisplay = true;
+    showingDisplayCommentButton = true;
 
 }
 
@@ -322,13 +322,12 @@ function fetchBlobstoreLocationsUrlAndShowForm() {
     
 }
 
-
-/* For displaying comments, shouldDisplay controls whether the comments should be displayed or hidden.
+/* For displaying comments, showingDisplayCommentButton controls whether the comments should be displayed or hidden.
 The reason for the existence of this variable is my decision to have the Display Comments button alternate between 
 "Display Comments" and "Hide Comments". I like the UI and display for this alternating button, which is why I have 
 implemented it in this way.
 */
-var shouldDisplay = true;
+var showingDisplayCommentButton = true;
 
 /* currLocation stores the current location that we should display and delete comments from. */
 var currLocation = "";

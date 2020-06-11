@@ -147,12 +147,10 @@ public class DataServlet extends HttpServlet {
       numComments = Integer.parseInt(numCommentsString);
     } catch (NumberFormatException e) {
       System.err.println("Could not convert to int: " + numCommentsString);
-      numComments = defaultNumComments;
     }
     
     if (numComments < 0) {
       System.err.println("Number of comments requested is out of range (must be nonnegative): " + numComments);
-      numComments = defaultNumComments;
     }
     
     return numComments;
