@@ -178,3 +178,37 @@ button:hover, input:hover {
     align-items: center;
     display: inline-block;
 }
+
+/* Week 4 - Blobstore */
+
+#location-imgs {
+    /*NT fix height*/
+    height: 500px;
+    margin: 20px;
+    display: inline;
+    text-align: center;
+    align-items: center;
+}
+
+/* Based on w3schools image gallery (https://www.w3schools.com/css/css_image_gallery.asp) */
+
+div.gallery {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 300px;
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  width: 90%;
+  height: auto;
+}
+
+div.img-caption {
+  padding: 15px;
+  text-align: center;
+}
