@@ -9,22 +9,32 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Blobstore JSP Example</title>
-  </head>
+<head>
+  <title>Cassandra's Portfolio</title>
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=B612&display=swap" rel="stylesheet">
+</head>
   <body>
-    <h1>Blobstore JSP Example</h1>
-    <p>Type a message and click submit:</p>
-
-    <form method="POST" enctype="multipart/form-data" action="<%= uploadUrl %>">
-      <p>Type some text:</p>
-      <textarea name="message"></textarea>
-      <br/>
-      <p>Upload an image:</p>
-      <input type="file" name="image">
-      <br/><br/>
-      <button>Submit</button>
-    </form>
+    <div class="navbar">
+        <a href="locations.html">Return to Locations</a>
+    </div>
+    <div id="content">
+        <div class="boxed-div-colorful">
+            <h1>Submit a photo and caption of your favorite location</h1>
+            <p>Type a message, upload an image, and click submit below.</p>
+        </div>
+        <div class="boxed-div">
+            <form method="POST" enctype="multipart/form-data" action="<%= uploadUrl %>">
+            <p>Caption your favorite location:</p>
+            <textarea name="message"></textarea>
+            <br/>
+            <p>Upload an image:</p>
+            <input type="file" name="image">
+            <br/><br/>
+            <button>Submit</button>
+            </form>
+        </div>
+    </div>
   </body>
 </html>
