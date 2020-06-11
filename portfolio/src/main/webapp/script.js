@@ -273,17 +273,11 @@ function addFavoriteSpot(map, lat, lng, title, description) {
   });
 }
 
-/* Week 4 - Blobstore usage on Locations page. The form on the page uses Blobstore to allow users to post pictures 
-of their favorite locations to the page. */
-
-function addLocationImage() {
-    //fetchBlobstoreLocationsUrlAndShowForm();
-    //fetch('/location-form-handler', {method: 'POST'});
-
-}
+/* Week 4 - Blobstore usage on page accessible from the Locations page via a button (to location_imgupload.jsp). 
+The form on the page uses Blobstore to allow users to post pictures of their favorite locations to the page. */
 
 function fetchBlobstoreLocationsUrlAndShowForm() {
-  fetch('/blobstore-upload-location-url')
+  fetch('/location-img-upload', {method: 'GET'})
       .then((response) => {
         return response.text();
       })
@@ -294,18 +288,28 @@ function fetchBlobstoreLocationsUrlAndShowForm() {
         // Perhaps check that commments is a json array first...
         var imgArr = JSON.parse(locationImg);
 
-        var imgDivText = "<p>hiii</p>";
+        var imgParagraph = document.createElement("p");
 
         //nothing in here yet
         for (var i=0; i<imgArr.length; i++){
 
-            var img = imgArr[i].imgUrl;
-            var message = imgArr[i].imgMessage;
+            var img = document.createElement("img");
+            img.src = imgArr[i].imgUrl;
 
-            imgDivText += '<p>' + message + "</p>";
+            if(img.src){
+                var message = imgArr[i].imgMessage;
+                var imgText = document.createElement("p");
+                imgText.innerHTML = '<p>' + message + '</p>';
+
+                imgParagraph.appendChild(img);
+                imgParagraph.appendChild(imgText);
+
+            }
+
         }
 
-        imagesLocationContainer.innerHTML = imgDivText;
+        imagesLocationContainer.append(imgParagraph);
+
       });
     
 }
