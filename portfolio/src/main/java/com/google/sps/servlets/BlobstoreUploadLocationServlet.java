@@ -52,7 +52,7 @@ public class BlobstoreUploadLocationServlet extends HttpServlet {
       String message = (String) entity.getProperty("message");
       long id = entity.getKey().getId();
 
-      if (url != null && !url.contains("undefined")) {
+      if (url != null && !url.contains("blobkey=null")) {
         
         LocationImg img = new LocationImg(url, message, id);
 
