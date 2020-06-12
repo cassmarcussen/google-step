@@ -296,7 +296,7 @@ function fetchBlobstoreLocationsUrlAndShowForm() {
             var img = document.createElement("img");
             img.src = imgArr[i].imgUrl;
 
-            if(img.src){
+            if(img.src != null && img.src.indexOf("undefined") == -1){
 
                 //for one image
                 var singularImageDiv = document.createElement("div");
