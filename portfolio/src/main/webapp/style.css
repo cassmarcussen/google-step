@@ -183,9 +183,9 @@ button:hover, input:hover {
 
 #location-imgs {
     margin: 20px;
-    display: inline;
     text-align: center;
     align-items: center;
+    overflow: auto;
 }
 
 /* Based on w3schools image gallery (https://www.w3schools.com/css/css_image_gallery.asp) */
@@ -194,7 +194,7 @@ div.gallery {
   margin: 5px;
   border: 2px solid gainsboro;
   float: left;
-  width: 300px;
+  width: 30%;
   border-radius: 5%;
 }
 
