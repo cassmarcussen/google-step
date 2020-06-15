@@ -46,36 +46,71 @@ public final class FindMeetingQuery {
 
   }
 
-  /* Won't work b/c Java is pass-by-value not pass-by-reference
-  private void removeConflictingMeetingTimes(Collection<TimeRange> meetingTimes, Event event) {
+  private Collection<TimeRange> getViableMeetingDurations(Collection<TimeRange> badMeetingTimes, int durationOfMeeting) {
 
-  }
-*/
-
-  private Collection<TimeRange> getViableMeetingDurations(Collection<TimeRange> badMeetingTimes) {
-
-      Collection<TimeRange> viableMeetingDurations= new HashSet<>();
+      Collection<TimeRange> viableMeetingDurations= new ArrayList<>();
       // First, now that all bad meeting times have been added (without duplicates), convert badMeetingTimes to ArrayList and 
       List<TimeRange> badMeetingList = new ArrayList<TimeRange>(badMeetingTimes);
       
       // sort by start time of TimeRange. TimeRange.ORDER_BY_START is a custom pre-built comparator for sorting TimeRange by the start time
       Collections.sort(badMeetingList, TimeRange.ORDER_BY_START);
 
+      if (badMeetingList.size() <= 0) {
+          //no bad meeting times
+          TimeRange viableRange = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY + 1, false);
+          viableMeetingDurations.add(viableRange);
+
+          return viableMeetingDurations;
+      }
+
       // start time is TimeRange start time
       int startOfViableRange = TimeRange.START_OF_DAY;
       // end time good is first start time of bad time
       int endOfViableRange = badMeetingList.get(0).start();
 
-      for ()
+      int comparingIndex = 0;
+
+      while (comparingIndex < badMeetingList.size()) {
+
+          TimeRange firstBadRange = badMeetingList.get(comparingIndex);
+          if (endOfViableRange - startOfViableRange >= durationOfMeeting) {
+              TimeRange viableRange = TimeRange.fromStartEnd(startOfViableRange, endOfViableRange, false);
+              viableMeetingDurations.add(viableRange);
+          }
+
+          comparingIndex++;
+          while(comparingIndex < badMeetingList.size() && firstBadRange.overlaps(badMeetingList.get(comparingIndex))) {
+              //since noninclusive for end, if overlap at end, break, don't consider overlapped
+              /*if(firstBadRange.end() == (badMeetingList.get(comparingIndex)).start()) {
+                  break;
+              }
+              startOfViableRange = badMeetingList.get(comparingIndex).end();*/
+              comparingIndex++;
+          }
+          
+           startOfViableRange = badMeetingList.get(comparingIndex).end();
+
+          if(comparingIndex < badMeetingList.size()) {
+            endOfViableRange = badMeetingList.get(comparingIndex).start() + 1;
+          } else {
+            endOfViableRange = TimeRange.END_OF_DAY + 1;
+            break;
+          }
+          
+      }
+
+      // Add the last viable range, after we break out of while loop
+      if (endOfViableRange - startOfViableRange >= durationOfMeeting) {
+          //deal with noOptionsForTooLongOfARequest (doesn't work! fix)
+        TimeRange lastViableRange = TimeRange.fromStartEnd(startOfViableRange - 15, endOfViableRange, false);
+        viableMeetingDurations.add(lastViableRange);
+      }
 
       // if greater than or equal to duration, add
       // new start time good is end of bad time
       // while overlap with next time interval bad time, incrememnt start time to next end of bad time
       // end time good is next start of bad time
       // if greater than or equal to duration, add
-
-
-
 
       return viableMeetingDurations;
 
@@ -115,14 +150,14 @@ public final class FindMeetingQuery {
         if (eventAndMeetingShareAttendee) {
             // = or +15? b/c maybe can start/end same time different events?
             for (int startTime = startOfEvent; startTime < endOfEvent; startTime += 15){
-                TimeRange conflictingMeeting = TimeRange.fromStartDuration(startTime, durationOfMeeting);
+                TimeRange conflictingMeeting = TimeRange.fromStartEnd(startTime, startTime + durationOfMeeting, false);
                 badMeetingTimes.add(conflictingMeeting);
             }
         }
 
     }
 
-    viableMeetingDurations = getViableMeetingDurations(badMeetingTimes);
+    viableMeetingDurations = getViableMeetingDurations(badMeetingTimes, durationOfMeeting);
 
     return viableMeetingDurations;
 
