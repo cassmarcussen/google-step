@@ -14,10 +14,37 @@
 
 package com.google.sps;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+    //throw new UnsupportedOperationException("TODO: Implement this method.");
+
+    Collection<TimeRange> meetingTimes= new HashSet<>();
+
+    //convert to int, since MeetingRequest has long duration, but TimeRange has int duration
+    int durationOfMeeting = (int)request.getDuration();
+    int startOfDay = TimeRange.START_OF_DAY;
+    int endOfDay = TimeRange.END_OF_DAY;
+
+    // Increment every 15 minutes, and add all potential meeting times with duration to meetingTimes.
+    // My algorithm will work by deleting entires out of meetingTimes.
+    for (int startOfMeeting = startOfDay; startOfMeeting < endOfDay; startOfMeeting += 15) {
+        TimeRange meeting =  TimeRange.fromStartDuration(startOfMeeting, durationOfMeeting);
+        meetingTimes.add(meeting);
+    }
+
+    for (Event event : events) {
+
+        
+    }
+
+    return meetingTimes;
+
   }
 }
+
