@@ -55,6 +55,8 @@ public final class FindMeetingQuery {
       // sort by start time of TimeRange. TimeRange.ORDER_BY_START is a custom pre-built comparator for sorting TimeRange by the start time
       Collections.sort(badMeetingList, TimeRange.ORDER_BY_START);
 
+      //return badMeetingList;
+
       if (badMeetingList.size() <= 0) {
           //no bad meeting times
           TimeRange viableRange = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY + 1, false);
@@ -72,8 +74,12 @@ public final class FindMeetingQuery {
 
       while (comparingIndex < badMeetingList.size()) {
 
+          if((endOfViableRange - startOfViableRange) > TimeRange.WHOLE_DAY.duration()) {
+              return viableMeetingDurations;
+          }
+
           TimeRange firstBadRange = badMeetingList.get(comparingIndex);
-          if (endOfViableRange - startOfViableRange >= durationOfMeeting) {
+          if ((endOfViableRange - startOfViableRange) >= durationOfMeeting) {
               TimeRange viableRange = TimeRange.fromStartEnd(startOfViableRange, endOfViableRange, false);
               viableMeetingDurations.add(viableRange);
           }
@@ -81,17 +87,17 @@ public final class FindMeetingQuery {
           comparingIndex++;
           while(comparingIndex < badMeetingList.size() && firstBadRange.overlaps(badMeetingList.get(comparingIndex))) {
               //since noninclusive for end, if overlap at end, break, don't consider overlapped
-              /*if(firstBadRange.end() == (badMeetingList.get(comparingIndex)).start()) {
-                  break;
-              }
-              startOfViableRange = badMeetingList.get(comparingIndex).end();*/
-              comparingIndex++;
+              //if(firstBadRange.end() == (badMeetingList.get(comparingIndex)).start()) {
+                //  break;
+              //}
+               
+               comparingIndex++;
           }
-          
-           startOfViableRange = badMeetingList.get(comparingIndex).end();
+
+         startOfViableRange = badMeetingList.get(comparingIndex - 1).end();    
 
           if(comparingIndex < badMeetingList.size()) {
-            endOfViableRange = badMeetingList.get(comparingIndex).start() + 1;
+            endOfViableRange = badMeetingList.get(comparingIndex).start();
           } else {
             endOfViableRange = TimeRange.END_OF_DAY + 1;
             break;
@@ -100,9 +106,9 @@ public final class FindMeetingQuery {
       }
 
       // Add the last viable range, after we break out of while loop
-      if (endOfViableRange - startOfViableRange >= durationOfMeeting) {
+      if ((endOfViableRange - startOfViableRange) >= durationOfMeeting && (endOfViableRange - startOfViableRange + 15) < TimeRange.WHOLE_DAY.duration()) {
           //deal with noOptionsForTooLongOfARequest (doesn't work! fix)
-        TimeRange lastViableRange = TimeRange.fromStartEnd(startOfViableRange - 15, endOfViableRange, false);
+        TimeRange lastViableRange = TimeRange.fromStartEnd(startOfViableRange, endOfViableRange, false);
         viableMeetingDurations.add(lastViableRange);
       }
 
@@ -148,11 +154,14 @@ public final class FindMeetingQuery {
         boolean eventAndMeetingShareAttendee = doEventAndMeetingShareAttendee(event, request);
 
         if (eventAndMeetingShareAttendee) {
+
+            badMeetingTimes.add(timeRangeOfEvent);
             // = or +15? b/c maybe can start/end same time different events?
-            for (int startTime = startOfEvent; startTime < endOfEvent; startTime += 15){
+            /*for (int startTime = startOfEvent; startTime < endOfEvent; startTime += 15){
+            //for (int startTime = startOfEvent; startTime < startOfEvent + durationOfMeeting; startTime += 15){
                 TimeRange conflictingMeeting = TimeRange.fromStartEnd(startTime, startTime + durationOfMeeting, false);
                 badMeetingTimes.add(conflictingMeeting);
-            }
+            }*/
         }
 
     }
