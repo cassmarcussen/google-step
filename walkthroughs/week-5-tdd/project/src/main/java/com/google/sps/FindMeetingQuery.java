@@ -85,16 +85,18 @@ public final class FindMeetingQuery {
           }
 
           comparingIndex++;
+
+          //int furthestEndBad = 0;
           while(comparingIndex < badMeetingList.size() && firstBadRange.overlaps(badMeetingList.get(comparingIndex))) {
               //since noninclusive for end, if overlap at end, break, don't consider overlapped
               //if(firstBadRange.end() == (badMeetingList.get(comparingIndex)).start()) {
                 //  break;
               //}
-               
                comparingIndex++;
           }
 
-         startOfViableRange = badMeetingList.get(comparingIndex - 1).end();    
+         // startOfViableRange = furthestEndBad;
+          startOfViableRange = badMeetingList.get(comparingIndex - 1).end();    
 
           if(comparingIndex < badMeetingList.size()) {
             endOfViableRange = badMeetingList.get(comparingIndex).start();
@@ -133,6 +135,12 @@ public final class FindMeetingQuery {
 
     //convert to int, since MeetingRequest has long duration, but TimeRange has int duration
     int durationOfMeeting = (int)request.getDuration();
+
+    if(durationOfMeeting > TimeRange.WHOLE_DAY.duration()) {
+        //return empty (no options) for too long of a request
+        return new ArrayList<TimeRange>();
+    }
+
     int startOfDay = TimeRange.START_OF_DAY;
     int endOfDay = TimeRange.END_OF_DAY;
 
