@@ -86,17 +86,27 @@ public final class FindMeetingQuery {
 
           comparingIndex++;
 
-          //int furthestEndBad = 0;
-          while(comparingIndex < badMeetingList.size() && firstBadRange.overlaps(badMeetingList.get(comparingIndex))) {
-              //since noninclusive for end, if overlap at end, break, don't consider overlapped
-              //if(firstBadRange.end() == (badMeetingList.get(comparingIndex)).start()) {
-                //  break;
-              //}
+          
+          int furthestBadEnd =  badMeetingList.get(comparingIndex - 1).end();    
+          while(comparingIndex < badMeetingList.size() ) {
+
+               if(!firstBadRange.overlaps(badMeetingList.get(comparingIndex))) {
+
+                   break;
+               }
+
+               //startOfViableRange = badMeetingList.get(comparingIndex).end();    
+
+               if ( badMeetingList.get(comparingIndex).end() > furthestBadEnd ) {
+                   furthestBadEnd =  badMeetingList.get(comparingIndex).end();
+               }
+
                comparingIndex++;
+
           }
 
-         // startOfViableRange = furthestEndBad;
-          startOfViableRange = badMeetingList.get(comparingIndex - 1).end();    
+          startOfViableRange = furthestBadEnd;
+          //startOfViableRange = badMeetingList.get(comparingIndex - 1).end();    
 
           if(comparingIndex < badMeetingList.size()) {
             endOfViableRange = badMeetingList.get(comparingIndex).start();
@@ -143,13 +153,6 @@ public final class FindMeetingQuery {
 
     int startOfDay = TimeRange.START_OF_DAY;
     int endOfDay = TimeRange.END_OF_DAY;
-
-    // Increment every 15 minutes, and add all potential meeting times with duration to meetingTimes.
-    // My algorithm will work by deleting entires out of meetingTimes.
-    /*for (int startOfMeeting = startOfDay; startOfMeeting < endOfDay; startOfMeeting += 15) {
-        TimeRange meeting =  TimeRange.fromStartDuration(startOfMeeting, durationOfMeeting);
-        meetingTimes.add(meeting);
-    }*/
 
     for (Event event : events) {
 
