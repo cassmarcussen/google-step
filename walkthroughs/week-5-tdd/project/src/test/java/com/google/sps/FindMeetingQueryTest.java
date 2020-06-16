@@ -400,7 +400,7 @@ public final class FindMeetingQueryTest {
 
     Collection<TimeRange> actual = query.query(events, request);
     Collection<TimeRange> expected =
-        Arrays.asList(TimeRange.fromStartDuration(TIME_0900AM, DURATION_30_MINUTES),
+        Arrays.asList(TimeRange.fromStartDuration(TIME_0830AM, DURATION_60_MINUTES),
         TimeRange.fromStartEnd(TIME_1000AM, TIME_0130PM, false));
 
     Assert.assertEquals(expected, actual);
