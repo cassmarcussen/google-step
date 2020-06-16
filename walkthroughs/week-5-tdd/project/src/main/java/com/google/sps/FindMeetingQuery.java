@@ -24,6 +24,10 @@ import java.util.Set;
 
 public final class FindMeetingQuery {
 
+  /* doEventAndMeetingShareAttendee returns whether the meeting to schedule and a particular event (from the Events Collection) 
+  share attendees. If so, later on, the event must be added to the "bad meeting times" list, since a meeting cannot be scheduled 
+  during the time range of the event.
+   */
   private boolean doEventAndMeetingShareAttendee(Event event, MeetingRequest meeting) {
     
     Collection<String> attendeesOfMeeting = meeting.getAttendees();
@@ -49,10 +53,10 @@ public final class FindMeetingQuery {
   private Collection<TimeRange> getViableMeetingDurations(Collection<TimeRange> badMeetingTimes, int durationOfMeeting) {
 
       Collection<TimeRange> viableMeetingDurations= new ArrayList<>();
-      // First, now that all bad meeting times have been added (without duplicates), convert badMeetingTimes to ArrayList and 
+      // First, now that all bad meeting times have been added (without duplicates), convert badMeetingTimes to ArrayList 
       List<TimeRange> badMeetingList = new ArrayList<TimeRange>(badMeetingTimes);
       
-      // sort by start time of TimeRange. TimeRange.ORDER_BY_START is a custom pre-built comparator for sorting TimeRange by the start time
+      // Sort by start time of TimeRange. TimeRange.ORDER_BY_START is a custom pre-built comparator for sorting TimeRange by the start time
       Collections.sort(badMeetingList, TimeRange.ORDER_BY_START);
 
       if (badMeetingList.size() <= 0) {
@@ -63,19 +67,22 @@ public final class FindMeetingQuery {
           return viableMeetingDurations;
       }
 
-      // start time is TimeRange start time
+      // The initial start time is TimeRange start time of day
       int startOfViableRange = TimeRange.START_OF_DAY;
-      // end time good is first start time of bad time
+      // The initial end time good is the start time of the first (earliest) bad meeting
       int endOfViableRange = badMeetingList.get(0).start();
 
       int comparingIndex = 0;
 
+      // Add a viable meeting duration to the viableMeetingDurations list
       while (comparingIndex < badMeetingList.size()) {
 
+          // Do not include a duration greater than a whole day (error / edge case checking)
           if((endOfViableRange - startOfViableRange) > TimeRange.WHOLE_DAY.duration()) {
               return viableMeetingDurations;
           }
 
+          // If the duration is long enough between the end and start of the viable range, add the duration to viableMeetingDurations
           TimeRange firstBadRange = badMeetingList.get(comparingIndex);
           if ((endOfViableRange - startOfViableRange) >= durationOfMeeting) {
               TimeRange viableRange = TimeRange.fromStartEnd(startOfViableRange, endOfViableRange, false);
@@ -84,8 +91,13 @@ public final class FindMeetingQuery {
 
           comparingIndex++;
 
-          
           int furthestBadEnd =  badMeetingList.get(comparingIndex - 1).end();    
+
+          /* Handle the overlapping events. If events overlap, so long as our comparingIndex is 
+          still in the badMeetingList size range, we want to push our 'furthestBadEnd' (the latest end 
+          time of the overlapping bad meetings) to later times. This handles the case of nested events as well, 
+          since the bad meeting times are sorted by start time from earliest to latest and not end time.
+          */
           while(comparingIndex < badMeetingList.size() ) {
 
                if(!firstBadRange.overlaps(badMeetingList.get(comparingIndex))) {
@@ -101,8 +113,10 @@ public final class FindMeetingQuery {
 
           }
 
+          /* We set the start of the viable range equal to the furthest bad end time, i.e. we can begin our meeting 
+          in the range that starts with the end of the last overlapping event time.
+          */
           startOfViableRange = furthestBadEnd;
-          //startOfViableRange = badMeetingList.get(comparingIndex - 1).end();    
 
           if(comparingIndex < badMeetingList.size()) {
             endOfViableRange = badMeetingList.get(comparingIndex).start();
@@ -114,47 +128,42 @@ public final class FindMeetingQuery {
       }
 
       // Add the last viable range, after we break out of while loop
-      if ((endOfViableRange - startOfViableRange) >= durationOfMeeting && (endOfViableRange - startOfViableRange + 15) < TimeRange.WHOLE_DAY.duration()) {
+      if ((endOfViableRange - startOfViableRange) >= durationOfMeeting && (endOfViableRange - startOfViableRange) < TimeRange.WHOLE_DAY.duration()) {
         TimeRange lastViableRange = TimeRange.fromStartEnd(startOfViableRange, endOfViableRange, false);
         viableMeetingDurations.add(lastViableRange);
       }
-
-      // if greater than or equal to duration, add
-      // new start time good is end of bad time
-      // while overlap with next time interval bad time, incrememnt start time to next end of bad time
-      // end time good is next start of bad time
-      // if greater than or equal to duration, add
 
       return viableMeetingDurations;
 
   }
 
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    //throw new UnsupportedOperationException("TODO: Implement this method.");
 
-    // Use Collection so no duplicate elements
+    // Use Collection so that no duplicate elements (i.e. bad meeting times) are added
     Collection<TimeRange> badMeetingTimes= new HashSet<>();
 
-    // The Collection of viable meeting durations to return
+    // viableMeetingDurations is the Collection of viable meeting durations to return
     Collection<TimeRange> viableMeetingDurations;
 
-    //convert to int, since MeetingRequest has long duration, but TimeRange has int duration
+    // Convert to int, since MeetingRequest has long duration, but TimeRange has int duration
     int durationOfMeeting = (int)request.getDuration();
 
     if(durationOfMeeting > TimeRange.WHOLE_DAY.duration()) {
-        //return empty (no options) for too long of a request
+        // return empty (no options) for too long of a request (handles the noOptionsForTooLongOfARequest() test)
         return new ArrayList<TimeRange>();
     }
 
     int startOfDay = TimeRange.START_OF_DAY;
     int endOfDay = TimeRange.END_OF_DAY;
 
+
+    /* For each of the events in the Collection of Events, if the event and the meeting have shared attendees, we 
+    need to signify that the meeting cannot be scheduled during the duration of the event. Therefore, we add the 
+    time range of this event to badMeetingTimes.
+    */
     for (Event event : events) {
 
         TimeRange timeRangeOfEvent = event.getWhen();
-        int startOfEvent = timeRangeOfEvent.start();
-        int durationOfEvent = timeRangeOfEvent.duration();
-        int endOfEvent = timeRangeOfEvent.end();
 
         // eventAndMeetingShareAttendee is true if the event and the meeting share at least one attendee
         boolean eventAndMeetingShareAttendee = doEventAndMeetingShareAttendee(event, request);
