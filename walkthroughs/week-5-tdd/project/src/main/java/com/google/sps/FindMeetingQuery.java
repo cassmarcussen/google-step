@@ -55,8 +55,6 @@ public final class FindMeetingQuery {
       // sort by start time of TimeRange. TimeRange.ORDER_BY_START is a custom pre-built comparator for sorting TimeRange by the start time
       Collections.sort(badMeetingList, TimeRange.ORDER_BY_START);
 
-      //return badMeetingList;
-
       if (badMeetingList.size() <= 0) {
           //no bad meeting times
           TimeRange viableRange = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY + 1, false);
@@ -95,8 +93,6 @@ public final class FindMeetingQuery {
                    break;
                }
 
-               //startOfViableRange = badMeetingList.get(comparingIndex).end();    
-
                if ( badMeetingList.get(comparingIndex).end() > furthestBadEnd ) {
                    furthestBadEnd =  badMeetingList.get(comparingIndex).end();
                }
@@ -119,7 +115,6 @@ public final class FindMeetingQuery {
 
       // Add the last viable range, after we break out of while loop
       if ((endOfViableRange - startOfViableRange) >= durationOfMeeting && (endOfViableRange - startOfViableRange + 15) < TimeRange.WHOLE_DAY.duration()) {
-          //deal with noOptionsForTooLongOfARequest (doesn't work! fix)
         TimeRange lastViableRange = TimeRange.fromStartEnd(startOfViableRange, endOfViableRange, false);
         viableMeetingDurations.add(lastViableRange);
       }
@@ -167,12 +162,7 @@ public final class FindMeetingQuery {
         if (eventAndMeetingShareAttendee) {
 
             badMeetingTimes.add(timeRangeOfEvent);
-            // = or +15? b/c maybe can start/end same time different events?
-            /*for (int startTime = startOfEvent; startTime < endOfEvent; startTime += 15){
-            //for (int startTime = startOfEvent; startTime < startOfEvent + durationOfMeeting; startTime += 15){
-                TimeRange conflictingMeeting = TimeRange.fromStartEnd(startTime, startTime + durationOfMeeting, false);
-                badMeetingTimes.add(conflictingMeeting);
-            }*/
+
         }
 
     }
