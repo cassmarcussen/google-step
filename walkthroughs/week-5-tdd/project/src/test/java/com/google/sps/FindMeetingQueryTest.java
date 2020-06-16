@@ -405,5 +405,39 @@ public final class FindMeetingQueryTest {
 
     Assert.assertEquals(expected, actual);
   }
+
+  @Test
+  public void noOptionsForOnlyOptionalAttendees() {
+    // Have no mandatory attendees, just two optional attendees with several 
+    // gaps in their schedules. query should return that no time is available.
+    //
+    // Events  : |--A--|      |--A---|       |--A----|
+    //                 |---B--|      |--B----|
+    // Day     : |--------------------------------------|
+    // Options :       |-----|
+
+    Collection<Event> events = Arrays.asList(
+        new Event("Event 1", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0830AM, false),
+            Arrays.asList(PERSON_A)),
+        new Event("Event 2", TimeRange.fromStartDuration(TIME_0900AM, DURATION_30_MINUTES),
+            Arrays.asList(PERSON_A)),
+        new Event("Event 3", TimeRange.fromStartEnd(TIME_1000AM, TimeRange.END_OF_DAY, true),
+            Arrays.asList(PERSON_A)),
+        new Event("Event 4", TimeRange.fromStartDuration(TIME_0830AM, DURATION_30_MINUTES),
+            Arrays.asList(PERSON_B)),
+        new Event("Event 5", TimeRange.fromStartDuration(TIME_0930AM, DURATION_30_MINUTES),
+            Arrays.asList(PERSON_B)));
+
+    MeetingRequest request = new MeetingRequest(Arrays.asList(), DURATION_30_MINUTES);
+
+    request.addOptionalAttendee(PERSON_A);
+    request.addOptionalAttendee(PERSON_B);
+
+    Collection<TimeRange> actual = query.query(events, request);
+    Collection<TimeRange> expected =
+        Arrays.asList();
+
+    Assert.assertEquals(expected, actual);
+  }
 }
 
