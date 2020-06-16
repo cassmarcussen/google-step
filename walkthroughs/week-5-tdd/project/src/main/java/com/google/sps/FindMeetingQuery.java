@@ -28,9 +28,10 @@ public final class FindMeetingQuery {
   share attendees. If so, later on, the event must be added to the "bad meeting times" list, since a meeting cannot be scheduled 
   during the time range of the event.
    */
-  private boolean doEventAndMeetingShareAttendee(Event event, MeetingRequest meeting) {
+  private boolean doEventAndMeetingShareAttendee(Event event, MeetingRequest meeting, boolean onlyConsiderMandatoryAttendees) {
     
-    Collection<String> attendeesOfMeeting = meeting.getAttendees();
+    Collection<String> mandatoryAttendeesOfMeeting = meeting.getAttendees();
+    Collection<String> optionalAttendeesOfMeeting = meeting.getOptionalAttendees();
 
     Set<String> attendeesOfEventSet = event.getAttendees();
 
@@ -41,9 +42,18 @@ public final class FindMeetingQuery {
     boolean eventAndMeetingShareAttendee = false;
     for (int i = 0; i < attendeesOfEvent.length; i++)  
     { 
-        if(attendeesOfMeeting.contains((String)attendeesOfEvent[i])){
+        if(mandatoryAttendeesOfMeeting.contains((String)attendeesOfEvent[i])){
             eventAndMeetingShareAttendee = true;
         }
+
+        /* Only check the optional attendees collection for comparison if we should include optional attendees, 
+        as signified by the boolean parameter onlyConsiderMandatoryAttendees */
+        if (!onlyConsiderMandatoryAttendees) {
+             if(optionalAttendeesOfMeeting.contains((String)attendeesOfEvent[i])){
+                eventAndMeetingShareAttendee = true;
+            }
+        }
+
     } 
 
     return eventAndMeetingShareAttendee;
@@ -139,11 +149,17 @@ public final class FindMeetingQuery {
 
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
 
-    // Use Collection so that no duplicate elements (i.e. bad meeting times) are added
-    Collection<TimeRange> badMeetingTimes= new HashSet<>();
+    // Use Collection so that no duplicate elements (i.e. bad meeting times) are added. No optional attendees considered.
+    Collection<TimeRange> badMeetingTimesNoOptional = new HashSet<>();
+    // If include optional attendees
+    Collection<TimeRange> badMeetingTimesWithOptional = new HashSet<>();
 
     // viableMeetingDurations is the Collection of viable meeting durations to return
-    Collection<TimeRange> viableMeetingDurations;
+    // no optional attendees included
+    Collection<TimeRange> viableMeetingDurationsNoOptional;   
+    // with optional attendees 
+    Collection<TimeRange> viableMeetingDurationsWithOptional;
+
 
     // Convert to int, since MeetingRequest has long duration, but TimeRange has int duration
     int durationOfMeeting = (int)request.getDuration();
@@ -165,20 +181,38 @@ public final class FindMeetingQuery {
 
         TimeRange timeRangeOfEvent = event.getWhen();
 
-        // eventAndMeetingShareAttendee is true if the event and the meeting share at least one attendee
-        boolean eventAndMeetingShareAttendee = doEventAndMeetingShareAttendee(event, request);
+        // eventAndMeetingShareMandatoryAttendee is true if the event and the meeting share at least one mandatory attendee
+        boolean eventAndMeetingShareMandatoryAttendee = doEventAndMeetingShareAttendee(event, request, true);
 
-        if (eventAndMeetingShareAttendee) {
+         // eventAndMeetingShareAnyAttendee is true if the event and the meeting share at least one attendee, either mandatory or optional
+        boolean eventAndMeetingShareAnyAttendee = doEventAndMeetingShareAttendee(event, request, false);
 
-            badMeetingTimes.add(timeRangeOfEvent);
+        if (eventAndMeetingShareMandatoryAttendee) {
+            badMeetingTimesNoOptional.add(timeRangeOfEvent);
+        }
 
+        if (eventAndMeetingShareAnyAttendee) {
+            badMeetingTimesWithOptional.add(timeRangeOfEvent);
         }
 
     }
 
-    viableMeetingDurations = getViableMeetingDurations(badMeetingTimes, durationOfMeeting);
+    viableMeetingDurationsWithOptional = getViableMeetingDurations(badMeetingTimesWithOptional, durationOfMeeting);
+    viableMeetingDurationsNoOptional = getViableMeetingDurations(badMeetingTimesNoOptional, durationOfMeeting);
 
-    return viableMeetingDurations;
+    if (viableMeetingDurationsWithOptional.size() == 0 && request.getAttendees().size() > 0) {
+        /* If no meetings worked when including the optional attendees, and there exist mandatory attendees, 
+        return the time slots that fit just the mandatory attendees.
+        */
+        return viableMeetingDurationsNoOptional;
+    } else if (viableMeetingDurationsWithOptional.size() == 0 && request.getAttendees().size() == 0) {
+        /* If no meetings worked when including the optional attendees, and there do not exist mandatory attendees, 
+        i.e. there only exists optional attendees, then no options will work, and return an empty ArrayList. 
+        */
+        return new ArrayList<>();
+    }
+
+    return viableMeetingDurationsWithOptional;
 
   }
 }
