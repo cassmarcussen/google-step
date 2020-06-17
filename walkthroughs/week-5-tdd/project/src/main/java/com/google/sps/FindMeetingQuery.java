@@ -35,21 +35,18 @@ public final class FindMeetingQuery {
 
     Set<String> attendeesOfEventSet = event.getAttendees();
 
-    // Convert to array because Set does not have a method to get a certain element
-    Object[] attendeesOfEvent =  attendeesOfEventSet.toArray();
-
     // eventAndMeetingShareAttendee is true if the event and the meeting share at least one attendee
     boolean eventAndMeetingShareAttendee = false;
-    for (int i = 0; i < attendeesOfEvent.length; i++)  
+    for (String attendee : attendeesOfEventSet)  
     { 
-        if(mandatoryAttendeesOfMeeting.contains((String)attendeesOfEvent[i])){
+        if (mandatoryAttendeesOfMeeting.contains(attendee)) {
             eventAndMeetingShareAttendee = true;
         }
 
         /* Only check the optional attendees collection for comparison if we should include optional attendees, 
         as signified by the boolean parameter onlyConsiderMandatoryAttendees */
         if (!onlyConsiderMandatoryAttendees) {
-             if(optionalAttendeesOfMeeting.contains((String)attendeesOfEvent[i])){
+             if (optionalAttendeesOfMeeting.contains(attendee)) {
                 eventAndMeetingShareAttendee = true;
             }
         }
