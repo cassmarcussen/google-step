@@ -5,7 +5,9 @@
     <title>Cassandra's Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=B612&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="script.js"></script>
+    <script src="charts-script.js"></script>
   </head>
   <body>
     <div class="navbar">
@@ -14,6 +16,7 @@
         <a href="step_projects.html">STEP Projects</a>
         <a href="hobbies.html">Hobbies</a>
         <a href="funfacts.html">Fun Facts</a>
+        <a href="locations.html">Locations</a>
     </div>
     <div id="content">
         <div class="boxed-div-colorful">
@@ -25,6 +28,10 @@
             <button onclick="addRandomFunFact()">Generate a Fun Fact</button>
             <div id="funfact-table"></div>
             <div id="funfact-message"></div>
+        </div>
+        <div class="boxed-div">
+            <h2>Hover over the Pie Chart below to learn more about my pets:</h2>
+            <div class="chart-container" id="pie-chart-container"></div>  
         </div>
         <div class="boxed-div">
             <img src="images/xkcd_pointers.png" id="xkcd-pointers" alt="XKCD Pointers Cartoon" width="300">

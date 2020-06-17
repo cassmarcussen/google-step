@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cassandra's Portfolio</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQRISMdIJq3jAlCaJ0vjWNqHbTLbCZg8"></script>
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=B612&display=swap" rel="stylesheet">
+</head>
+<body onload="createColumbiaMap(); fetchBlobstoreLocationsUrlAndShowForm();">
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="step.html">STEP Internship</a>
+        <a href="step_projects.html">STEP Projects</a>
+        <a href="hobbies.html">Hobbies</a>
+        <a href="funfacts.html">Fun Facts</a>
+        <a href="locations.html">Locations</a>
+    </div>
+    <div id="content">
+        <div class="boxed-div-colorful">
+            <h1>Cassandra Marcussen's Locations</h1>
+            <p>This page displays locations which are special or useful to me.</p>
+        </div>
+        <div class="boxed-div">
+            <h2>Columbia University</h2>
+            <p>I'm a rising junior at Columbia University. This is a very special campus to me, and 
+                I can't wait to return, whenever that may be.
+            </p>
+            <p>
+              Click on the markers to learn more about my favorite spots on campus. 
+            </p>
+            <div id="map"></div>
+        </div>
+        <div class="boxed-div">
+            <h2>What's your favorite location? </h2>
+             <p>Especially during the outbreak of Coronavirus, I think we all find ourselves thinking about all of our favorite places around the world 
+                 that we wish we could visit. Because of this, I wanted to create a space on my website where anyone and everyone can post a picture of 
+                 their favorite locations in the world. This collective image gallery of some of the special locations around the world is a reminder of all 
+                 of the normal, the extraordinary, and everything in between that is special to us. I encourage you to post a picture of your favorite location, be it 
+                 near or far, and to reflect on what you value in the places that are most special to you.
+             </p>
+            <p>Click the button below to redirect to a form to submit a photo of your favorite location to upload on this website.</p>
+            <button onclick="location.href='/location_imgupload.jsp'">Submit a photo</button>
+            <div id="location-imgs"></div>
+        </div>
+    </div>
+</body>
+</html>
