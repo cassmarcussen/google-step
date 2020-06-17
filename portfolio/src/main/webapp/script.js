@@ -202,6 +202,126 @@ function deleteComments(myLocation){
 
 }
 
+/* Google Maps integration - Week 4 Libraries project */
+/** Creates a map and adds it to the page. */
+function createColumbiaMap() {
+  const map = new google.maps.Map(
+      document.getElementById('map'),
+      {center: {lat: 40.8075, lng: -73.9626}, zoom: 16});
+
+  addFavoriteSpot(
+      map, 40.8093798, -73.9599676, 'Mudd (CS Building)',
+      'The CS building! You can often find me coding away here...')
+
+  addFavoriteSpot(
+      map, 40.806427, -73.961655, 'Hartley Hall',
+      'My dorm room from Sophomore year! I lived in a suite with a couple friends, and across the hall from my girlfriend!');
+
+  addFavoriteSpot(
+      map, 40.808345, -73.960949, 'Avery',
+      'My favorite library: Avery');
+
+  addFavoriteSpot(
+      map, 40.807928, -73.964338, 'Pret',
+      'Pret - the best place to grab some espresso');
+
+  addFavoriteSpot(
+      map, 40.807854, -73.960917, 'Postcrypt Coffeehouse',
+      'Postcrypt is one of the most special places on campus. It is a rather hidden music venue in the postcrypt of the chapel on campus, where student musicians can perform their pieces.');
+
+  addFavoriteSpot(
+      map, 40.806403, -73.96322, 'Butler Library',
+      `Butler Library is an enormous, beautiful library on campus. To be honest, I spend most of my time there, at any time from the morning to midnight. 
+      I have really fond memories of grabbing espresso and chips at Blue Java, the coffee shop inside the library, and expanding my set of knowledge while 
+      reading and studying for hours on end. It's really fun when you bring friends along to study!`);
+
+   addFavoriteSpot(
+      map, 40.807845, -73.962125, 'Low Steps',
+      `Low Steps (also known as Low Beach when it is sunny outside, due to the crowds of people who sit on the steps) is one of the most well-known places 
+      on campus. It's an iconic place to take a photo if you are visiting campus. For me, when it's sunny outside, I love to study on the steps. This place is 
+      especially special to me because it's one of the places my girlfriend and I spent our first date.`);
+
+}
+
+function createWildlifeManagementMap() {
+
+    /* Create a map that displays all of Vermont */
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 7,
+        center: {lat: 43.8306202, lng: -72.309127}
+    });
+
+    // Set the stroke width, and fill color for each polygon
+    map.data.setStyle({
+        fillColor: 'blue',
+        strokeWeight: 1
+    });
+
+    // NOTE: This uses cross-domain XHR, and may not work on older browsers.
+    map.data.loadGeoJson(
+        'https://geodata.vermont.gov/datasets/5c9be3e39d9945a0bf1d58e1e812a554_164.geojson');
+}
+
+/** Adds a marker that shows an info window when clicked. */
+function addFavoriteSpot(map, lat, lng, title, description) {
+  const marker = new google.maps.Marker(
+      {position: {lat: lat, lng: lng}, map: map, title: title});
+
+  const infoWindow = new google.maps.InfoWindow({content: description});
+  marker.addListener('click', () => {
+    infoWindow.open(map, marker);
+  });
+}
+
+/* Week 4 - Blobstore usage on page accessible from the Locations page via a button (to location_imgupload.jsp). 
+The form on the page uses Blobstore to allow users to post pictures of their favorite locations to the page. */
+
+function fetchBlobstoreLocationsUrlAndShowForm() {
+  fetch('/location-img-upload', {method: 'GET'})
+      .then((response) => {
+        return response.text();
+      })
+      .then((locationImg) => {
+        
+        const imagesLocationContainer = document.getElementById('location-imgs');
+
+        // Perhaps check that commments is a json array first...
+        var imgArr = JSON.parse(locationImg);
+
+        var imgDiv = document.createElement("div");
+
+        //nothing in here yet
+        for (var i=0; i<imgArr.length; i++){
+
+            var img = document.createElement("img");
+            img.src = imgArr[i].imgUrl;
+
+            if(img.src != null && img.src.indexOf("undefined") == -1){
+
+                //for one image
+                var singularImageDiv = document.createElement("div");
+                singularImageDiv.classList.add("gallery");
+
+                var message = imgArr[i].imgMessage;
+                var imgText = document.createElement("p");
+                imgText.innerHTML = '<p>' + message + '</p>';
+                imgText.classList.add("img-caption");
+
+                singularImageDiv.appendChild(img);
+                singularImageDiv.appendChild(imgText);
+
+                imgDiv.appendChild(singularImageDiv);
+
+            }
+
+        }
+
+        imagesLocationContainer.append(imgDiv);
+
+      });
+    
+}
+
 /* For displaying comments, showingDisplayCommentButton controls whether the comments should be displayed or hidden.
 The reason for the existence of this variable is my decision to have the Display Comments button alternate between 
 "Display Comments" and "Hide Comments". I like the UI and display for this alternating button, which is why I have 

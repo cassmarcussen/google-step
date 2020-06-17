@@ -5,20 +5,27 @@
     <title>Cassandra's Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=B612&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQRISMdIJq3jAlCaJ0vjWNqHbTLbCZg8"></script>
     <script src="script.js"></script>
+    <script src="charts-script.js"></script>
   </head>
-  <body>
+  <!--Onload map creation is for Week 4 Google Maps feature. Onload blobstore is for Week 4 Blobstore feature. Onloads are typically declared in the body html tag. -->
+  <body onload="createWildlifeManagementMap();">
     <div class="navbar">
         <a href="index.html">Home</a>
         <a href="step.html">STEP Internship</a>
         <a href="step_projects.html">STEP Projects</a>
         <a href="hobbies.html">Hobbies</a>
         <a href="funfacts.html">Fun Facts</a>
+        <a href="locations.html">Locations</a>
     </div>
     <div id="content">
       <div class="boxed-div-colorful">
         <h1>STEP Internship Projects</h1>
-        <p>The sub-projects for the portfolio project of the STEP Internship 2020</p>
+        <p>The sub-projects for the portfolio project of the STEP Internship 2020. The goal of this page is 
+            to display each of my tasks for the weeks separately to track my progress each week.
+        </p>
       </div>
       <div class="boxed-div">
         <h2>Week 3 Servlets: Comments Section</h2>
@@ -54,6 +61,43 @@
             </div>
         </div > 
       </div>
+      <div class="boxed-div">
+          <h2>Week 4 Overview: Climate Reports</h2>
+          <p>For this week, I chose to learn how to use the Google Charts and Google Maps APIs. 
+              Below, for the two Week 4 sections, I use these skills to represent data from data sets 
+              in an interactive, visual format. I chose to focus on climate change data sets for both of the components.
+          </p>
+      </div>
+      <div class="boxed-div">
+        <h2>Week 4 Libraries: Google Charts</h2>   
+        <p>According to data.world (source linked below), the description of the data set is:  
+            <i>Contributors evaluated tweets for belief in the existence of global warming or climate change. 
+            The possible answers were "Yes" if the tweet suggests global warming is occurring, 
+            "No" if the tweet suggests global warming is not occurring, and "I can't tell" if the tweet is ambiguous or unrelated to global warming. 
+            We also provide a confidence score for the classification of each tweet.</i></p>
+        <p><button onclick="location.href='https://data.world/crowdflower/sentiment-of-climate-change'">Learn about the Data Set</button></p>
+        <p>In the histograpm below, "Yes" and "No" are represented, and N/A answers are not included. The x-axis is sentiment and the y-axis is the 
+            number of tweets corresponding to each sentiment. 
+        </p>
+        <div class="chart-container" id="globalwarming-chart-container"></div>     
+      </div>
+      <div class="boxed-div">
+        <h2>Week 4 Libraries: Google Maps</h2> 
+        <!---button onclick="location.href='/locations.html'">Locations</button-->  
+        <p>According to data.gov (source linked below), the description of the data set is:
+            <i>Dataset delineates the boundaries of the Vermont Fish and Wildlife Department's wildlife management units by which specific harvested species are managed. 
+                The units are determined based on vegetation, climate, and wildlife habitat features. 
+                The boundaries of the wildlife management units are select town or state highways.</i>
+        </p>
+        <p><button onclick="location.href='https://catalog.data.gov/dataset/wildlife-management-units'">Learn more about the Data Set</button></p>
+        <div id="map"></div>
+      </div>
+     <div class="boxed-div">
+        <h2>Week 4 Libraries: Blobstore</h2> 
+        <p>See the Locations tab.</p>
+      </div>
+
+     </div>
     </div>
   </body>
 </html>
