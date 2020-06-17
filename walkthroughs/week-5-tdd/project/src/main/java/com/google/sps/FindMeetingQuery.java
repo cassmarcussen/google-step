@@ -57,10 +57,15 @@ public final class FindMeetingQuery {
 
   }
 
+  /* Before we find the viable meeting times, we want to sort and reduce the bad meeting times, or in other words: 
+  sort the bad meeting times, then find the overlap in meeting times, then reduce the bad meeting times to larger, non-overlapping 
+  bad meeting times which encompass all of the original bad meeting times. This reduces the work-load of 
+  getViableMeetingDurations later on, and is a neater solution to this problem than just including this code in another function.
+  */
   private List<TimeRange> sortAndReduce(List<TimeRange> badMeetingTimesParam) {
 
     List<TimeRange> badMeetingTimes = badMeetingTimesParam;
-      // Sort, so we can find the overlapping times
+    // Sort, so we can find the overlapping times
     Collections.sort(badMeetingTimes, TimeRange.ORDER_BY_START);
 
     /* Handle the overlapping events. If events overlap, so long as our comparingIndex is 
@@ -68,7 +73,6 @@ public final class FindMeetingQuery {
     time of the overlapping bad meetings) to later times. This handles the case of nested events as well, 
     since the bad meeting times are sorted by start time from earliest to latest and not end time.
     */
-
     TimeRange firstBadRange;
 
     int currIndex = 0;
@@ -87,13 +91,11 @@ public final class FindMeetingQuery {
 
         // Need to check the comparingIndex < badMeetingTimes.size condition because we remove from the badMeetingTimes
         while(comparingIndex < badMeetingTimes.size() && firstBadRange.overlaps(badMeetingTimes.get(comparingIndex))) {
-
             if ( badMeetingTimes.get(comparingIndex).end() > furthestBadEnd ) {
                 furthestBadEnd =  badMeetingTimes.get(comparingIndex).end();
             }
 
             badMeetingTimes.remove(comparingIndex);
-
         }
 
         TimeRange combinedBadRange = TimeRange.fromStartEnd(furthestBadStart, furthestBadEnd, false);
@@ -105,7 +107,6 @@ public final class FindMeetingQuery {
         }
 
         currIndex++;
-
     }
 
     return badMeetingTimes;
@@ -170,7 +171,6 @@ public final class FindMeetingQuery {
       }
 
       return viableMeetingDurations;
-
   }
 
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
@@ -242,8 +242,6 @@ public final class FindMeetingQuery {
     }
  
     return viableMeetingDurationsWithOptional;
-
-
   }
 }
 
