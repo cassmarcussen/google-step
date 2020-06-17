@@ -57,10 +57,64 @@ public final class FindMeetingQuery {
 
   }
 
+  private List<TimeRange> sortAndReduce(List<TimeRange> badMeetingTimesParam) {
+
+    List<TimeRange> badMeetingTimes = badMeetingTimesParam;
+      // Sort, so we can find the overlapping times
+    Collections.sort(badMeetingTimes, TimeRange.ORDER_BY_START);
+
+    /* Handle the overlapping events. If events overlap, so long as our comparingIndex is 
+    still in the badMeetingList size range, we want to push our 'furthestBadEnd' (the latest end 
+    time of the overlapping bad meetings) to later times. This handles the case of nested events as well, 
+    since the bad meeting times are sorted by start time from earliest to latest and not end time.
+    */
+
+    TimeRange firstBadRange;
+
+    int currIndex = 0;
+    int furthestBadStart = 0;
+    int furthestBadEnd = 0;
+
+    // -1 b/c will increment and use currIndex + 1
+    while (currIndex < badMeetingTimes.size() - 1) {
+
+        firstBadRange = badMeetingTimes.get(currIndex);
+
+        furthestBadStart = firstBadRange.start();
+        furthestBadEnd = firstBadRange.end();
+
+        int comparingIndex = currIndex + 1;
+
+        // Need to check the comparingIndex < badMeetingTimes.size condition because we remove from the badMeetingTimes
+        while(comparingIndex < badMeetingTimes.size() && firstBadRange.overlaps(badMeetingTimes.get(comparingIndex))) {
+
+            if ( badMeetingTimes.get(comparingIndex).end() > furthestBadEnd ) {
+                furthestBadEnd =  badMeetingTimes.get(comparingIndex).end();
+            }
+
+            badMeetingTimes.remove(comparingIndex);
+
+        }
+
+        TimeRange combinedBadRange = TimeRange.fromStartEnd(furthestBadStart, furthestBadEnd, false);
+
+        // If the combinedBadRange is not equal to the firstBadRange, we must have accounted for some overlap, so replace
+        // firstBadRange with combinedBadRange in the badMeetingTimes.
+        if(!firstBadRange.equals(combinedBadRange)) {
+            badMeetingTimes.set(badMeetingTimes.indexOf(firstBadRange), combinedBadRange);
+        }
+
+        currIndex++;
+
+    }
+
+    return badMeetingTimes;
+  }
+
   private Collection<TimeRange> getViableMeetingDurations(Collection<TimeRange> badMeetingTimes, int durationOfMeeting) {
 
       Collection<TimeRange> viableMeetingDurations= new ArrayList<>();
-      // First, now that all bad meeting times have been added (without duplicates), convert badMeetingTimes to ArrayList 
+      // First, now that all bad meeting times have been added (without duplicates), store local copy of badMeetingTimes as ArrayList 
       List<TimeRange> badMeetingList = new ArrayList<TimeRange>(badMeetingTimes);
       
       // Sort by start time of TimeRange. TimeRange.ORDER_BY_START is a custom pre-built comparator for sorting TimeRange by the start time
@@ -96,34 +150,9 @@ public final class FindMeetingQuery {
               viableMeetingDurations.add(viableRange);
           }
 
+          startOfViableRange = badMeetingList.get(comparingIndex).end(); 
+
           comparingIndex++;
-
-          int furthestBadEnd =  badMeetingList.get(comparingIndex - 1).end();    
-
-          /* Handle the overlapping events. If events overlap, so long as our comparingIndex is 
-          still in the badMeetingList size range, we want to push our 'furthestBadEnd' (the latest end 
-          time of the overlapping bad meetings) to later times. This handles the case of nested events as well, 
-          since the bad meeting times are sorted by start time from earliest to latest and not end time.
-          */
-          while(comparingIndex < badMeetingList.size() ) {
-
-               if(!firstBadRange.overlaps(badMeetingList.get(comparingIndex))) {
-
-                   break;
-               }
-
-               if ( badMeetingList.get(comparingIndex).end() > furthestBadEnd ) {
-                   furthestBadEnd =  badMeetingList.get(comparingIndex).end();
-               }
-
-               comparingIndex++;
-
-          }
-
-          /* We set the start of the viable range equal to the furthest bad end time, i.e. we can begin our meeting 
-          in the range that starts with the end of the last overlapping event time.
-          */
-          startOfViableRange = furthestBadEnd;
 
           if(comparingIndex < badMeetingList.size()) {
             endOfViableRange = badMeetingList.get(comparingIndex).start();
@@ -147,9 +176,9 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
 
     // Use Collection so that no duplicate elements (i.e. bad meeting times) are added. No optional attendees considered.
-    Collection<TimeRange> badMeetingTimesNoOptional = new HashSet<>();
+    List<TimeRange> badMeetingTimesNoOptional = new ArrayList<TimeRange>();
     // If include optional attendees
-    Collection<TimeRange> badMeetingTimesWithOptional = new HashSet<>();
+    List<TimeRange> badMeetingTimesWithOptional = new ArrayList<TimeRange>();
 
     // viableMeetingDurations is the Collection of viable meeting durations to return
     // no optional attendees included
@@ -169,7 +198,6 @@ public final class FindMeetingQuery {
     int startOfDay = TimeRange.START_OF_DAY;
     int endOfDay = TimeRange.END_OF_DAY;
 
-
     /* For each of the events in the Collection of Events, if the event and the meeting have shared attendees, we 
     need to signify that the meeting cannot be scheduled during the duration of the event. Therefore, we add the 
     time range of this event to badMeetingTimes.
@@ -184,19 +212,23 @@ public final class FindMeetingQuery {
          // eventAndMeetingShareAnyAttendee is true if the event and the meeting share at least one attendee, either mandatory or optional
         boolean eventAndMeetingShareAnyAttendee = doEventAndMeetingShareAttendee(event, request, false);
 
-        if (eventAndMeetingShareMandatoryAttendee) {
+        // check that contains will work, call the equals of timerange
+        if (eventAndMeetingShareMandatoryAttendee && !badMeetingTimesNoOptional.contains(timeRangeOfEvent)) {
             badMeetingTimesNoOptional.add(timeRangeOfEvent);
         }
 
-        if (eventAndMeetingShareAnyAttendee) {
+        if (eventAndMeetingShareAnyAttendee && !badMeetingTimesWithOptional.contains(timeRangeOfEvent)) {
             badMeetingTimesWithOptional.add(timeRangeOfEvent);
         }
 
     }
 
+    badMeetingTimesNoOptional = sortAndReduce(badMeetingTimesNoOptional);
+    badMeetingTimesWithOptional = sortAndReduce(badMeetingTimesWithOptional);
+
     viableMeetingDurationsWithOptional = getViableMeetingDurations(badMeetingTimesWithOptional, durationOfMeeting);
     viableMeetingDurationsNoOptional = getViableMeetingDurations(badMeetingTimesNoOptional, durationOfMeeting);
-
+ 
     if (viableMeetingDurationsWithOptional.size() == 0 && request.getAttendees().size() > 0) {
         /* If no meetings worked when including the optional attendees, and there exist mandatory attendees, 
         return the time slots that fit just the mandatory attendees.
@@ -208,8 +240,9 @@ public final class FindMeetingQuery {
         */
         return new ArrayList<>();
     }
-
+ 
     return viableMeetingDurationsWithOptional;
+
 
   }
 }
