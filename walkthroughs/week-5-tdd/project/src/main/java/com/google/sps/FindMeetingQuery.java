@@ -28,8 +28,8 @@ public final class FindMeetingQuery {
   share attendees. If so, later on, the event must be added to the "bad meeting times" list, since a meeting cannot be scheduled 
   during the time range of the event.
    */
-  private boolean doEventAndMeetingShareAttendee(Event event, MeetingRequest meeting, boolean onlyConsiderMandatoryAttendees) {
-    
+  private boolean doEventAndMeetingShareAttendee(Event event, MeetingRequest meeting, boolean considerMandatoryAttendees, boolean considerOptionalAttendees) {
+
     Collection<String> mandatoryAttendeesOfMeeting = meeting.getAttendees();
     Collection<String> optionalAttendeesOfMeeting = meeting.getOptionalAttendees();
 
@@ -39,13 +39,17 @@ public final class FindMeetingQuery {
     boolean eventAndMeetingShareAttendee = false;
     for (String attendee : attendeesOfEventSet)  
     { 
-        if (mandatoryAttendeesOfMeeting.contains(attendee)) {
-            eventAndMeetingShareAttendee = true;
+        /* Only check the mandatory attendees collection for comparison if we should include mandatory attendees, 
+        as signified by the boolean parameter considerMandatoryAttendees */
+        if (considerMandatoryAttendees) {
+            if (mandatoryAttendeesOfMeeting.contains(attendee)) {
+                eventAndMeetingShareAttendee = true;
+            }
         }
 
         /* Only check the optional attendees collection for comparison if we should include optional attendees, 
-        as signified by the boolean parameter onlyConsiderMandatoryAttendees */
-        if (!onlyConsiderMandatoryAttendees) {
+        as signified by the boolean parameter considerOptionalAttendees */
+        if (considerOptionalAttendees) {
              if (optionalAttendeesOfMeeting.contains(attendee)) {
                 eventAndMeetingShareAttendee = true;
             }
@@ -64,7 +68,10 @@ public final class FindMeetingQuery {
   */
   private List<TimeRange> sortAndReduce(List<TimeRange> badMeetingTimesParam) {
 
+    // Original bad meeting times
     List<TimeRange> badMeetingTimes = badMeetingTimesParam;
+    // The merged bad meeting times to return
+    List<TimeRange> mergedBadMeetingTimes = new ArrayList<TimeRange>();
     // Sort, so we can find the overlapping times
     Collections.sort(badMeetingTimes, TimeRange.ORDER_BY_START);
 
@@ -79,8 +86,7 @@ public final class FindMeetingQuery {
     int furthestBadStart = 0;
     int furthestBadEnd = 0;
 
-    // -1 b/c will increment and use currIndex + 1
-    while (currIndex < badMeetingTimes.size() - 1) {
+    while (currIndex < badMeetingTimes.size()) {
 
         firstBadRange = badMeetingTimes.get(currIndex);
 
@@ -95,21 +101,19 @@ public final class FindMeetingQuery {
                 furthestBadEnd =  badMeetingTimes.get(comparingIndex).end();
             }
 
-            badMeetingTimes.remove(comparingIndex);
+            comparingIndex++;
         }
 
         TimeRange combinedBadRange = TimeRange.fromStartEnd(furthestBadStart, furthestBadEnd, false);
 
-        // If the combinedBadRange is not equal to the firstBadRange, we must have accounted for some overlap, so replace
-        // firstBadRange with combinedBadRange in the badMeetingTimes.
-        if(!firstBadRange.equals(combinedBadRange)) {
-            badMeetingTimes.set(badMeetingTimes.indexOf(firstBadRange), combinedBadRange);
-        }
+        // Add the merged bad time range (will be the initial bad time range we looked at if no overlap, 
+        // and will be the combined overlapped bad times if there was overlap
+        mergedBadMeetingTimes.add(combinedBadRange);
 
-        currIndex++;
+        currIndex = comparingIndex;
     }
 
-    return badMeetingTimes;
+    return mergedBadMeetingTimes;
   }
 
   private Collection<TimeRange> getViableMeetingDurations(Collection<TimeRange> badMeetingTimes, int durationOfMeeting) {
@@ -173,12 +177,30 @@ public final class FindMeetingQuery {
       return viableMeetingDurations;
   }
 
+  private Collection<TimeRange> findOptimalMeetings(Collection<TimeRange> viableMeetingMandatoryOnly, List<TimeRange> badMeetingTimesOptionalOnly) { 
+      
+      Collection<TimeRange> viableMeetingDurationsOptimized = new ArrayList<>();
+
+      for (TimeRange goodTimeRangeMandatoryOnly : viableMeetingMandatoryOnly) {
+        for (TimeRange badTimeRange : badMeetingTimesOptionalOnly) {
+            if (badTimeRange.overlaps(goodTimeRangeMandatoryOnly)) {
+
+            }
+        }
+      }
+
+        return viableMeetingMandatoryOnly;
+      //return viableMeetingDurationsOptimized;
+  }
+
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
 
     // Use Collection so that no duplicate elements (i.e. bad meeting times) are added. No optional attendees considered.
     List<TimeRange> badMeetingTimesNoOptional = new ArrayList<TimeRange>();
     // If include optional attendees
     List<TimeRange> badMeetingTimesWithOptional = new ArrayList<TimeRange>();
+    // Used for optimizing for including all mandatory and as many optional attendees as possible 
+    List<TimeRange> badMeetingTimesOptionalOnly = new ArrayList<TimeRange>();
 
     // viableMeetingDurations is the Collection of viable meeting durations to return
     // no optional attendees included
@@ -207,10 +229,13 @@ public final class FindMeetingQuery {
         TimeRange timeRangeOfEvent = event.getWhen();
 
         // eventAndMeetingShareMandatoryAttendee is true if the event and the meeting share at least one mandatory attendee
-        boolean eventAndMeetingShareMandatoryAttendee = doEventAndMeetingShareAttendee(event, request, true);
+        boolean eventAndMeetingShareMandatoryAttendee = doEventAndMeetingShareAttendee(event, request, true, false);
 
          // eventAndMeetingShareAnyAttendee is true if the event and the meeting share at least one attendee, either mandatory or optional
-        boolean eventAndMeetingShareAnyAttendee = doEventAndMeetingShareAttendee(event, request, false);
+        boolean eventAndMeetingShareAnyAttendee = doEventAndMeetingShareAttendee(event, request, true, true);
+
+        // eventAndMeetingShareOptionalAttendee is true if the event and the meeting share at least one optional attendee
+        boolean eventAndMeetingShareOptionalAttendee = doEventAndMeetingShareAttendee(event, request, false, true);
 
         // check that contains will work, call the equals of timerange
         if (eventAndMeetingShareMandatoryAttendee && !badMeetingTimesNoOptional.contains(timeRangeOfEvent)) {
@@ -219,6 +244,11 @@ public final class FindMeetingQuery {
 
         if (eventAndMeetingShareAnyAttendee && !badMeetingTimesWithOptional.contains(timeRangeOfEvent)) {
             badMeetingTimesWithOptional.add(timeRangeOfEvent);
+        }
+
+        // Used for optimizing the meeting times to include as many optional attendees as possible
+        if (eventAndMeetingShareOptionalAttendee && !badMeetingTimesOptionalOnly.contains(timeRangeOfEvent)) {
+            badMeetingTimesOptionalOnly.add(timeRangeOfEvent);
         }
 
     }
@@ -239,9 +269,16 @@ public final class FindMeetingQuery {
         i.e. there only exists optional attendees, then no options will work, and return an empty ArrayList. 
         */
         return new ArrayList<>();
+    } else {
+        /* Implement an optimized version of the optional attendee functionality. If no time exists for all optional 
+        and mandatory attendees, find the time slots that allow mandatory attendees and the greatest possible number of optional 
+        attendees to attend. */
+        //return findOptimalMeetings(viableMeetingDurationsNoOptional, badMeetingTimesOptionalOnly);
+
     }
- 
+
     return viableMeetingDurationsWithOptional;
+ 
   }
 }
 
