@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -177,20 +178,135 @@ public final class FindMeetingQuery {
       return viableMeetingDurations;
   }
 
-  private Collection<TimeRange> findOptimalMeetings(Collection<TimeRange> viableMeetingMandatoryOnly, List<TimeRange> badMeetingTimesOptionalOnly) { 
+  /* 
+  Note: This is an optional feature, and is not yet completely implemented.
+  */
+  private Collection<TimeRange> findOptimalMeetings(Collection<TimeRange> viableMeetingMandatoryOnly, Collection<Event> eventsWithOptionalAttendees, MeetingRequest request) { 
       
-      Collection<TimeRange> viableMeetingDurationsOptimized = new ArrayList<>();
+      // HashMap with TimeRange and number of optional attendees who can attend that duration
+      HashMap<TimeRange, Integer> viableMeetingDurationsOptimized = new HashMap<>();
 
-      for (TimeRange goodTimeRangeMandatoryOnly : viableMeetingMandatoryOnly) {
-        for (TimeRange badTimeRange : badMeetingTimesOptionalOnly) {
-            if (badTimeRange.overlaps(goodTimeRangeMandatoryOnly)) {
+      // Find the events that each optional attendee is going to
+      HashMap<String, ArrayList<TimeRange>> badTimesForEachOptionalAttendee = new HashMap<>();
 
-            }
-        }
+      Collection<String> optionalAttendees = request.getOptionalAttendees();
+
+      Integer numOptionalAttendeesOverall = optionalAttendees.size();
+
+      // First, assume all optional attendees can attend the viable meeting times for mandatory only.
+      // The algorithm works by removing optional attendees from the viable meeting times if they can't attend
+
+      for (TimeRange viableTime : viableMeetingMandatoryOnly) {
+        viableMeetingDurationsOptimized.put(viableTime, numOptionalAttendeesOverall);
       }
 
-        return viableMeetingMandatoryOnly;
-      //return viableMeetingDurationsOptimized;
+
+      for (String optionalAttendee : optionalAttendees) {
+
+        ArrayList<TimeRange> eventsForOptionalAttendee = new ArrayList<TimeRange>();
+
+        for (Event event : eventsWithOptionalAttendees) {
+            TimeRange eventTime = event.getWhen();
+            if (event.getAttendees().contains(optionalAttendee)) {
+                eventsForOptionalAttendee.add(eventTime);
+            }
+        }
+
+        badTimesForEachOptionalAttendee.put(optionalAttendee, eventsForOptionalAttendee);
+
+      }
+
+      for (String optionalAttendee : badTimesForEachOptionalAttendee.keySet()) {
+           ArrayList<TimeRange> badTimesForOptionalAttendee = badTimesForEachOptionalAttendee.get(optionalAttendee);
+
+            // Note: in each iteration, viableMeetinMandatoryOnly updates. If the next person can attend the viable time, 
+            // do nothing. If there is overlap, then you break apart the viable meeting time into smaller times and reduce the number who can attend 
+            // of the larger block.
+            for (TimeRange viableTime : viableMeetingMandatoryOnly) {
+                
+                ArrayList<TimeRange> overlappingBadTimes = new ArrayList<TimeRange>();
+                for (TimeRange badTime : badTimesForOptionalAttendee) {
+                    
+                    if(badTime.overlaps(viableTime)) {
+                        overlappingBadTimes.add(badTime);
+                    }
+
+                }
+
+                Collections.sort(overlappingBadTimes, TimeRange.ORDER_BY_START);
+
+                // If overlapping event for this attendee, the attendee cannot attend this longer duration
+                if (!overlappingBadTimes.isEmpty()) {
+
+                    int numOriginalAttendeesForViableTimeBlock = viableMeetingDurationsOptimized.get(viableTime);
+                    viableMeetingDurationsOptimized.replace(viableTime, numOriginalAttendeesForViableTimeBlock - 1);
+
+                    // We need to find the furthest end time to compare it to the end of the viable meeting time block
+                    int furthestEndTime = overlappingBadTimes.get(0).end();
+
+                    // we need to access index before and after current index, so that's why we iterate by index
+                    for (int i=0; i <overlappingBadTimes.size(); i++) {
+                        
+                        //add in all of the smaller times
+                        //HashMap<TimeRange, Integer> viableMeetingDurationsOptimized = new HashMap<>();
+                        
+                        TimeRange badTime = overlappingBadTimes.get(i);
+
+                        if (badTime.end() > furthestEndTime) {
+                            furthestEndTime = badTime.end();
+                        }
+
+                        // i==0 since this is for the first (earliest starting) event
+                        if (i == 0 && badTime.start() - viableTime.start() >= request.getDuration()) {
+
+                            //everyone can attend this block; it's just a shorter block
+                            TimeRange newViableTime = TimeRange.fromStartEnd(viableTime.start(), badTime.start(), false);
+                            viableMeetingDurationsOptimized.put(newViableTime, numOriginalAttendeesForViableTimeBlock);
+                        }
+                        
+                        // If the current bad time considered and the next one don't overlap and have a time block in between them greater than the duration time, 
+                        // add the time block in between them to the optimized viable meeting durations hashmap.
+                        if (i + 1 < overlappingBadTimes.size() && !overlappingBadTimes.get(i+1).overlaps(badTime) && overlappingBadTimes.get(i+1).start() - badTime.end() >= request.getDuration()) {
+                            //everyone can attend this block; it's just a shorter block
+                            TimeRange newViableTime = TimeRange.fromStartEnd(badTime.end(), overlappingBadTimes.get(i+1).start(), false);
+                            viableMeetingDurationsOptimized.put(newViableTime, numOriginalAttendeesForViableTimeBlock);
+                        }
+
+                    }
+
+                    if (viableTime.end() - furthestEndTime >= request.getDuration()) {
+                        TimeRange newViableTime = TimeRange.fromStartEnd(furthestEndTime, viableTime.end(), false);
+                        viableMeetingDurationsOptimized.put(newViableTime, numOriginalAttendeesForViableTimeBlock);
+                    }
+
+                }
+
+            }
+      }
+
+    /* Now, we have all the blocks of time that all mandatory attendees can attend, and some optional attendees can attend, 
+    along with the number of optional attendees who can attend each block of time.
+    Just return those blocks of time with the greatest number of optional attendees that can attend.
+    */
+    int topNumberOfOptionalAttendeesForAnyBlock = 0;
+
+    for (Integer numOptionalAttendeesForEvent : viableMeetingDurationsOptimized.values()) {
+        if ((int) numOptionalAttendeesForEvent > topNumberOfOptionalAttendeesForAnyBlock) {
+            topNumberOfOptionalAttendeesForAnyBlock = (int) numOptionalAttendeesForEvent;
+        }
+    }
+
+    ArrayList<TimeRange> timeRangesWithTopNumOfOptionalAttendees = new ArrayList<>();
+    for (TimeRange blockOfTime : viableMeetingDurationsOptimized.keySet()) {
+        if (viableMeetingDurationsOptimized.get(blockOfTime) == topNumberOfOptionalAttendeesForAnyBlock) {
+            timeRangesWithTopNumOfOptionalAttendees.add(blockOfTime);
+        }
+    }
+
+    Collections.sort(timeRangesWithTopNumOfOptionalAttendees, TimeRange.ORDER_BY_START);
+
+    return timeRangesWithTopNumOfOptionalAttendees;
+
   }
 
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
@@ -208,6 +324,7 @@ public final class FindMeetingQuery {
     // with optional attendees 
     Collection<TimeRange> viableMeetingDurationsWithOptional;
 
+    Collection<Event> eventsWithOptionalAttendees = new HashSet<>();
 
     // Convert to int, since MeetingRequest has long duration, but TimeRange has int duration
     int durationOfMeeting = (int)request.getDuration();
@@ -247,8 +364,13 @@ public final class FindMeetingQuery {
         }
 
         // Used for optimizing the meeting times to include as many optional attendees as possible
-        if (eventAndMeetingShareOptionalAttendee && !badMeetingTimesOptionalOnly.contains(timeRangeOfEvent)) {
-            badMeetingTimesOptionalOnly.add(timeRangeOfEvent);
+        if (eventAndMeetingShareOptionalAttendee && !eventsWithOptionalAttendees.contains(event)) {
+            //badMeetingTimesOptionalOnly.add(timeRangeOfEvent);
+
+            // For the optimizing to include all mandatory attendees and as many optional attendees as possible (we want the specific events 
+            // since we need to know the number of optional attendees
+            eventsWithOptionalAttendees.add(event);
+
         }
 
     }
@@ -269,15 +391,20 @@ public final class FindMeetingQuery {
         i.e. there only exists optional attendees, then no options will work, and return an empty ArrayList. 
         */
         return new ArrayList<>();
+    } else if (viableMeetingDurationsWithOptional.size() > 0 && request.getAttendees().size() == 0) {
+        /* If meetings worked including the optional attendees, and there does not exist mandatory attendees, 
+        return the time slots that fit just the optional attendees.
+        */
+       return viableMeetingDurationsWithOptional;
     } else {
         /* Implement an optimized version of the optional attendee functionality. If no time exists for all optional 
         and mandatory attendees, find the time slots that allow mandatory attendees and the greatest possible number of optional 
         attendees to attend. */
-        //return findOptimalMeetings(viableMeetingDurationsNoOptional, badMeetingTimesOptionalOnly);
+
+        Collection<String> optionalAttendees = request.getOptionalAttendees();
+        return findOptimalMeetings(viableMeetingDurationsNoOptional, eventsWithOptionalAttendees, request);
 
     }
-
-    return viableMeetingDurationsWithOptional;
  
   }
 }
