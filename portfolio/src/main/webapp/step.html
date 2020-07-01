@@ -248,6 +248,12 @@
             This process was really valuable, since it showed the importance of ideation and good teamwork. I am enthusiastic that the other two interns and I work very 
             well together as a team.
         </p>
+        <p>
+            After meeting with members of the YouTube Ads Formats - Infeed team and as a Pod with hosts and inters, we chose to select the video-to-effect project idea 
+            for the Capstone project. At the end of the week (Friday), the other two interns and I worked all day on our Design Doc for this idea. It is so exciting 
+            to see the project idea I had thought of come to life. I believe that this is a tool that is useful and necessary for both advertisers and Google engineers. 
+            I can't wait to get started! We also divided tasks and created visualizations of each of our three feature flows.
+        </p>
          <p>
             <button id="Week5-get-button" onclick=getComments("Week5")>Display Comments</button>
             <button onclick=deleteComments("Week5")>Delete all comments</button>
@@ -280,7 +286,28 @@
        </div>
        <div class="boxed-div">
         <h2>Week 6</h2>
-        <p>This week, I 
+        <p>This week, I started to work on the 'keyframe image to effect' flow of the Capstone project, which we have named Video Vigilance. Essentially, one intern will work on 
+            converting the video to keyframe images using shot change detection and image capturing. These keyframe images will be passed to my component of the project, which 
+            stores and displays these images and extracts each image's effect using the Cloud Vision API. The third component will extract and display the effect of the audio 
+            of the video advertisement. By 'effect', I am referring to the SafeSearch feature of the Vision API and Perspective API (for image and text, correspondingly), which 
+            return the type of sensitive content that is flagged in the content passed to the API.
+        </p>
+        <p>
+            I have implemented the Java servlets for Blobstore (GET/POST) to get and post keyframe images to a DataStore data set. I relied on tools I had learned 
+            during the starter project tutorials. The POST request will be called by the intern working on video-to-keyframe image. I will call the GET request in order to 
+            retrieve the keyframe images from the data set. Storing the images in a data set allows for reliability and extensibility in the structure of our web application. 
+            The Vision API requires that the images are stored in a Google Cloud Storage (GCS) Bucket, so next week I will work on integrating GCS in with Blobstore.
+        </p>
+        <p>
+            I also implemented the flow of the Vision API's SafeSearch functionality, which will take in a video from a GCS Bucket and extract its effect. I followed tutorials on the 
+            Google Cloud Vision API page to learn how to do this. I also worked on the front-end display of the website, so that the effect of the image 
+            is displayed using HTML meters and colors (indicating if the effect is good/medium/bad, with green/yellow/red), so that the user can understand the 
+            results of the Vision API's Safe Search visually.
+        </p>
+        <p>
+            I created Java servlets and a DetectSafeSearch file to handle getting the effect of the images. I also display the timestamp, start and end times 
+            of the shot in the video that the key frame image is from. I sort the keyframe images by timestamp and implemented the logic to only display flagged keyframe images, 
+            i.e. the keyframe images that do not pass the SafeSearch test.
         </p>
          <p>
             <button id="Week6-get-button" onclick=getComments("Week6")>Display Comments</button>
