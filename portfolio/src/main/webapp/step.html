@@ -183,8 +183,7 @@
             design and client-server interactions more deeply.
         </p>
         <p> Here is an overview of the features I added: 
-            Used the Google Charts API
-            <ul>
+            <ul style="text-align: left">
                 <li>STEP Projects page - interactive column chart of the global warming sentiment of tweets. My goal was to learn about data representation using data from an environmental study. </li>
                 <li>Fun Facts page - interactive pie chart of the distribution of my pets (by species/type) </li>
                 <li>STEP Projects page - Google Map representation geographical information about wildlife management units in Vermont. My goal was to learn about how to represent geographical information using the Google Maps API. </li>
@@ -194,7 +193,7 @@
         </p>
         <p>
             This week, I also worked on the Capstone project ideation. I came up with two ideas for the Capstone project, and added to the ideas 
-            and notesc about other proposed ideas. One of my ideas is a tool which displays the effect of the advertisement video to the advertiser, or 
+            and notes about other proposed ideas. One of my ideas is a tool which displays the effect of the advertisement video to the advertiser, or 
             in other words if the advertisement has a negative, violent, or harmful effect. The other idea is an accessibility metric for video or 
             immersive panel ads, which may also be incorporated into the first idea.
         </p>
@@ -230,7 +229,24 @@
        </div>
        <div class="boxed-div">
         <h2>Week 5</h2>
-        <p>This week, I 
+        <p>This week, I worked on both my Starter Project for Week 5 and the Capstone project ideation and design steps. For the Week 5 Starter 
+            Project, I implemented the calendar scheduler feature, for both mandatory and optional attendees, using test-driven development. 
+            My work on this project can be found under the "walkthroughs --> week 5" folder in the GitHub repository.
+        </p>
+        <p>
+            For this starter project, I focused on having a clean, extensible design. For example, when working on the functionality for scheduling 
+            calendar events for mandatory attendees, I created functions with one purpose each and flexible parameters, so that when it was time 
+            to work on the optional attendees functionality, I was able to add the new functionality with ease. This required just changing some parameters 
+            and making extra function calls, but was facilitated by my extensible design set up in the initial steps of this starter project.
+        </p>
+        <p>
+            For the starter project, I also wrote unit tests for edge cases and the optional attendees feature. This week, I also attended the PGP Livestream sessions for YouTube Ads.
+        </p>
+        <p>
+            This week, for the Capstone project, I met with the two other inters to solidify our preferences for the Capstone project ideas. We filled 
+            out the design doc ideation documents for our top two preferred Capstone project ideas. One of these ideas was the video-to-effect project idea I had proposed to the team. 
+            This process was really valuable, since it showed the importance of ideation and good teamwork. I am enthusiastic that the other two interns and I work very 
+            well together as a team.
         </p>
          <p>
             <button id="Week5-get-button" onclick=getComments("Week5")>Display Comments</button>
@@ -259,6 +275,74 @@
                 <input type="hidden" name="location" value="Week5" />
                 <br/><br/>
                 <button onclick=updateNumComments("Week5")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
+        <h2>Week 6</h2>
+        <p>This week, I 
+        </p>
+         <p>
+            <button id="Week6-get-button" onclick=getComments("Week6")>Display Comments</button>
+            <button onclick=deleteComments("Week6")>Delete all comments</button>
+            <button id="Week6-display-button" onclick=displayCommentBoxes("Week6")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week6"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week6">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week6" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week6" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week6" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week6")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
+        <h2>Week 7</h2>
+        <p>This week, I 
+        </p>
+         <p>
+            <button id="Week7-get-button" onclick=getComments("Week7")>Display Comments</button>
+            <button onclick=deleteComments("Week7")>Delete all comments</button>
+            <button id="Week7-display-button" onclick=displayCommentBoxes("Week7")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week7"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week7">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week7" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week7" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week7" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week7")>Submit</button>                   
             </div>
         </div>
        </div>
