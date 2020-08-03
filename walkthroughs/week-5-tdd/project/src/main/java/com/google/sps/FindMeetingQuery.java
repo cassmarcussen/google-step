@@ -391,20 +391,27 @@ public final class FindMeetingQuery {
         i.e. there only exists optional attendees, then no options will work, and return an empty ArrayList. 
         */
         return new ArrayList<>();
-    } else if (viableMeetingDurationsWithOptional.size() > 0 && request.getAttendees().size() == 0) {
+    }  else {
+        return viableMeetingDurationsWithOptional;
+    }
+    
+    /* 
+    Note: The commented-out code below is part of the Week 5 stretch goals. It is unfinished.
+    */
+    //else if (viableMeetingDurationsWithOptional.size() > 0 && request.getAttendees().size() == 0) {
         /* If meetings worked including the optional attendees, and there does not exist mandatory attendees, 
         return the time slots that fit just the optional attendees.
         */
-       return viableMeetingDurationsWithOptional;
-    } else {
+    //   return viableMeetingDurationsWithOptional;
+    //} else {
         /* Implement an optimized version of the optional attendee functionality. If no time exists for all optional 
         and mandatory attendees, find the time slots that allow mandatory attendees and the greatest possible number of optional 
         attendees to attend. */
 
-        Collection<String> optionalAttendees = request.getOptionalAttendees();
+    /*    Collection<String> optionalAttendees = request.getOptionalAttendees();
         return findOptimalMeetings(viableMeetingDurationsNoOptional, eventsWithOptionalAttendees, request);
 
-    }
+    }*/
  
   }
 }
