@@ -341,7 +341,23 @@
        </div>
        <div class="boxed-div">
         <h2>Week 7</h2>
-        <p>This week, I 
+        <p>This week, I completed the MVP for my standalone feature of Video Vigilance, the keyframe-images-to-effect feature. I worked on 
+            connecting Google Cloud Storage Bucket to Blobstore. There are a few main reasons behind needing to work on this: First, the Vision API requires that the images it parses the effect from are stored in a Bucket. 
+            Also, we want to connect Blobstore to Google Cloud Storage, instead of using just Google Cloud Storage, because we need to store other information about the keyframe images, primarily: their timestamp, and the start and end time of their shot in the video advertisement.
+        </p>
+        <p>
+            This week, I also implemented the logic for displaying only keyframe images which have been flagged for sensitive/negative content. 
+            Additionally, I implemented the logic for finding out the number of flagged keyframe images, and for displaying a ‘good job’ message if none of the video’s keyframe images have been flagged for sensitive content. 
+            I focused on making sure that the logic is organized, not redundant, and is attached to a clear, user-friendly UI.
+        </p>
+        <p>
+            I also worked on sorting the keyframe images by timestamp. This required finding a way to store the GCS image url in DataStore, and serving this url when it retrieved from DataStore. 
+            In regards to the Java servlets for DataStore, I implemented a Delete request for the keyframe image storage. 
+            This empties the content of the GCS bucket and DataStore, so that the information that is served on the page is guaranteed to be the data from the particular user’s video advertisement, not leftover data from past website uses. 
+            I also updated the UI to be consistent with the index page’s UI and design.
+        </p>
+        <p>
+            ADD CHALLENGES
         </p>
          <p>
             <button id="Week7-get-button" onclick=getComments("Week7")>Display Comments</button>
