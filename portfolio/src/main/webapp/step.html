@@ -189,7 +189,7 @@
                 <li>STEP Projects page - Google Map representation geographical information about wildlife management units in Vermont. My goal was to learn about how to represent geographical information using the Google Maps API. </li>
                 <li>Locations page - Google Map of Columbia University with markers and info windows to locate and describe my favorite locations around campus.</li>
                 <li>Locations page  (which includes a button that routes to a page to post an image) - Blobstore API so that page viewers can post images of their favorite locations to a collective image gallery. The goal was to extend my Locations page to make it more interactive, to learn how to use Blobstore to create a meaningful section of my website, and to learn how to create and style an image gallery using HTML and CSS.</li>
-            <ul>
+            </ul>
         </p>
         <p>
             This week, I also worked on the Capstone project ideation. I came up with two ideas for the Capstone project, and added to the ideas 
@@ -374,9 +374,179 @@
         </div>
        </div>
        <div class="boxed-div">
+        <h2>Week 8</h2>
+        <p>This week, I 
+        </p>
+         <p>
+            <button id="Week8-get-button" onclick=getComments("Week8")>Display Comments</button>
+            <button onclick=deleteComments("Week8")>Delete all comments</button>
+            <button id="Week8-display-button" onclick=displayCommentBoxes("Week8")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week8"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week8">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week8" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week8" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week8" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week8")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
+        <h2>Week 9</h2>
+        <p>This week, I 
+        </p>
+         <p>
+            <button id="Week9-get-button" onclick=getComments("Week9")>Display Comments</button>
+            <button onclick=deleteComments("Week9")>Delete all comments</button>
+            <button id="Week9-display-button" onclick=displayCommentBoxes("Week9")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week9"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week9">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week9" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week9" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week9" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week9")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
+        <h2>Week 10</h2>
+        <p>This week, I 
+        </p>
+         <p>
+            <button id="Week10-get-button" onclick=getComments("Week10")>Display Comments</button>
+            <button onclick=deleteComments("Week10")>Delete all comments</button>
+            <button id="Week10-display-button" onclick=displayCommentBoxes("Week10")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week10"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week10">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week10" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week10" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week10" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week10")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
+        <h2>Week 11</h2>
+        <p>This week, I 
+        </p>
+         <p>
+            <button id="Week11-get-button" onclick=getComments("Week11")>Display Comments</button>
+            <button onclick=deleteComments("Week11")>Delete all comments</button>
+            <button id="Week11-display-button" onclick=displayCommentBoxes("Week11")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week11"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week11">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week11" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week11" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week11" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week11")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
+        <h2>Week 12</h2>
+        <p>This week, I 
+        </p>
+         <p>
+            <button id="Week12-get-button" onclick=getComments("Week12")>Display Comments</button>
+            <button onclick=deleteComments("Week12")>Delete all comments</button>
+            <button id="Week12-display-button" onclick=displayCommentBoxes("Week12")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week12"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week12">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week12" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week12" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week12" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week12")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
         <h1>Challenges</h1>
         <p>Understanding and adjusting to Google's standards for code and design, and applying these standards to my own code</p>
-        <p>[To be added to throughout the internship]</p>
+        <p>Figuring out how to set up keys for the APIs I am using in my component of the Capstone project.</p>
         <p>
             <button id="Challenges-get-button" onclick=getComments("Challenges")>Display Comments</button>
             <button onclick=deleteComments("Challenges")>Delete all comments</button>
