@@ -160,6 +160,109 @@
         </div>
        </div>
        <div class="boxed-div">
+        <h2>Week 4</h2>
+        <p>This week, I learned how to use various Google APIs and libraries and integrated them into my website. I initially 
+            chose to learn how to use the Google Charts and Google Maps API, and afterwards added the usage of the Blobstore API as 
+            well. Even though we only had to use each API once, for two APIs, I wanted to incorporate in Blobstore as a third API because 
+            I thought it could potentially be useful to know for the upcoming Capstone project. Throughout the week, I learned how 
+            to represent data from data sets using Google Charts and Google Maps. I also used Charts in my Fun Facts page to add a visual 
+            about my pets, and added a Locations page with an interactive map of Columbia's campus and collective photo gallery of the page 
+            viewers' favorite locations around the world.
+        </p>
+        <p>
+            One of the challenges of this week was figuring out how to incorporate the API features into my portfolio website. When given 
+            the APIs to choose from in the tutorials page, I found that the APIs I was most interested in learning had less of a direct or 
+            intuitive application to my website. This is part of the reason why I have a STEP Projects page on my website, so that I can 
+            expand my skill set on features which do not directly relate to the website. Part of figuring out this incorporation was adding a 
+            Locations page. I think this is a fun way to learn more about me, which is one of the main objectives of the Portfolio website.
+        </p>
+        <p>
+            Another challenge was figuring out how to integrate in data of various forms to the features. For example, for the Charts and Maps API, 
+            I incorporated in data from a data set in CSV form and geoJSON form, correspondingly. For Locations, figuring out how to serve and gather 
+            the images using the Blobstore proved to be a challenge. Working with this information of various forms, however, pushed me to think about 
+            design and client-server interactions more deeply.
+        </p>
+        <p> Here is an overview of the features I added: 
+            Used the Google Charts API
+            <ul>
+                <li>STEP Projects page - interactive column chart of the global warming sentiment of tweets. My goal was to learn about data representation using data from an environmental study. </li>
+                <li>Fun Facts page - interactive pie chart of the distribution of my pets (by species/type) </li>
+                <li>STEP Projects page - Google Map representation geographical information about wildlife management units in Vermont. My goal was to learn about how to represent geographical information using the Google Maps API. </li>
+                <li>Locations page - Google Map of Columbia University with markers and info windows to locate and describe my favorite locations around campus.</li>
+                <li>Locations page  (which includes a button that routes to a page to post an image) - Blobstore API so that page viewers can post images of their favorite locations to a collective image gallery. The goal was to extend my Locations page to make it more interactive, to learn how to use Blobstore to create a meaningful section of my website, and to learn how to create and style an image gallery using HTML and CSS.</li>
+            <ul>
+        </p>
+        <p>
+            This week, I also worked on the Capstone project ideation. I came up with two ideas for the Capstone project, and added to the ideas 
+            and notesc about other proposed ideas. One of my ideas is a tool which displays the effect of the advertisement video to the advertiser, or 
+            in other words if the advertisement has a negative, violent, or harmful effect. The other idea is an accessibility metric for video or 
+            immersive panel ads, which may also be incorporated into the first idea.
+        </p>
+         <p>
+            <button id="Week4-get-button" onclick=getComments("Week4")>Display Comments</button>
+            <button onclick=deleteComments("Week4")>Delete all comments</button>
+            <button id="Week4-display-button" onclick=displayCommentBoxes("Week4")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week4"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week4">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week4" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week4" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week4" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week4")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
+        <h2>Week 5</h2>
+        <p>This week, I 
+        </p>
+         <p>
+            <button id="Week5-get-button" onclick=getComments("Week5")>Display Comments</button>
+            <button onclick=deleteComments("Week5")>Delete all comments</button>
+            <button id="Week5-display-button" onclick=displayCommentBoxes("Week5")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week5"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week5">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week5" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week5" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week5" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week5")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
         <h1>Challenges</h1>
         <p>Understanding and adjusting to Google's standards for code and design, and applying these standards to my own code</p>
         <p>[To be added to throughout the internship]</p>
