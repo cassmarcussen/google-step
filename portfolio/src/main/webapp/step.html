@@ -183,18 +183,17 @@
             design and client-server interactions more deeply.
         </p>
         <p> Here is an overview of the features I added: 
-            Used the Google Charts API
-            <ul>
+            <ul style="text-align: left">
                 <li>STEP Projects page - interactive column chart of the global warming sentiment of tweets. My goal was to learn about data representation using data from an environmental study. </li>
                 <li>Fun Facts page - interactive pie chart of the distribution of my pets (by species/type) </li>
                 <li>STEP Projects page - Google Map representation geographical information about wildlife management units in Vermont. My goal was to learn about how to represent geographical information using the Google Maps API. </li>
                 <li>Locations page - Google Map of Columbia University with markers and info windows to locate and describe my favorite locations around campus.</li>
                 <li>Locations page  (which includes a button that routes to a page to post an image) - Blobstore API so that page viewers can post images of their favorite locations to a collective image gallery. The goal was to extend my Locations page to make it more interactive, to learn how to use Blobstore to create a meaningful section of my website, and to learn how to create and style an image gallery using HTML and CSS.</li>
-            <ul>
+            </ul>
         </p>
         <p>
             This week, I also worked on the Capstone project ideation. I came up with two ideas for the Capstone project, and added to the ideas 
-            and notesc about other proposed ideas. One of my ideas is a tool which displays the effect of the advertisement video to the advertiser, or 
+            and notes about other proposed ideas. One of my ideas is a tool which displays the effect of the advertisement video to the advertiser, or 
             in other words if the advertisement has a negative, violent, or harmful effect. The other idea is an accessibility metric for video or 
             immersive panel ads, which may also be incorporated into the first idea.
         </p>
@@ -230,7 +229,30 @@
        </div>
        <div class="boxed-div">
         <h2>Week 5</h2>
-        <p>This week, I 
+        <p>This week, I worked on both my Starter Project for Week 5 and the Capstone project ideation and design steps. For the Week 5 Starter 
+            Project, I implemented the calendar scheduler feature, for both mandatory and optional attendees, using test-driven development. 
+            My work on this project can be found under the "walkthroughs --> week 5" folder in the GitHub repository.
+        </p>
+        <p>
+            For this starter project, I focused on having a clean, extensible design. For example, when working on the functionality for scheduling 
+            calendar events for mandatory attendees, I created functions with one purpose each and flexible parameters, so that when it was time 
+            to work on the optional attendees functionality, I was able to add the new functionality with ease. This required just changing some parameters 
+            and making extra function calls, but was facilitated by my extensible design set up in the initial steps of this starter project.
+        </p>
+        <p>
+            For the starter project, I also wrote unit tests for edge cases and the optional attendees feature. This week, I also attended the PGP Livestream sessions for YouTube Ads.
+        </p>
+        <p>
+            This week, for the Capstone project, I met with the two other inters to solidify our preferences for the Capstone project ideas. We filled 
+            out the design doc ideation documents for our top two preferred Capstone project ideas. One of these ideas was the video-to-effect project idea I had proposed to the team. 
+            This process was really valuable, since it showed the importance of ideation and good teamwork. I am enthusiastic that the other two interns and I work very 
+            well together as a team.
+        </p>
+        <p>
+            After meeting with members of the YouTube Ads Formats - Infeed team and as a Pod with hosts and inters, we chose to select the video-to-effect project idea 
+            for the Capstone project. At the end of the week (Friday), the other two interns and I worked all day on our Design Doc for this idea. It is so exciting 
+            to see the project idea I had thought of come to life. I believe that this is a tool that is useful and necessary for both advertisers and Google engineers. 
+            I can't wait to get started! We also divided tasks and created visualizations of each of our three feature flows.
         </p>
          <p>
             <button id="Week5-get-button" onclick=getComments("Week5")>Display Comments</button>
@@ -263,9 +285,401 @@
         </div>
        </div>
        <div class="boxed-div">
+        <h2>Week 6</h2>
+        <p>This week, I started to work on the 'keyframe image to effect' flow of the Capstone project, which we have named Video Vigilance. Essentially, one intern will work on 
+            converting the video to keyframe images using shot change detection and image capturing. These keyframe images will be passed to my component of the project, which 
+            stores and displays these images and extracts each image's effect using the Cloud Vision API. The third component will extract and display the effect of the audio 
+            of the video advertisement. By 'effect', I am referring to the SafeSearch feature of the Vision API and Perspective API (for image and text, correspondingly), which 
+            return the type of sensitive content that is flagged in the content passed to the API.
+        </p>
+        <p>
+            I have implemented the Java servlets for Blobstore (GET/POST) to get and post keyframe images to a DataStore data set. I relied on tools I had learned 
+            during the starter project tutorials. The POST request will be called by the intern working on video-to-keyframe image. I will call the GET request in order to 
+            retrieve the keyframe images from the data set. Storing the images in a data set allows for reliability and extensibility in the structure of our web application. 
+            The Vision API requires that the images are stored in a Google Cloud Storage (GCS) Bucket, so next week I will work on integrating GCS in with Blobstore.
+        </p>
+        <p>
+            I also implemented the flow of the Vision API's SafeSearch functionality, which will take in a video from a GCS Bucket and extract its effect. I followed tutorials on the 
+            Google Cloud Vision API page to learn how to do this. I also worked on the front-end display of the website, so that the effect of the image 
+            is displayed using HTML meters and colors (indicating if the effect is good/medium/bad, with green/yellow/red), so that the user can understand the 
+            results of the Vision API's Safe Search visually.
+        </p>
+        <p>
+            I created Java servlets and a DetectSafeSearch file to handle getting the effect of the images. I also display the timestamp, start and end times 
+            of the shot in the video that the key frame image is from. I sort the keyframe images by timestamp and implemented the logic to only display flagged keyframe images, 
+            i.e. the keyframe images that do not pass the SafeSearch test.
+        </p>
+         <p>
+            <button id="Week6-get-button" onclick=getComments("Week6")>Display Comments</button>
+            <button onclick=deleteComments("Week6")>Delete all comments</button>
+            <button id="Week6-display-button" onclick=displayCommentBoxes("Week6")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week6"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week6">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week6" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week6" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week6" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week6")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
+        <h2>Week 7</h2>
+        <p>This week, I completed the MVP for my standalone feature of Video Vigilance, the keyframe-images-to-effect feature. I worked on 
+            connecting Google Cloud Storage Bucket to Blobstore. There are a few main reasons behind needing to work on this: First, the Vision API requires that the images it parses the effect from are stored in a Bucket. 
+            Also, we want to connect Blobstore to Google Cloud Storage, instead of using just Google Cloud Storage, because we need to store other information about the keyframe images, primarily: their timestamp, and the start and end time of their shot in the video advertisement.
+        </p>
+        <p>
+            This week, I also implemented the logic for displaying only keyframe images which have been flagged for sensitive/negative content. 
+            Additionally, I implemented the logic for finding out the number of flagged keyframe images, and for displaying a ‘good job’ message if none of the video’s keyframe images have been flagged for sensitive content. 
+            I focused on making sure that the logic is organized, not redundant, and is attached to a clear, user-friendly UI.
+        </p>
+        <p>
+            I also worked on sorting the keyframe images by timestamp. This required finding a way to store the GCS image url in DataStore, and serving this url when it retrieved from DataStore. 
+            In regards to the Java servlets for DataStore, I implemented a Delete request for the keyframe image storage. 
+            This empties the content of the GCS bucket and DataStore, so that the information that is served on the page is guaranteed to be the data from the particular user’s video advertisement, not leftover data from past website uses. 
+            I also updated the UI to be consistent with the index page’s UI and design.
+        </p>
+        <p>
+            A challenge is that we still need to figure out how to connect the extraction of keyframe images from the video (another intern's feature) to the POST request to GCS and DataStore that I have created.
+        </p>
+         <p>
+            <button id="Week7-get-button" onclick=getComments("Week7")>Display Comments</button>
+            <button onclick=deleteComments("Week7")>Delete all comments</button>
+            <button id="Week7-display-button" onclick=displayCommentBoxes("Week7")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week7"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week7">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week7" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week7" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week7" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week7")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
+        <h2>Week 8</h2>
+        <p>This week, one of my main areas of accomplishment was testing my Java code using jUnit, Mockito, and Spring. Specifically, I worked on testing my 
+            POST and GET requests for the KeyframeImageUploadServlet. I also tested my POST request for the KeyframeImageDeleteServlet, i.e. the method that deletes all objects from Datastore and the Google Cloud Storage Bucket. 
+            Additionally, I tested my API call for the Vision API's SafeSearch detection method and the handling of incorrectly formatted bucket path urls. 
+            This was a challenge because testing Java code is new to me, outside of using print statements and other more basic testing methods. I spent a lot 
+            of time reading through tutorials for jUnit, Mockito, and Spring, and especially found it difficult to mock out get and post methods despite 
+            permission errors that come with these methods when using the Blobstore API. After a lot of hard work on this task, I am proud of my progress in this area 
+            and am working towards 100% code coverage for my tests.
+        </p>
+        <p>I also made progress on Code Reviews this week, alongside the other two interns in my pod. With the other two interns, established a more productive schedule and system of requesting and giving feedback on our code. 
+            Additionally, I learned to create Pull Requests which correspond to one feature or addition, instead of Pull Requests for improvements on multiple features. 
+            I also am making progress on giving descriptive, thoughtful comments and feedback on my Pull Reviews. I am new to the process of giving feedback on code, 
+            so this has been a great learning experience and opportunity for growth. 
+        </p>
+        <p>
+            This week, I also cleaned up my code, based on PR comments and Google style guidelines. I also integrated all three features of Video Vigilance, alongside 
+            the other two interns. Additionally, I pair programmed with Sharon over GVC to figure out the POST request to post the keyframe images 
+            she extracts from the video to a database, which required using Ajax to fill in the jsp upload form. 
+            The POST request must be done in this way due to Blobstore authentication errors, where the POST must be called from a valid blob address. I also met with the other 
+            two interns to discuss the UI and how our features will be displayed together. I created a diagram using Google Drawings of a potential UI fix for the Results page. We created a merged version of the web application on a testing branch.
+        </p>    
+        <p>
+            A challenge this week was testing APIs that have Permission Errors on the local website, such as the Vision API. Also, 
+            testing the POST and GET for Blobstore is difficult because these requests must be called from a 'valid blob location' due to 
+            Blobstore API specifications. An area of growth was learning how to give constructive feedback on Pull Requests.
+        </p>
+         <p>
+            <button id="Week8-get-button" onclick=getComments("Week8")>Display Comments</button>
+            <button onclick=deleteComments("Week8")>Delete all comments</button>
+            <button id="Week8-display-button" onclick=displayCommentBoxes("Week8")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week8"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week8">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week8" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week8" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week8" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week8")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
+        <h2>Week 9</h2>
+        <p>Based on the feedback from other interns and hosts, this week I updated the UI of the meter to more clearly show how many values the meter can take on. 
+            To do this, I split up the meter into 5 distinct sections. Also, I move the information hover buttons to each individual category of the Vision API's SafeSearch detection. 
+            I also worked on edge case management. For example, I considered the edge case that there are multiple users of the website at the same time. 
+            For this edge case, we need to give each user a unique DataStore list, so that if two or more users are using Video Vigilance simultaneously their information is kept in different locations and each of the users’ list of 
+            keyframe images stored does not interfere with the other users’ information. 
+            I implemented this feature for POST and GET, and still need to work on making this feature compatible with the Delete method.
+        </p>
+        <p>
+            I also worked on testing more this week. I am currently working on testing out the use of DataStore in my feature. In addition, 
+            I worked with the other interns on integrating our 3 features. 
+            All of the 3 features are integrated and working together in the MVP. We can now demonstrate the entire user flow of uploading a video, choosing keyframe images, and displaying the visual and audio effect results.
+
+        </p>
+         <p>
+            <button id="Week9-get-button" onclick=getComments("Week9")>Display Comments</button>
+            <button onclick=deleteComments("Week9")>Delete all comments</button>
+            <button id="Week9-display-button" onclick=displayCommentBoxes("Week9")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week9"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week9">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week9" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week9" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week9" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week9")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
+        <h2>Week 10</h2>
+        <p>This week, based on our discussion as a pod from last Friday about designing a clearer, more user-friendly results page UI, I worked on the UI of the 
+            Results page. I worked with the other two interns on designing the UI, and I was then responsible for implemeting this updated UI by myself. 
+            I added a side navbar, a section for the overall visual and audio scores, and horizontal dividers between sections of the Results page. 
+            I also cleaned up some of my own Results page UI (for the Visual Effect feature), centering the dots to go through the carousel of keyframe images, 
+            and improving the UI if there are no images to display in the carousel.
+        </p>
+        <p>
+            I also worked this week on optimizations in my code for the Visual Effect feature. In particular, one of the aspects of the feature I optimized was 
+            the display of "All" or "Flagged" keyframe images based on the buttons clicked by the user. 
+            Instead of calling 'fetch' each time one of these buttons is clicked, I fetch once, and if the button is clicked afterwards, I use the already-fetched keyframe images. 
+        </p>
+        <p>
+            I also optimized the retrieval of the Cloud Vision API’s SafeSearch effect for each keyframe images, based on the suggestions of Di and Vikki during the design review meeting as a pod. 
+            Before this optimization, I called GET to get all keyframe images from DataStore. Then, I would pass an array of Keyframe Images to JavaScript. 
+            In JavaScript, I then would iterate through all the keyframe images, calling 'fetch' for each one to another servlet that retrieved the image's SafeSearch effect. 
+            This is not an optimized design because it wastes time and space, and has logic taking place in client-side JavaScript instead of keeping logic on the server side. 
+            I changed this to now call GET to get all the keyframe images form DataStore. Then, in the for loop to convert all DataStore entities to keyframe images, 
+            I call the DetectsSafeSearchGcs class’ static helper method for SafeSearch on each image, and pass an array of keyframe images, with effect already included, to client-side JavaScript. 
+            This is a better, more optimized algorithm because it conserves time and space, and reserves the logic for server-side Java servlets.
+        </p>
+        <p>
+            One of my biggest achievements for the week was working on the algorithm for the Overall Visual Score. I spent a lot of time carefully considering how this number 
+            should be formulated. I thought of trade-offs like compatibility with the overall audio score to display, and more. I wrote extensive notes about these 
+            trade-offs and the algorithm in the document: <a href="https://docs.google.com/document/d/1o-ZbfJRUGNjWO-pmYmsIbPomY4Wvcmu9avrIa3R0pTc/edit">Overall Visual Effect Algorithm</a>. 
+            I also began to think about the initial implementation, though most of the work for this feature will be in thinking about the algorithm. I used Desmos and graphing tools 
+            to think about how steeply I wanted to Overall Visual Score effect to grow, to penalize any unsafe or negative visual content in the video advertisement.
+        </p>
+        <p>
+            I also created a flow of the Java files being called and used in the code, and the relationship between the different Java servlets, classes, and methods.
+        </p>
+         <p>
+            <button id="Week10-get-button" onclick=getComments("Week10")>Display Comments</button>
+            <button onclick=deleteComments("Week10")>Delete all comments</button>
+            <button id="Week10-display-button" onclick=displayCommentBoxes("Week10")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week10"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week10">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week10" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week10" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week10" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week10")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
+        <h2>Week 11</h2>
+        <p>One of my tasks for the week was merging Pull Requests. I also improved my process and frequency of responding to comments on the other interns' 
+            PRs. I reviewed the other interns' PRs this week, writing helpful, descriptive comments.
+        </p>
+        <p>
+            This week, I also worked on clean-up and bug fixing. For one, I worked on sorting the Keyframe Images returned from DataStore by timestamp, numerically. 
+            The issue is that the DataStore Query sorted timestamp alphabetically, so it would prioritize the highest magnitude digit and sort as follows: (e.g.) 40 seconds, 5 seconds, 50 seconds, 500 seconds, 6 seconds. 
+            One thought would be to convert the timestamp to a readable format in minutes and seconds, but the issue would be that for longer videos, a time such as 15:10 (15 minutes and 10 seconds) 
+            would be alphabetic ordered below 2:40 (2 minutes and 40 seconds). This is an edge case for longer videos and must be considered. 
+            Therefore, I had to convert the Strings to integer values, and add a KeyframeImage compareTo method that sorts timestamps numerically, so as follows: (e.g.) 5 seconds, 6 seconds, 40 seconds, 50 seconds, 500 seconds. 
+            A difficulty with this is that DataStore must store its entity values as Strings. So, I had to rely on each Keyframe Image's stored timestamp, which is stored 
+            as an integer. With my new method of sorting, we only have to do the conversion once, and can convert the timestamps to a human-readable format at a later stage. 
+        </p>
+        <p>
+            I also made other optimizations and improvements to my code. I moved the checking of Keyframe Image validity (e.g. all fields not null, and more) to the server-side 
+            instead of keeping it in JavaScript client-side code. I also changed the keyframe image carousel to a horizontal layout. This presented the following challenges: First, 
+            with extra width for each card for the Keyframe Images, we need to change how we display the carousel if there are no flagged images to show (in the 
+            "Display Flagged Images" carousel option). I also had to make changes to the meter's display and width, and had to think carefully about 
+            the best design in making the text for the image's effect show to the side of the image. There were different possible designs to choose between, and I 
+            took time to choose what I thought was the most optimal, cleanest method. There were mulitple edge cases to consider. For example, 
+            if there were no images to show, I had to add a background square and message. I first tried to hard code this manually. Then, 
+            I formed a solution not to do this, using modifications on the width and display options of the background square and then moving some of this 
+            code to dynamic JavaScript where it was most useful to do so. It took a lot of iterations to get this right. I needed to make sure the changes would fit 
+            the width of the whole website, for the layout. I put a lot of effort into these decisions. 
+        </p>
+        <p>
+            In line with my descriptions above, I worked on the horizontal layout of the keyframe image cards in teh carousel. 
+            The motivation was data density: we want the user to see all of the information about a keyframe image without needing to scroll. 
+            Additionally for this week, I worked on the algorithm and implementation furhter for the Overall Visual Effect.
+        </p>
+         <p>
+            <button id="Week11-get-button" onclick=getComments("Week11")>Display Comments</button>
+            <button onclick=deleteComments("Week11")>Delete all comments</button>
+            <button id="Week11-display-button" onclick=displayCommentBoxes("Week11")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week11"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week11">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week11" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week11" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week11" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week11")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
+        <h2>Week 12</h2>
+        <p>This week, one of the tasks I worked on was adding final additions to my UI. 
+            I added a camera icon for manually captured keyframe images. 
+            This also required changing my Java servlet calls and the information I store in DataStore about each keyframe image. Additionally, I 
+            added a hoverable information icon for the Overall Visual Effect. I had to think carefully about how to be concise and user-friendly in this description.
+        </p>
+        <p>
+            Since this is the last week, I also worked on preparing for my final presentations. I practiced my final presentation, and worked on the 
+            slides with the two other interns. Creating a gif for the slides with my Visual Effect feature was difficult, because the uploading to 
+            the database for the keyframe images from the video was in a different branch than the code with my improved UI. I took the time to merge 
+            these changes and branches to make this gif for the presentation. I also wrote a description about my feature (trhe Visual Effect of the Video Advertismement) for the slides. 
+            I gave two final presentations this week. I also worked a lot on my Final Evaluation this week.
+        </p>
+        <p>
+            I spent time this week working on testing as well. I worked on mocking out functions in my DetectSafeSearchGcs tests and DataStore uploading and retrieving tests, 
+            over multiple iterations. I had to do a lot of research into the Vision API and associated classes, such as classes to annotate images, 
+            to figure out what methods to mock and how. This required looking through the builder methods for classes related to image annotation and 
+            the safe search effect for the Vision API. I applied feedback from the hosts and other interns in my pod. 
+            Writing tests was a learning experience, so I tried to improve my tests each day, at least in part, and to understand what needed to be improved in the tests and why. 
+            I merged these tests to master, and resolved challenging merge conflicts between these branches.
+        </p>
+        <p>
+            By the end of this week, I have merged all of my branches to main. This required resolving merge conflicts. For example, my testing branch 
+            was working off of a KeyframeImage class that still stored startTime and endTime, but did not store isManuallyCaptured. 
+            It also stored timestamp as a String instead of as an integer. I resolved these merge conflicts one-by-one, testing my code 
+            afterwards manually to make sure all the merge conflicts were handled correctly.
+        </p>
+         <p>
+            <button id="Week12-get-button" onclick=getComments("Week12")>Display Comments</button>
+            <button onclick=deleteComments("Week12")>Delete all comments</button>
+            <button id="Week12-display-button" onclick=displayCommentBoxes("Week12")>Post a Comment</button>
+        </p>
+        <div id="comments-container-Week12"></div>
+        <div class="forms-wrapper" id="forms-wrapper-Week12">
+            <div class="form-div">
+                <h3>Post a new comment: </h3>
+                <form action="/comments" method="POST">
+                    <p>Name :</p>
+                    <textarea name="commenter-name"></textarea>
+                    <p>Comment :</p>
+                    <textarea name="text-input">I love your website! :)</textarea>
+                    <input name="location" value="Week12" type="hidden" />
+                    <br/><br/>
+
+                    <input type="submit" />
+                </form>
+            </div>
+            <div class="form-div" id="max-comments">
+                <h3>Change the maximum number of comments to display: </h3>
+                <p>Maximum number of comments to display: </p>
+                <input class="num-comments" id="num-comments-Week12" name="num-comments" type="number">
+                <input type="hidden" name="location" value="Week12" />
+                <br/><br/>
+                <button onclick=updateNumComments("Week12")>Submit</button>                   
+            </div>
+        </div>
+       </div>
+       <div class="boxed-div">
         <h1>Challenges</h1>
         <p>Understanding and adjusting to Google's standards for code and design, and applying these standards to my own code</p>
-        <p>[To be added to throughout the internship]</p>
+        <p>Figuring out how to set up keys for the APIs I am using in my component of the Capstone project.</p>
+        <p>Testing complicated APIs (Vision API, Blobstore API) with Permission Errors, finding workarounds such as mocking and stubbing</p>
+        <p>Learning how to give helpful feedback on Pull Reviews</p>
+        <p>Resolving complicated merge conflicts</p>
+        <p>Becoming more confident in speaking up and advocating for my successes</p>
         <p>
             <button id="Challenges-get-button" onclick=getComments("Challenges")>Display Comments</button>
             <button onclick=deleteComments("Challenges")>Delete all comments</button>
@@ -303,6 +717,10 @@
         <p>To improve my skills in writing unit tests, and more generally testing my code</p>
         <p>To become a stronger advocate for good design principles in my coding</p>
         <p>To gain guidance about my career from my hosts and other Googlers</p>
+        <p>To be a leader and helpful contributor within my STEP Pod</p>
+        <p>To come up with creative, original ideas for the Capstone project (and starter projects), and to implement these ideas</p>
+        <p>To attend meetings for my team (YT Ads Formats Infeed team)</p>
+        <p>To grow as a communicator, programmer, and teammate</p>
         <p>To learn about Google's culture and its opportunities</p>
         <p>
             <button id="Goals-get-button" onclick=getComments("Goals")>Display Comments</button>
