@@ -357,7 +357,7 @@
             I also updated the UI to be consistent with the index page’s UI and design.
         </p>
         <p>
-            ADD CHALLENGES
+            A challenge is that we still need to figure out how to connect the extraction of keyframe images from the video (another intern's feature) to the POST request to GCS and DataStore that I have created.
         </p>
          <p>
             <button id="Week7-get-button" onclick=getComments("Week7")>Display Comments</button>
@@ -391,7 +391,30 @@
        </div>
        <div class="boxed-div">
         <h2>Week 8</h2>
-        <p>This week, I 
+        <p>This week, one of my main areas of accomplishment was testing my Java code using jUnit, Mockito, and Spring. Specifically, I worked on testing my 
+            POST and GET requests for the KeyframeImageUploadServlet. I also tested my POST request for the KeyframeImageDeleteServlet, i.e. the method that deletes all objects from Datastore and the Google Cloud Storage Bucket. 
+            Additionally, I tested my API call for the Vision API's SafeSearch detection method and the handling of incorrectly formatted bucket path urls. 
+            This was a challenge because testing Java code is new to me, outside of using print statements and other more basic testing methods. I spent a lot 
+            of time reading through tutorials for jUnit, Mockito, and Spring, and especially found it difficult to mock out get and post methods despite 
+            permission errors that come with these methods when using the Blobstore API. After a lot of hard work on this task, I am proud of my progress in this area 
+            and am working towards 100% code coverage for my tests.
+        </p>
+        <p>I also made progress on Code Reviews this week, alongside the other two interns in my pod. With the other two interns, established a more productive schedule and system of requesting and giving feedback on our code. 
+            Additionally, I learned to create Pull Requests which correspond to one feature or addition, instead of Pull Requests for improvements on multiple features. 
+            I also am making progress on giving descriptive, thoughtful comments and feedback on my Pull Reviews. I am new to the process of giving feedback on code, 
+            so this has been a great learning experience and opportunity for growth. 
+        </p>
+        <p>
+            This week, I also cleaned up my code, based on PR comments and Google style guidelines. I also integrated all three features of Video Vigilance, alongside 
+            the other two interns. Additionally, I pair programmed with Sharon over GVC to figure out the POST request to post the keyframe images 
+            she extracts from the video to a database, which required using Ajax to fill in the jsp upload form. 
+            The POST request must be done in this way due to Blobstore authentication errors, where the POST must be called from a valid blob address. I also met with the other 
+            two interns to discuss the UI and how our features will be displayed together. I created a diagram using Google Drawings of a potential UI fix for the Results page. We created a merged version of the web application on a testing branch.
+        </p>    
+        <p>
+            A challenge this week was testing APIs that have Permission Errors on the local website, such as the Vision API. Also, 
+            testing the POST and GET for Blobstore is difficult because these requests must be called from a 'valid blob location' due to 
+            Blobstore API specifications. An area of growth was learning how to give constructive feedback on Pull Requests.
         </p>
          <p>
             <button id="Week8-get-button" onclick=getComments("Week8")>Display Comments</button>
