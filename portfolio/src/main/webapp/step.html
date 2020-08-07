@@ -509,7 +509,7 @@
             Before this optimization, I called GET to get all keyframe images from DataStore. Then, I would pass an array of Keyframe Images to JavaScript. 
             In JavaScript, I then would iterate through all the keyframe images, calling 'fetch' for each one to another servlet that retrieved the image's SafeSearch effect. 
             This is not an optimized design because it wastes time and space, and has logic taking place in client-side JavaScript instead of keeping logic on the server side. 
-            I changed this to now call GET to get all the keyframe images form DataStore. Then, in the for loop to convert all DataStore entities to keyframe images, 
+            I changed this to now call GET to get all the keyframe images from DataStore. Then, in the for loop to convert all DataStore entities to keyframe images, 
             I call the DetectsSafeSearchGcs class’ static helper method for SafeSearch on each image, and pass an array of keyframe images, with effect already included, to client-side JavaScript. 
             This is a better, more optimized algorithm because it conserves time and space, and reserves the logic for server-side Java servlets.
         </p>
