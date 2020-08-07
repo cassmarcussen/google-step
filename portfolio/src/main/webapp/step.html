@@ -493,7 +493,35 @@
        </div>
        <div class="boxed-div">
         <h2>Week 10</h2>
-        <p>This week, I 
+        <p>This week, based on our discussion as a pod from last Friday about designing a clearer, more user-friendly results page UI, I worked on the UI of the 
+            Results page. I worked with the other two interns on designing the UI, and I was then responsible for implemeting this updated UI by myself. 
+            I added a side navbar, a section for the overall visual and audio scores, and horizontal dividers between sections of the Results page. 
+            I also cleaned up some of my own Results page UI (for the Visual Effect feature), centering the dots to go through the carousel of keyframe images, 
+            and improving the UI if there are no images to display in the carousel.
+        </p>
+        <p>
+            I also worked this week on optimizations in my code for the Visual Effect feature. In particular, one of the aspects of the feature I optimized was 
+            the display of "All" or "Flagged" keyframe images based on the buttons clicked by the user. 
+            Instead of calling 'fetch' each time one of these buttons is clicked, I fetch once, and if the button is clicked afterwards, I use the already-fetched keyframe images. 
+        </p>
+        <p>
+            I also optimized the retrieval of the Cloud Vision API’s SafeSearch effect for each keyframe images, based on the suggestions of Di and Vikki during the design review meeting as a pod. 
+            Before this optimization, I called GET to get all keyframe images from DataStore. Then, I would pass an array of Keyframe Images to JavaScript. 
+            In JavaScript, I then would iterate through all the keyframe images, calling 'fetch' for each one to another servlet that retrieved the image's SafeSearch effect. 
+            This is not an optimized design because it wastes time and space, and has logic taking place in client-side JavaScript instead of keeping logic on the server side. 
+            I changed this to now call GET to get all the keyframe images form DataStore. Then, in the for loop to convert all DataStore entities to keyframe images, 
+            I call the DetectsSafeSearchGcs class’ static helper method for SafeSearch on each image, and pass an array of keyframe images, with effect already included, to client-side JavaScript. 
+            This is a better, more optimized algorithm because it conserves time and space, and reserves the logic for server-side Java servlets.
+        </p>
+        <p>
+            One of my biggest achievements for the week was working on the algorithm for the Overall Visual Score. I spent a lot of time carefully considering how this number 
+            should be formulated. I thought of trade-offs like compatibility with the overall audio score to display, and more. I wrote extensive notes about these 
+            trade-offs and the algorithm in the document: <a href="https://docs.google.com/document/d/1o-ZbfJRUGNjWO-pmYmsIbPomY4Wvcmu9avrIa3R0pTc/edit">Overall Visual Effect Algorithm</a>. 
+            I also began to think about the initial implementation, though most of the work for this feature will be in thinking about the algorithm. I used Desmos and graphing tools 
+            to think about how steeply I wanted to Overall Visual Score effect to grow, to penalize any unsafe or negative visual content in the video advertisement.
+        </p>
+        <p>
+            I also created a flow of the Java files being called and used in the code, and the relationship between the different Java servlets, classes, and methods.
         </p>
          <p>
             <button id="Week10-get-button" onclick=getComments("Week10")>Display Comments</button>
