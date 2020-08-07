@@ -616,8 +616,33 @@
        </div>
        <div class="boxed-div">
         <h2>Week 12</h2>
-        <p>This week, I 
+        <p>This week, one of the tasks I worked on was adding final additions to my UI. 
+            I added a camera icon for manually captured keyframe images. 
+            This also required changing my Java servlet calls and the information I store in DataStore about each keyframe image. Additionally, I 
+            added a hoverable information icon for the Overall Visual Effect. I had to think carefully about how to be concise and user-friendly in this description.
         </p>
+        <p>
+            Since this is the last week, I also worked on preparing for my final presentations. I practiced my final presentation, and worked on the 
+            slides with the two other interns. Creating a gif for the slides with my Visual Effect feature was difficult, because the uploading to 
+            the database for the keyframe images from the video was in a different branch than the code with my improved UI. I took the time to merge 
+            these changes and branches to make this gif for the presentation. I also wrote a description about my feature (trhe Visual Effect of the Video Advertismement) for the slides. 
+            I gave two final presentations this week. I also worked a lot on my Final Evaluation this week.
+        </p>
+        <p>
+            I spent time this week working on testing as well. I worked on mocking out functions in my DetectSafeSearchGcs tests and DataStore uploading and retrieving tests, 
+            over multiple iterations. I had to do a lot of research into the Vision API and associated classes, such as classes to annotate images, 
+            to figure out what methods to mock and how. This required looking through the builder methods for classes related to image annotation and 
+            the safe search effect for the Vision API. I applied feedback from the hosts and other interns in my pod. 
+            Writing tests was a learning experience, so I tried to improve my tests each day, at least in part, and to understand what needed to be improved in the tests and why. 
+            I merged these tests to master, and resolved challenging merge conflicts between these branches.
+        </p>
+        <p>
+            By the end of this week, I have merged all of my branches to main. This required resolving merge conflicts. For example, my testing branch 
+            was working off of a KeyframeImage class that still stored startTime and endTime, but did not store isManuallyCaptured. 
+            It also stored timestamp as a String instead of as an integer. I resolved these merge conflicts one-by-one, testing my code 
+            afterwards manually to make sure all the merge conflicts were handled correctly.
+        </p>
+
          <p>
             <button id="Week12-get-button" onclick=getComments("Week12")>Display Comments</button>
             <button onclick=deleteComments("Week12")>Delete all comments</button>
