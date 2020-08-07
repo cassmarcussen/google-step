@@ -448,7 +448,18 @@
        </div>
        <div class="boxed-div">
         <h2>Week 9</h2>
-        <p>This week, I 
+        <p>Based on the feedback from other interns and hosts, this week I updated the UI of the meter to more clearly show how many values the meter can take on. 
+            To do this, I split up the meter into 5 distinct sections. Also, I move the information hover buttons to each individual category of the Vision API's SafeSearch detection. 
+            I also worked on edge case management. For example, I considered the edge case that there are multiple users of the website at the same time. 
+            For this edge case, we need to give each user a unique DataStore list, so that if two or more users are using Video Vigilance simultaneously their information is kept in different locations and each of the users’ list of 
+            keyframe images stored does not interfere with the other users’ information. 
+            I implemented this feature for POST and GET, and still need to work on making this feature compatible with the Delete method.
+        </p>
+        <p>
+            I also worked on testing more this week. I am currently working on testing out the use of DataStore in my feature. In addition, 
+            I worked with the other interns on integrating our 3 features. 
+            All of the 3 features are integrated and working together in the MVP. We can now demonstrate the entire user flow of uploading a video, choosing keyframe images, and displaying the visual and audio effect results.
+
         </p>
          <p>
             <button id="Week9-get-button" onclick=getComments("Week9")>Display Comments</button>
