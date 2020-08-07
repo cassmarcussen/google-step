@@ -555,7 +555,34 @@
        </div>
        <div class="boxed-div">
         <h2>Week 11</h2>
-        <p>This week, I 
+        <p>One of my tasks for the week was merging Pull Requests. I also improved my process and frequency of responding to comments on the other interns' 
+            PRs. I reviewed the other interns' PRs this week, writing helpful, descriptive comments.
+        </p>
+        <p>
+            This week, I also worked on clean-up and bug fixing. For one, I worked on sorting the Keyframe Images returned from DataStore by timestamp, numerically. 
+            The issue is that the DataStore Query sorted timestamp alphabetically, so it would prioritize the highest magnitude digit and sort as follows: (e.g.) 40 seconds, 5 seconds, 50 seconds, 500 seconds, 6 seconds. 
+            One thought would be to convert the timestamp to a readable format in minutes and seconds, but the issue would be that for longer videos, a time such as 15:10 (15 minutes and 10 seconds) 
+            would be alphabetic ordered below 2:40 (2 minutes and 40 seconds). This is an edge case for longer videos and must be considered. 
+            Therefore, I had to convert the Strings to integer values, and add a KeyframeImage compareTo method that sorts timestamps numerically, so as follows: (e.g.) 5 seconds, 6 seconds, 40 seconds, 50 seconds, 500 seconds. 
+            A difficulty with this is that DataStore must store its entity values as Strings. So, I had to rely on each Keyframe Image's stored timestamp, which is stored 
+            as an integer. With my new method of sorting, we only have to do the conversion once, and can convert the timestamps to a human-readable format at a later stage. 
+        </p>
+        <p>
+            I also made other optimizations and improvements to my code. I moved the checking of Keyframe Image validity (e.g. all fields not null, and more) to the server-side 
+            instead of keeping it in JavaScript client-side code. I also changed the keyframe image carousel to a horizontal layout. This presented the following challenges: First, 
+            with extra width for each card for the Keyframe Images, we need to change how we display the carousel if there are no flagged images to show (in the 
+            "Display Flagged Images" carousel option). I also had to make changes to the meter's display and width, and had to think carefully about 
+            the best design in making the text for the image's effect show to the side of the image. There were different possible designs to choose between, and I 
+            took time to choose what I thought was the most optimal, cleanest method. There were mulitple edge cases to consider. For example, 
+            if there were no images to show, I had to add a background square and message. I first tried to hard code this manually. Then, 
+            I formed a solution not to do this, using modifications on the width and display options of the background square and then moving some of this 
+            code to dynamic JavaScript where it was most useful to do so. It took a lot of iterations to get this right. I needed to make sure the changes would fit 
+            the width of the whole website, for the layout. I put a lot of effort into these decisions. 
+        </p>
+        <p>
+            In line with my descriptions above, I worked on the horizontal layout of the keyframe image cards in teh carousel. 
+            The motivation was data density: we want the user to see all of the information about a keyframe image without needing to scroll. 
+            Additionally for this week, I worked on the algorithm and implementation furhter for the Overall Visual Effect.
         </p>
          <p>
             <button id="Week11-get-button" onclick=getComments("Week11")>Display Comments</button>
